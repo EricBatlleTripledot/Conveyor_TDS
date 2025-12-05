@@ -4630,7 +4630,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 360
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_Name
