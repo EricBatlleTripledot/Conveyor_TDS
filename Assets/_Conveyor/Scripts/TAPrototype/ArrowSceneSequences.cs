@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -29,6 +30,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         [Header("VFX Prototypes")]
         public GameObject vfxOnTileCascadeLanding;
+        public GameObject vfxOnTileCascadeFastLanding;
+        public int thresholdForFasterVFX = 2;
         
         [Header("Controls")]
         public bool triggerStack1;
@@ -48,7 +51,10 @@ namespace _2025.ColourBlockArrowProto.Scripts
             {
                 triggerStack1 = false;
                 var tween = stackOntoBeltTile.DoMoveOntoBelt(ontoStackPoint.position);
-                tween.OnComplete(() => stackOntoBeltTile.GetComponent<Animation>().PlayQueued(motionName));
+                tween.OnComplete(() =>
+                {
+                    stackOntoBeltTile.GetComponent<Animation>().PlayQueued(motionName);
+                });
             }
             if (resetStack1)
             {
@@ -79,6 +85,15 @@ namespace _2025.ColourBlockArrowProto.Scripts
             }
         }
 
+        private IEnumerator WaitForAnimation(Animation target, Action onFinish)
+        {
+            while (target.isPlaying)
+            {
+                yield return null;
+            }
+            onFinish.Invoke();
+        }
+
         private void DoCascade(ArrowTileMotions initiator, ArrowTileMotions[] tiles, int cascade)
         {
             initiator.gameObject.SetActive(false);
@@ -87,7 +102,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 return;
 
             // for the final tile in the cascade, it has it's own anim + VFX, so don't spawn a landing VFX
-            Instantiate(vfxOnTileCascadeLanding, initiator.transform.position, Quaternion.identity);
+            var vfxPrefab = cascade >= thresholdForFasterVFX ? vfxOnTileCascadeFastLanding : vfxOnTileCascadeLanding; 
+            Instantiate(vfxPrefab, initiator.transform.position, Quaternion.identity);
             
             Vector3 nextPos;
             if (cascade + 1 < tiles.Length)

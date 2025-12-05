@@ -129,7 +129,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 229.26
+      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_Name
@@ -197,7 +197,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -350.5278
+      value: -360
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -274,6 +274,8 @@ MonoBehaviour:
   - {fileID: 1755185119}
   - {fileID: 1772346682}
   vfxOnTileCascadeLanding: {fileID: 891140212264022168, guid: 35c82b04e71c247bb95b514ceb1f8af8, type: 3}
+  vfxOnTileCascadeFastLanding: {fileID: 891140212264022168, guid: ff1f675cc39e1468287f1b3753efb999, type: 3}
+  thresholdForFasterVFX: 2
   triggerStack1: 0
   resetStack1: 0
   triggerCascade: 0
@@ -502,37 +504,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148670795}
   m_Mesh: {fileID: 8257523118669362552, guid: 6fac4ce3c0391463c8fed6ad872c142f, type: 3}
---- !u!1 &173743622
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 173743623}
-  m_Layer: 0
-  m_Name: 'todo: tile animation clips for rotation and hopping'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &173743623
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173743622}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.016000003, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &201162676
 GameObject:
   m_ObjectHideFlags: 0
@@ -1089,6 +1060,10 @@ PrefabInstance:
     - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_Name
       value: Tile onStack 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3484204310395637046, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -2632,15 +2607,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 1.177
+      value: 0.02020396
       objectReference: {fileID: 0}
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -1.355
+      value: -0.34058303
       objectReference: {fileID: 0}
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 90.978
+      value: -3.0438871
       objectReference: {fileID: 0}
     - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_Name
@@ -2716,7 +2691,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -346.88242
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -2802,6 +2777,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 956215501}
     m_Modifications:
+    - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -29.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 251.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -28.94
+      objectReference: {fileID: 0}
     - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_Name
       value: Tile cascade4
@@ -2865,6 +2852,10 @@ PrefabInstance:
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -336.55215
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3129,37 +3120,6 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!1 &1533627612
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1533627613}
-  m_Layer: 0
-  m_Name: 'todo: VFX spawner'
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1533627613
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1533627612}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.016000003, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1584789908
 GameObject:
   m_ObjectHideFlags: 0
@@ -4126,19 +4086,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 13.733031
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -18.652313
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -10.268093
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_Name
       value: Tile onStack 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3458513576347124628, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3484204310395637046, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -4184,6 +4152,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3612693951461609187, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
@@ -4202,15 +4174,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -16.663845
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 15.236382
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 4.9350357
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4277,6 +4249,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1131086873}
     m_Modifications:
+    - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.00020410493
+      objectReference: {fileID: 0}
+    - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0.0034404397
+      objectReference: {fileID: 0}
+    - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.030745983
+      objectReference: {fileID: 0}
     - target: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_Name
       value: Tile onStack
@@ -4343,6 +4327,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -359.02832
+      objectReference: {fileID: 0}
+    - target: {fileID: 5199383391658379170, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4629,6 +4621,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 956215501}
     m_Modifications:
     - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 17.004326
+      objectReference: {fileID: 0}
+    - target: {fileID: 144125743545927468, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
@@ -4694,11 +4690,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: -16.068892
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -360
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4357684072321233976, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_ConstrainProportionsScale
@@ -4726,8 +4722,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1301864891}
   - {fileID: 1998189183}
-  - {fileID: 173743623}
-  - {fileID: 1533627613}
   - {fileID: 56193894}
   - {fileID: 931123105}
   - {fileID: 1492228626}
