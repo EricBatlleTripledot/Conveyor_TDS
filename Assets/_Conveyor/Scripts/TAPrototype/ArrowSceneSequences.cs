@@ -81,12 +81,14 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         private void DoCascade(ArrowTileMotions initiator, ArrowTileMotions[] tiles, int cascade)
         {
-            Instantiate(vfxOnTileCascadeLanding, initiator.transform.position, Quaternion.identity);
             initiator.gameObject.SetActive(false);
 
             if (cascade >= tiles.Length)
                 return;
 
+            // for the final tile in the cascade, it has it's own anim + VFX, so don't spawn a landing VFX
+            Instantiate(vfxOnTileCascadeLanding, initiator.transform.position, Quaternion.identity);
+            
             Vector3 nextPos;
             if (cascade + 1 < tiles.Length)
             {
