@@ -273,6 +273,7 @@ MonoBehaviour:
   - {fileID: 1814156220}
   - {fileID: 1755185119}
   - {fileID: 1772346682}
+  vfxOnTileCascadeLanding: {fileID: 891140212264022168, guid: 35c82b04e71c247bb95b514ceb1f8af8, type: 3}
   triggerStack1: 0
   resetStack1: 0
   triggerCascade: 0
