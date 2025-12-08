@@ -57,9 +57,15 @@ namespace _2025.ColourBlockArrowProto.Scripts
             {
                 triggerStack1 = false;
                 var tween = stackOntoBeltTile.DoMoveOntoBelt(ontoStackPoint.position);
+                beltOntoBoardTile.gameObject.SetActive(false);
                 tween.OnComplete(() =>
                 {
-                    stackOntoBeltTile.GetComponent<Animation>().PlayQueued(motionName);
+                    var anim = stackOntoBeltTile.GetComponent<Animation>();
+                    anim.PlayQueued(motionName);
+                    StartCoroutine(WaitForAnimation(anim, () =>
+                    {
+                        triggerCascade = true;
+                    }));
                 });
             }
             if (resetStack1)
@@ -73,6 +79,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
             {
                 triggerCascade = false;
                 stackOntoBeltTile.gameObject.SetActive(false);
+                beltOntoBoardTile.gameObject.SetActive(true);
                 
                 var tween = beltOntoBoardTile.DoMoveOntoBoard(cascadingRightTiles[0].transform.position);
                 tween.OnComplete(() => DoCascade(beltOntoBoardTile, cascadingRightTiles, 0));
