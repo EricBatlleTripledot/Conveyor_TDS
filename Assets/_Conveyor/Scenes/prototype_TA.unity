@@ -12246,13 +12246,17 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   jumpHeightsPerStackedTile:
-  - 0.25
+  - 0.3
   - 0.5
   - 0.7
   - 0.9
   - 1.2
   - 1.5
   - 1.8
+  - 2.1
+  - 2.4
+  - 2.7
+  - 3
   jumpDurationsPerStackedTile:
   - 0.4
   - 0.45
@@ -12261,6 +12265,40 @@ MonoBehaviour:
   - 0.6
   - 0.65
   - 0.7
+  randomRotationOffset: 15
+  rotationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.7690823
+      outSlope: 2.7690823
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.047774322
+    - serializedVersion: 3
+      time: 0.6239816
+      value: 1
+      inSlope: 0.3043663
+      outSlope: 0
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.19869432
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.051490497
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   trigger: 0
   tilePrefab: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
   tileMaterialToSpawn: {fileID: 2100000, guid: bd0425e8c362d4a4db39a4ee3760679b, type: 2}
