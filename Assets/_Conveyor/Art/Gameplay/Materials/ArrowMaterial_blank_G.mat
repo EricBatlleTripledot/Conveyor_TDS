@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ArrowMaterial_Right_B
+  m_Name: ArrowMaterial_blank_G
   m_Shader: {fileID: -6465566751694194690, guid: bc25e972d9fc84cd5bed9b5be778f004, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _IconTex:
-        m_Texture: {fileID: 2800000, guid: 0eeac4d23d9c344ddbf57f7f75f8ac90, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -128,7 +128,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
-    - _Color: {r: 0, g: 0.37633944, b: 1, a: 1}
+    - _Color: {r: 0.07492691, g: 0.764151, b: 0, a: 1}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _Icon_Offset: {r: -0.25, g: -0.25, b: 0, a: 0}
