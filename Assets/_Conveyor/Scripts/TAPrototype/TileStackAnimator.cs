@@ -62,7 +62,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
             {
                 currentStack.Add(stackContainer.GetChild(i));
             }
-            
+            // reverse the list so that we have the latest tile added first,
+            // as that needs to be at the bottom of the visual stack
             currentStack.Reverse();
         }
 
