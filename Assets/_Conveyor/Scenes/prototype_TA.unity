@@ -1829,7 +1829,7 @@ GameObject:
   - component: {fileID: 890734653}
   - component: {fileID: 890734652}
   m_Layer: 0
-  m_Name: Sparks_Burst
+  m_Name: OnSpawn_Sparks_Burst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1843,12 +1843,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 890734650}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.1798688, y: 0.6838476, z: 0.17986897, w: 0.68384707}
-  m_LocalPosition: {x: 1.379, y: 0.432, z: -0}
+  m_LocalRotation: {x: -0.254373, y: 0.000000029802322, z: 0.000000014901161, w: 0.9671062}
+  m_LocalPosition: {x: 0.11399845, y: -0.972, z: 1.8650001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2122035503}
+  m_Father: {fileID: 1040882008}
   m_LocalEulerAnglesHint: {x: -29.473, y: 90, z: 0}
 --- !u!199 &890734652
 ParticleSystemRenderer:
@@ -1944,7 +1944,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -7078,7 +7078,7 @@ GameObject:
   - component: {fileID: 1040882010}
   - component: {fileID: 1040882009}
   m_Layer: 0
-  m_Name: Smoke_Burst
+  m_Name: OnSpawn_Smoke_Burst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7096,7 +7096,9 @@ Transform:
   m_LocalPosition: {x: -0.486, y: 1.404, z: 0.114}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1746833888}
+  - {fileID: 890734651}
   m_Father: {fileID: 2122035503}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!199 &1040882009
@@ -7193,7 +7195,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -18127,9 +18129,10 @@ MonoBehaviour:
   animator: {fileID: 1423449599}
   idleClipName: Furnace_Idle
   actClipName: Furnace_Act
+  onSpawnParticles: {fileID: 1040882010}
   trigger: 0
   tileClone: {fileID: 295618855}
-  tileMaterialToSpawn: {fileID: 0}
+  tileMaterialToSpawn: {fileID: 2100000, guid: 06f931aee9fd642068908b1b8c2cb2cb, type: 2}
 --- !u!1001 &1440837997
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18831,7 +18834,7 @@ GameObject:
   - component: {fileID: 1746833890}
   - component: {fileID: 1746833889}
   m_Layer: 0
-  m_Name: Sparks_Noisy
+  m_Name: OnSpawn_Sparks_Noisy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18845,12 +18848,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746833887}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.1798688, y: 0.6838476, z: 0.17986897, w: 0.68384707}
-  m_LocalPosition: {x: 1.379, y: 0.432, z: -0}
+  m_LocalRotation: {x: -0.254373, y: 0.000000029802322, z: 0.000000014901161, w: 0.9671062}
+  m_LocalPosition: {x: 0.11399845, y: -0.972, z: 1.8650001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2122035503}
+  m_Father: {fileID: 1040882008}
   m_LocalEulerAnglesHint: {x: -29.473, y: 90, z: 0}
 --- !u!199 &1746833889
 ParticleSystemRenderer:
@@ -18946,7 +18949,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -24923,8 +24926,6 @@ Transform:
   m_Children:
   - {fileID: 1346935354}
   - {fileID: 1040882008}
-  - {fileID: 1746833888}
-  - {fileID: 890734651}
   m_Father: {fileID: 1423449598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2126844592

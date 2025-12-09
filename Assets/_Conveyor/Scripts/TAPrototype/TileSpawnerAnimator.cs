@@ -14,6 +14,10 @@ namespace _2025.ColourBlockArrowProto.Scripts
         [SerializeField]
         private string actClipName;
 
+        [Header("VFX")]
+        [SerializeField]
+        private ParticleSystem onSpawnParticles;
+
         [Header("Testing")]
         public bool trigger;
 
@@ -28,6 +32,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 tileClone.material = new Material(tileMaterialToSpawn);
                 animator.Play(actClipName);
+                onSpawnParticles.Play();
+                
                 animator.PlayQueued(idleClipName);
             }
         }
