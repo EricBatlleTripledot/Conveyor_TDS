@@ -82,6 +82,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 var jumpToLocalPoint = rootLocalPoint + jumpLocalDirection * jumpHeightsPerStackedTile[Mathf.Clamp(i, 0, distancesCount - 1)];
 
                 var randomRotation = Quaternion.AngleAxis(Random.Range(-randomRotationOffset, randomRotationOffset), Vector3.up);
+                randomRotation *= Quaternion.AngleAxis(Random.Range(-randomRotationOffset, randomRotationOffset), Vector3.forward);
+                randomRotation *= Quaternion.AngleAxis(Random.Range(-randomRotationOffset, randomRotationOffset), Vector3.right);
                 
                 stackTf.DOKill();
                 
