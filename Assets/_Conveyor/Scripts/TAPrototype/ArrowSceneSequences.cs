@@ -44,6 +44,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public bool triggerCascade;
         public bool triggerCascade2;
         public bool triggerCascade3;
+        public bool triggerCascade3Rejection;
         public bool triggerCascade4;
 
         private void Awake()
@@ -98,6 +99,20 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 var tween = beltOntoBoardTile3.DoMoveOntoBoard(cascadingRightTiles3[0].transform.position);
                 tween.OnComplete(() => DoCascade(beltOntoBoardTile3, cascadingRightTiles3, 0));
             }
+
+            if (triggerCascade3Rejection)
+            {
+                triggerCascade3Rejection = false;
+
+                beltOntoBoardTile3.DoRejectFromBoard(
+                    cascadingRightTiles3[0].transform.position,
+                    beltOntoBoardTile3.transform.position);
+                foreach (var tile in cascadingRightTiles3)
+                {
+                    tile.DoRejectOnBoard();
+                }
+            }
+            
             if (triggerCascade4)
             {
                 triggerCascade4 = false;
