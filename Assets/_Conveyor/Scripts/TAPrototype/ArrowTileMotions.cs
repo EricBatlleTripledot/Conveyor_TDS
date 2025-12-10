@@ -18,16 +18,30 @@ namespace _2025.ColourBlockArrowProto.Scripts
     {
         public Animation animator;
 
-        [Header("From Stack onto Conveyor Animation")]
+        [Header("From Stack onto Belt Animation")]
         public float fromStackToBeltDuration = 1;
         public AnimationCurve fromStackToBeltMoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         public string fromStackToBeltClipName;
         
-        [Header("From Conveyor onto the Board Animation")]
+        [Header("From Belt onto the Board Animation")]
         public float fromBeltToBoardDuration = 1;
         public AnimationCurve fromBeltToBoardMoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         public string fromBeltToBoardClipName;
+        
+        [Header("From Belt but Rejected from Board Animation")]
+        // one animation across both tweens
+        public float fromBeltToRejectDuration = 1;
+        public float fromRejectToBeltDuration = 0.5f;
+        public AnimationCurve fromBeltToRejectMoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        public AnimationCurve fromRejectToBeltMoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+        public string fromBeltToRejectClipName;
 
+        [Header("Reject on Board")]
+        public float rejectOnBoardDelay = 0.28f;
+        public float rejectOnBoardDuration = 0.5f;
+        public float rejectOnBoardStrength = 1f;
+        public int rejectOnBoardVibrato = 10;
+        
         [Header("Cascade Animation")]
         // treated as an array of options to play through and repeat the last one until done,
         // if the cascade ends before this array is done, we always play the finish motion instead
@@ -55,6 +69,24 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 animator.Play(fromBeltToBoardClipName);
 
             return tween;
+        }
+
+        public Sequence DoRejectFromBoard(Vector3 point, Vector3 returnPoint)
+        {
+            var sequence = DOTween.Sequence();
+            sequence.Append(transform.DOMove(point, fromBeltToRejectDuration).SetEase(fromBeltToRejectMoveCurve));
+            sequence.Append(transform.DOMove(returnPoint, fromRejectToBeltDuration).SetEase(fromRejectToBeltMoveCurve));
+            
+            if (!string.IsNullOrEmpty(fromBeltToRejectClipName))
+                animator.Play(fromBeltToRejectClipName);
+
+            return sequence;
+        }
+
+        public Tween DoRejectOnBoard()
+        {
+            return transform.DOShakePosition(rejectOnBoardDuration, rejectOnBoardStrength, rejectOnBoardVibrato)
+                .SetDelay(rejectOnBoardDelay);
         }
         
         public Tween DoCascade(Vector3 point, int cascadeIndex, bool isFinal)
