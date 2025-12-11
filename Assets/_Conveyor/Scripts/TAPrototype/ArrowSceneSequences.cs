@@ -61,6 +61,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 beltOntoBoardTile.gameObject.SetActive(false);
                 tween.OnComplete(() =>
                 {
+                    stackOntoBeltTile.transform.parent = ontoStackPoint;
                     var anim = stackOntoBeltTile.GetComponent<Animation>();
                     anim.PlayQueued(motionName);
                     StartCoroutine(WaitForAnimation(anim, () =>
