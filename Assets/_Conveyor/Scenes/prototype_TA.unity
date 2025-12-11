@@ -432,10 +432,10 @@ MonoBehaviour:
   furnace: {fileID: 1423449600}
   stack: {fileID: 1131086874}
   materialsToSpawn:
-  - {fileID: 2100000, guid: 6cb07021c2cb840dd82a49e0a70079b3, type: 2}
-  - {fileID: 2100000, guid: bd0425e8c362d4a4db39a4ee3760679b, type: 2}
-  - {fileID: 2100000, guid: 06f931aee9fd642068908b1b8c2cb2cb, type: 2}
-  - {fileID: 2100000, guid: 6d4e0433fa9e4403ab71dde6deb3f780, type: 2}
+  - {fileID: 2100000, guid: 2c2cc27f0af0946939c280a416a5a96f, type: 2}
+  - {fileID: 2100000, guid: e133772490eec4e5cb0db6ea8b32e5b3, type: 2}
+  - {fileID: 2100000, guid: 782b6ee283fcd4baeb86597b85906fbe, type: 2}
+  - {fileID: 2100000, guid: 322e2cce23f274ee5b1eee5dc2a29a11, type: 2}
   triggerNewTile: 0
 --- !u!1 &130056371
 GameObject:
@@ -18962,7 +18962,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1715432847
 Transform:
   m_ObjectHideFlags: 0
