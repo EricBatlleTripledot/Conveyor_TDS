@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -48,7 +49,11 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public TileMotionConfig[] cascadeMotions;
         public TileMotionConfig finalCascadeMotion;
 
+        [Header("Cascade Pre-empt Animation")]
+        public float preEmptDelayPerIndex = 0.05f;
+        public string preEmptClipName;
 
+        
         public Tween DoMoveOntoBelt(Vector3 point)
         {
             var tween = transform.DOMove(point, fromStackToBeltDuration)
@@ -103,6 +108,21 @@ namespace _2025.ColourBlockArrowProto.Scripts
             }
 
             return tween;
+        }
+
+        public void DoPreEmptCascade(int cascadeIndex)
+        {
+            StartCoroutine(DelayBeforeAnimation( preEmptClipName, preEmptDelayPerIndex * cascadeIndex));
+        }
+
+        private IEnumerator DelayBeforeAnimation(string clip, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            
+            if (!string.IsNullOrEmpty(clip))
+            {
+                animator.Play(clip);
+            }
         }
     }
 }
