@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace _2025.ColourBlockArrowProto.Scripts
@@ -37,7 +38,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public GameObject vfxOnTileCascadeLanding;
         public GameObject vfxOnTileCascadeFastLanding;
         public int thresholdForFasterVFX = 2;
-        
+        public GameObject vfxOnTileFinish;
+
         [Header("Controls")]
         public bool triggerStack1;
         public bool resetStack1;
@@ -137,7 +139,10 @@ namespace _2025.ColourBlockArrowProto.Scripts
             initiator.gameObject.SetActive(false);
 
             if (cascade >= tiles.Length)
+            {
+                Instantiate(vfxOnTileFinish, initiator.transform.position, quaternion.identity);
                 return;
+            }
 
             // for the final tile in the cascade, it has it's own anim + VFX, so don't spawn a landing VFX
             var vfxPrefab = cascade >= thresholdForFasterVFX ? vfxOnTileCascadeFastLanding : vfxOnTileCascadeLanding; 
