@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using DG.Tweening;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace _2025.ColourBlockArrowProto.Scripts
@@ -37,7 +38,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public GameObject vfxOnTileCascadeLanding;
         public GameObject vfxOnTileCascadeFastLanding;
         public int thresholdForFasterVFX = 2;
-        
+        public GameObject vfxOnTileFinish;
+
         [Header("Controls")]
         public bool triggerStack1;
         public bool resetStack1;
@@ -85,6 +87,11 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 var tween = beltOntoBoardTile.DoMoveOntoBoard(cascadingRightTiles[0].transform.position);
                 tween.OnComplete(() => DoCascade(beltOntoBoardTile, cascadingRightTiles, 0));
+                
+                for (int i = 0; i < cascadingRightTiles.Length; i++)
+                {
+                    cascadingRightTiles[i].DoPreEmptCascade(i);
+                }
             }
             if (triggerCascade2)
             {
@@ -92,6 +99,11 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 var tween = beltOntoBoardTile2.DoMoveOntoBoard(cascadingRightTiles2[0].transform.position);
                 tween.OnComplete(() => DoCascade(beltOntoBoardTile2, cascadingRightTiles2, 0));
+                
+                for (int i = 0; i < cascadingRightTiles2.Length; i++)
+                {
+                    cascadingRightTiles2[i].DoPreEmptCascade(i);
+                }
             }
             if (triggerCascade3)
             {
@@ -99,6 +111,11 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 var tween = beltOntoBoardTile3.DoMoveOntoBoard(cascadingRightTiles3[0].transform.position);
                 tween.OnComplete(() => DoCascade(beltOntoBoardTile3, cascadingRightTiles3, 0));
+
+                for (int i = 0; i < cascadingRightTiles3.Length; i++)
+                {
+                    cascadingRightTiles3[i].DoPreEmptCascade(i);
+                }
             }
 
             if (triggerCascade3Rejection)
@@ -120,6 +137,11 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 var tween = beltOntoBoardTile4.DoMoveOntoBoard(cascadingRightTiles4[0].transform.position);
                 tween.OnComplete(() => DoCascade(beltOntoBoardTile4, cascadingRightTiles4, 0));
+                
+                for (int i = 0; i < cascadingRightTiles4.Length; i++)
+                {
+                    cascadingRightTiles4[i].DoPreEmptCascade(i);
+                }
             }
         }
 
@@ -137,7 +159,10 @@ namespace _2025.ColourBlockArrowProto.Scripts
             initiator.gameObject.SetActive(false);
 
             if (cascade >= tiles.Length)
+            {
+                Instantiate(vfxOnTileFinish, initiator.transform.position, quaternion.identity);
                 return;
+            }
 
             // for the final tile in the cascade, it has it's own anim + VFX, so don't spawn a landing VFX
             var vfxPrefab = cascade >= thresholdForFasterVFX ? vfxOnTileCascadeFastLanding : vfxOnTileCascadeLanding; 

@@ -5308,6 +5308,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     clipName: ArrowTile_Move_CascadeFinish
+  preEmptDelayPerIndex: 0.05
+  preEmptClipName: ArrowTile_PreEmpt_Cascade
 --- !u!111 &7756074481308706194
 Animation:
   m_ObjectHideFlags: 0
@@ -5328,6 +5330,7 @@ Animation:
   - {fileID: 7400000, guid: 144ef31773d8c4a1383ef9b5073f971e, type: 2}
   - {fileID: 7400000, guid: 43d77e73a6a014762a54830050e57383, type: 2}
   - {fileID: 7400000, guid: eca48241fddbd4e679197a19348a6d1b, type: 2}
+  - {fileID: 7400000, guid: 652b4645a495049c9ae8dbd553a90b7b, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -34852,5 +34855,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 0.25}
+  m_Size: {x: 1, y: 0.25, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
