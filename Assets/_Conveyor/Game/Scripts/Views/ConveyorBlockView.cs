@@ -67,5 +67,10 @@ namespace Game
 			propertyBlock.SetColor("_Color", color);
 			meshRenderer.SetPropertyBlock(propertyBlock);
 		}
+
+		public void DisableSplineMovement()
+		{
+			splineAnimate.Pause();
+		}
 	}
 }

@@ -128,14 +128,17 @@ namespace Game
             RemoveGridBlocks(chain);
 
             PreEmptCascade(chain);
+
+            var beltPoint = conveyorBlockView.transform.position;
             
             await RemoveConveyorBlock(conveyorBlockView, chain.Blocks[0]);
-            await RemoveGridBlocksView(chain);
+            await RemoveGridBlocksView(beltPoint, chain);
         }
 
         private async Task RemoveConveyorBlock(ConveyorBlockView conveyorBlockView, ColorBlock firstBlockInChain)
         {
             conveyorBlockView.GridBlockDetected -= CheckBlockViewMatch;
+            conveyorBlockView.DisableSplineMovement();
 
             var firstChainView = gameGridView.GetViewForBlock(firstBlockInChain);
             var firstChainPos = firstChainView.transform.position;
@@ -167,8 +170,9 @@ namespace Game
             }
         }
         
-        private async Task RemoveGridBlocksView(ColorBlocksChain chain)
+        private async Task RemoveGridBlocksView(Vector3 beltInitialPoint, ColorBlocksChain chain)
         {
+            Vector3 lastViewPosition = beltInitialPoint;
             var count = chain.Blocks.Count;
             for (int i = 0; i < count; i++)
             {
@@ -184,14 +188,15 @@ namespace Game
                 else
                 {
                     var pos = view.transform.position;
-                    var previousView = gameGridView.GetViewForBlock(chain.Blocks[i - 2]);
-                    var dir = (pos - previousView.transform.position).normalized;
+                    var dir = (pos - lastViewPosition).normalized;
                     
                     nextPos = pos + dir * 0.5f;
                 }
 
                 var isFinalInCascade = i + 1 == count;
                 var tween = view.TileMotions.DoCascade(nextPos, i, isFinalInCascade);
+
+                lastViewPosition = view.transform.position;
 
                 await tween.AsyncWaitForCompletion();
                 
