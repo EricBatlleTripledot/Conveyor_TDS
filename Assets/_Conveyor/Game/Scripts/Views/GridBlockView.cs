@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace Game
 {
-	[RequireComponent(typeof(MeshRenderer))]
 	public class GridBlockView : MonoBehaviour
 	{
 		[SerializeField]
@@ -29,7 +28,7 @@ namespace Game
 		private void UpdateView(ColorBlock colorBlock)
 		{
 			var propertyBlock = new MaterialPropertyBlock();
-			propertyBlock.SetColor("_BaseColor", colorBlock.Color);
+			propertyBlock.SetColor("_Color", colorBlock.Color);
 			meshRenderer.SetPropertyBlock(propertyBlock);
 			text.text = this.colorBlock.Direction.ToSymbolString();
 		}

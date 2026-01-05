@@ -6,7 +6,6 @@ namespace Game
 {
 	[RequireComponent(typeof(AlignedObjectRaycaster))]
 	[RequireComponent(typeof(SplineAnimate))]
-	[RequireComponent(typeof(MeshRenderer))]
 	public class ConveyorBlockView : MonoBehaviour
 	{
 		public event Action<ConveyorBlockView, GridBlockView> GridBlockDetected;
@@ -61,7 +60,7 @@ namespace Game
 		private void SetColor(Color color)
 		{
 			var propertyBlock = new MaterialPropertyBlock();
-			propertyBlock.SetColor("_BaseColor", color);
+			propertyBlock.SetColor("_Color", color);
 			meshRenderer.SetPropertyBlock(propertyBlock);
 		}
 	}
