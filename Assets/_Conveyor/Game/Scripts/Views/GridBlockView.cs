@@ -15,6 +15,7 @@ namespace Game
 		private ArrowTileMotions tileMotions;
 
 		public ColorBlock ColorBlock => colorBlock;
+		public ArrowTileMotions TileMotions => tileMotions;
 
 		public void Initialize(ColorBlock colorBlock)
 		{

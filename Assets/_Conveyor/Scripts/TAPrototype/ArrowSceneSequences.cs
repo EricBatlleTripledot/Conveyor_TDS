@@ -177,7 +177,6 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 var pos = initiator.transform.position;
                 var dir = (pos - tiles[cascade - 2].transform.position).normalized;
                 nextPos = pos + dir * 0.5f;
-
             }
 
             var tween = tiles[cascade].DoCascade(nextPos, cascade, cascade + 1 == tiles.Length);

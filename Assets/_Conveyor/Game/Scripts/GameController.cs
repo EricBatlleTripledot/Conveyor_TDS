@@ -122,17 +122,28 @@ namespace Game
             OnConveyorBlockMatch(conveyorBlockView, gridBlockView.ColorBlock);
         }
 
-        private void OnConveyorBlockMatch(ConveyorBlockView conveyorBlockView, ColorBlock colorBlock)
+        private async Task OnConveyorBlockMatch(ConveyorBlockView conveyorBlockView, ColorBlock colorBlock)
         {
             var chain = level.Grid.GetBlockChain(colorBlock);
             RemoveGridBlocks(chain);
-            RemoveConveyorBlock(conveyorBlockView);
-            RemoveGridBlocksView(chain);
+
+            PreEmptCascade(chain);
+            
+            await RemoveConveyorBlock(conveyorBlockView, chain.Blocks[0]);
+            await RemoveGridBlocksView(chain);
         }
 
-        private void RemoveConveyorBlock(ConveyorBlockView conveyorBlockView)
+        private async Task RemoveConveyorBlock(ConveyorBlockView conveyorBlockView, ColorBlock firstBlockInChain)
         {
             conveyorBlockView.GridBlockDetected -= CheckBlockViewMatch;
+
+            var firstChainView = gameGridView.GetViewForBlock(firstBlockInChain);
+            var firstChainPos = firstChainView.transform.position;
+
+            var tween = conveyorBlockView.TileMotions.DoMoveOntoBoard(firstChainPos);
+
+            await tween.AsyncWaitForCompletion();
+            
             conveyorBlockView.Destroy();
         }
 
@@ -144,12 +155,53 @@ namespace Game
             }
         }
 
-        private async Task RemoveGridBlocksView(ColorBlocksChain chain)
+        private void PreEmptCascade(ColorBlocksChain chain)
         {
+            var i = 0;
+
             foreach (var colorBlock in chain)
             {
-                gameGridView.DestroyGridBlockView(colorBlock);
-                await Task.Delay(500);
+                var view = gameGridView.GetViewForBlock(colorBlock);
+                view.TileMotions.DoPreEmptCascade(i);
+                i++;
+            }
+        }
+        
+        private async Task RemoveGridBlocksView(ColorBlocksChain chain)
+        {
+            var count = chain.Blocks.Count;
+            for (int i = 0; i < count; i++)
+            {
+                var block = chain.Blocks[i];
+                var view = gameGridView.GetViewForBlock(block);
+                
+                Vector3 nextPos;
+                if (i + 1 < count)
+                {
+                    var nextView = gameGridView.GetViewForBlock(chain.Blocks[i + 1]);
+                    nextPos = nextView.transform.position;
+                }
+                else
+                {
+                    var pos = view.transform.position;
+                    var previousView = gameGridView.GetViewForBlock(chain.Blocks[i - 2]);
+                    var dir = (pos - previousView.transform.position).normalized;
+                    
+                    nextPos = pos + dir * 0.5f;
+                }
+
+                var isFinalInCascade = i + 1 == count;
+                var tween = view.TileMotions.DoCascade(nextPos, i, isFinalInCascade);
+
+                await tween.AsyncWaitForCompletion();
+                
+                // todo: instantiate vfx at position of blockView
+                //if (cascade >= tiles.Length)
+                //  Instantiate(vfxOnTileFinish, initiator.transform.position, Quaternion.identity);
+                //else
+                //  var vfxPrefab = cascade >= thresholdForFasterVFX ? vfxOnTileCascadeFastLanding : vfxOnTileCascadeLanding; 
+
+                gameGridView.DestroyGridBlockView(block);
             }
         }
     }

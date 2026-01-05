@@ -23,6 +23,7 @@ namespace Game
 		private ArrowTileMotions tileMotions;
 
 		public ConveyorBlock ConveyorBlock => conveyorBlock;
+		public ArrowTileMotions TileMotions => tileMotions;
 
 		public void Initialize(ConveyorBlock conveyorBlock, SplineContainer splineContainer)
 		{
