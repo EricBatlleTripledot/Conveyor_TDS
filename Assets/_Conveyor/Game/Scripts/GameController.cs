@@ -155,6 +155,9 @@ namespace Game
 
             await tween.AsyncWaitForCompletion();
             
+            // technically this is the first block in the cascade
+            vfxSpawner.SpawnCascadeLanding(conveyorBlockView.transform.position, 0);
+            
             conveyorBlockView.Destroy();
         }
 
@@ -187,6 +190,7 @@ namespace Game
                 var block = chain.Blocks[i];
                 var view = gameGridView.GetViewForBlock(block);
                 
+                // todo: define next position as block pos + the direction of the block
                 Vector3 nextPos;
                 if (i + 1 < count)
                 {
@@ -208,12 +212,11 @@ namespace Game
 
                 await tween.AsyncWaitForCompletion();
                 
-                // todo: instantiate vfx at position of blockView
-                //if (cascade >= tiles.Length)
-                //  Instantiate(vfxOnTileFinish, initiator.transform.position, Quaternion.identity);
-                //else
-                //  var vfxPrefab = cascade >= thresholdForFasterVFX ? vfxOnTileCascadeFastLanding : vfxOnTileCascadeLanding; 
-
+                if(i < count - 1)
+                    vfxSpawner.SpawnCascadeLanding(nextPos, i);
+                else
+                    vfxSpawner.SpawnTileFinish(nextPos);
+                
                 gameGridView.DestroyGridBlockView(block);
             }
         }
