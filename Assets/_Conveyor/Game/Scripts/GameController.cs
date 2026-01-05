@@ -124,10 +124,49 @@ namespace Game
             var canMatch = blockMatchService.CanMatch(conveyorBlockView.ConveyorBlock, gridBlockView.ColorBlock, level.Grid);
             if (!canMatch)
             {
+                // todo: technically works but will repeatedly trigger,
+                // needs a cooldown of some kind
+                /*if (blockMatchService.HasSameColor(conveyorBlockView.ConveyorBlock, gridBlockView.ColorBlock))
+                {
+                    OnConveyorBlockReject(conveyorBlockView, gridBlockView.ColorBlock);
+                }*/
                 return;
             }
 
             OnConveyorBlockMatch(conveyorBlockView, gridBlockView.ColorBlock);
+        }
+
+        private async Task OnConveyorBlockReject(ConveyorBlockView conveyorBlockView, ColorBlock colorBlock)
+        {
+            var chain = level.Grid.GetBlockChain(colorBlock);
+            
+            foreach (var block in chain)
+            {
+                var view = gameGridView.GetViewForBlock(block);
+                view.TileMotions.DoRejectOnBoard();
+            }
+
+            await RejectConveyorBlock(conveyorBlockView, chain.Blocks[0]);
+        }
+
+        private async Task RejectConveyorBlock(ConveyorBlockView conveyorBlockView, ColorBlock firstBlockInChain)
+        {
+            conveyorBlockView.ToggleSplineMovement(false);
+            conveyorBlockView.ToggleDetection(false);
+
+            var firstChainView = gameGridView.GetViewForBlock(firstBlockInChain);
+            var firstChainPos = firstChainView.transform.position;
+
+            var initPos = conveyorBlockView.transform.position;
+            
+            var sequence = conveyorBlockView.TileMotions.DoRejectFromBoard(
+                firstChainPos,
+                initPos);
+
+            await sequence.AsyncWaitForCompletion();
+            
+            conveyorBlockView.ToggleSplineMovement(true);
+            conveyorBlockView.ToggleDetection(true);
         }
 
         private async Task OnConveyorBlockMatch(ConveyorBlockView conveyorBlockView, ColorBlock colorBlock)
@@ -146,7 +185,7 @@ namespace Game
         private async Task RemoveConveyorBlock(ConveyorBlockView conveyorBlockView, ColorBlock firstBlockInChain)
         {
             conveyorBlockView.GridBlockDetected -= CheckBlockViewMatch;
-            conveyorBlockView.DisableSplineMovement();
+            conveyorBlockView.ToggleSplineMovement(false);
 
             var firstChainView = gameGridView.GetViewForBlock(firstBlockInChain);
             var firstChainPos = firstChainView.transform.position;

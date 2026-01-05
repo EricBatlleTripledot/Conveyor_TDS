@@ -68,9 +68,21 @@ namespace Game
 			meshRenderer.SetPropertyBlock(propertyBlock);
 		}
 
-		public void DisableSplineMovement()
+		public void ToggleSplineMovement(bool value)
 		{
-			splineAnimate.Pause();
+			if (value)
+			{
+				splineAnimate.Play();
+			}
+			else
+			{
+				splineAnimate.Pause();
+			}
+		}
+
+		public void ToggleDetection(bool value)
+		{
+			alignedObjectRaycaster.EnableRaycasting = value;
 		}
 	}
 }
