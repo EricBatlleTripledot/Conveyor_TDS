@@ -73,6 +73,7 @@ MonoBehaviour:
     color: {r: 0, g: 0, b: 0, a: 0}
     direction: 0
   meshRenderer: {fileID: 7238252238584497798}
+  tileMotions: {fileID: 1947578221895688035}
 --- !u!114 &1947578221895688035
 MonoBehaviour:
   m_ObjectHideFlags: 0

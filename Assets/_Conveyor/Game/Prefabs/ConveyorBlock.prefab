@@ -75,6 +75,7 @@ MonoBehaviour:
   alignedObjectRaycaster: {fileID: 2998505270170761108}
   splineAnimate: {fileID: 1938092185555450406}
   meshRenderer: {fileID: 5449055159121653392}
+  tileMotions: {fileID: 6451605777008959950}
 --- !u!114 &2998505270170761108
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using DG.Tweening;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace _2025.ColourBlockArrowProto.Scripts
@@ -160,7 +159,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
             if (cascade >= tiles.Length)
             {
-                Instantiate(vfxOnTileFinish, initiator.transform.position, quaternion.identity);
+                Instantiate(vfxOnTileFinish, initiator.transform.position, Quaternion.identity);
                 return;
             }
 

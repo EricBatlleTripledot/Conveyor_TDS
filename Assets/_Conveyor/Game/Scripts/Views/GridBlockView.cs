@@ -1,4 +1,5 @@
 ﻿using System;
+using _2025.ColourBlockArrowProto.Scripts;
 using TMPro;
 using UnityEngine;
 
@@ -10,6 +11,8 @@ namespace Game
 		private ColorBlock colorBlock;
 		[SerializeField]
 		private MeshRenderer meshRenderer;
+		[SerializeField]
+		private ArrowTileMotions tileMotions;
 
 		public ColorBlock ColorBlock => colorBlock;
 
