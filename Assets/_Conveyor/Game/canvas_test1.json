@@ -1,0 +1,162 @@
+{
+    "version": 1,
+    "name": "canvas_test1",
+    "width": 5,
+    "height": 5,
+    "blocks": [
+        {
+            "x": 0,
+            "y": 0,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":4}"
+        },
+        {
+            "x": 1,
+            "y": 0,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":4}"
+        },
+        {
+            "x": 2,
+            "y": 0,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":4}"
+        },
+        {
+            "x": 3,
+            "y": 0,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 0,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 1,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":4}"
+        },
+        {
+            "x": 1,
+            "y": 1,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":4}"
+        },
+        {
+            "x": 2,
+            "y": 1,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":4}"
+        },
+        {
+            "x": 3,
+            "y": 1,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":4}"
+        },
+        {
+            "x": 4,
+            "y": 1,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":4}"
+        },
+        {
+            "x": 0,
+            "y": 2,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":2}"
+        },
+        {
+            "x": 1,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 2,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":1}"
+        },
+        {
+            "x": 3,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 3,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":2}"
+        },
+        {
+            "x": 1,
+            "y": 3,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":1.0,\"b\":0.0,\"a\":1.0},\"direction\":1}"
+        },
+        {
+            "x": 2,
+            "y": 3,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":1}"
+        },
+        {
+            "x": 3,
+            "y": 3,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":1.0,\"b\":0.0,\"a\":1.0},\"direction\":3}"
+        },
+        {
+            "x": 4,
+            "y": 3,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":1.0,\"b\":0.0,\"a\":1.0},\"direction\":3}"
+        },
+        {
+            "x": 0,
+            "y": 4,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":2}"
+        },
+        {
+            "x": 1,
+            "y": 4,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":1.0,\"b\":0.0,\"a\":1.0},\"direction\":1}"
+        },
+        {
+            "x": 2,
+            "y": 4,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":1}"
+        },
+        {
+            "x": 3,
+            "y": 4,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 4,
+            "type": "Empty",
+            "payload": ""
+        }
+    ],
+    "hand": {
+        "initialCustomHand": [],
+        "colorWeights": []
+    }
+}
