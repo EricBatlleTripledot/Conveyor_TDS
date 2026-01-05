@@ -5006,6 +5006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 7756074481308706194}
+  animationSettings: {fileID: 11400000, guid: c9686e11ef86843d5a88d73f48f5ea94, type: 2}
   fromStackToBeltDuration: 0.25
   fromStackToBeltMoveCurve:
     serializedVersion: 2
