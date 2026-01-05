@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace Game
@@ -7,8 +8,6 @@ namespace Game
 	{
 		[SerializeField]
 		private ColorBlock colorBlock;
-		[SerializeField]
-		private TextMeshPro text;
 		[SerializeField]
 		private MeshRenderer meshRenderer;
 
@@ -30,7 +29,33 @@ namespace Game
 			var propertyBlock = new MaterialPropertyBlock();
 			propertyBlock.SetColor("_Color", colorBlock.Color);
 			meshRenderer.SetPropertyBlock(propertyBlock);
-			text.text = this.colorBlock.Direction.ToSymbolString();
+			
+			UpdateRotationForDirection(colorBlock.Direction);
+		}
+
+		private void UpdateRotationForDirection(BlockDirection blockDirection)
+		{
+			switch (blockDirection)
+			{
+				case BlockDirection.None:
+				case BlockDirection.Right:
+					// 0Y
+					break;
+				case BlockDirection.Up:
+					// 270Y
+					transform.localEulerAngles = new Vector3(0, 270f, 0);
+					break;
+				case BlockDirection.Down:
+					// 90Y
+					transform.localEulerAngles = new Vector3(0, 90f, 0);
+					break;
+				case BlockDirection.Left:
+					// 180Y
+					transform.localEulerAngles = new Vector3(0, 180f, 0);
+					break;
+				default:
+					throw new ArgumentOutOfRangeException(nameof(blockDirection), blockDirection, null);
+			}
 		}
 	}
 }
