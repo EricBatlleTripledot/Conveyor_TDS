@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using _2025.ColourBlockArrowProto.Scripts;
+using _Conveyor.Scripts.Gameplay.VFX;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Splines;
@@ -22,9 +23,11 @@ namespace Game
         [SerializeField]
         private SplineContainer splineContainer;
 
-        [Header("Animation")]
+        [Header("Animation/VFX")]
         [SerializeField]
         private ArrowTileAnimationSettings tileAnimationSettings;
+        [SerializeField]
+        private GameVFXSpawner vfxSpawner;
         
         [Header("DEBUG")]
         [SerializeField]
