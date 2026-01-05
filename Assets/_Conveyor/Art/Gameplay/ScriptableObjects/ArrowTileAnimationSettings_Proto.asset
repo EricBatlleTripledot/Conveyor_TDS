@@ -93,50 +93,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     clipName: ArrowTile_Move_OntoBoard
-  fromBeltToBoardDuration: 0.5
-  fromBeltToBoardMoveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 2.880937
-      outSlope: 2.880937
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.06579498
-    - serializedVersion: 3
-      time: 0.36
-      value: 0.60919493
-      inSlope: 0.51597834
-      outSlope: 0.51597834
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.3102526
-    - serializedVersion: 3
-      time: 0.6013428
-      value: 0.9573113
-      inSlope: 0.26680467
-      outSlope: 0.26680467
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.2594115
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  fromBeltToBoardClipName: ArrowTile_Move_OntoBoard
   fromBeltToRejectDuration: 0.28
   fromRejectToBeltDuration: 0.4
   fromBeltToRejectMoveCurve:
@@ -360,5 +316,6 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     clipName: ArrowTile_Move_CascadeFinish
+  finalCascadeJumpDistance: 0.75
   preEmptDelayPerIndex: 0.05
   preEmptClipName: ArrowTile_PreEmpt_Cascade

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using _2025.ColourBlockArrowProto.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Splines;
@@ -21,6 +22,10 @@ namespace Game
         [SerializeField]
         private SplineContainer splineContainer;
 
+        [Header("Animation")]
+        [SerializeField]
+        private ArrowTileAnimationSettings tileAnimationSettings;
+        
         [Header("DEBUG")]
         [SerializeField]
         private TextAsset serializedLevel;
@@ -190,7 +195,7 @@ namespace Game
                     var pos = view.transform.position;
                     var dir = (pos - lastViewPosition).normalized;
                     
-                    nextPos = pos + dir * 0.5f;
+                    nextPos = pos + dir * tileAnimationSettings.FinalCascadeJumpDistance;
                 }
 
                 var isFinalInCascade = i + 1 == count;

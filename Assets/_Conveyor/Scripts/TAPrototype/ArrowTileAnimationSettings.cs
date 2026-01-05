@@ -59,7 +59,10 @@ namespace _2025.ColourBlockArrowProto.Scripts
         private TileMotionConfig[] cascadeMotions;
         [SerializeField]
         private TileMotionConfig finalCascadeMotion;
-
+        [Space(10)]
+        [SerializeField]
+        private float finalCascadeJumpDistance = 0.5f;
+        
         [Header("Cascade Pre-empt Animation")]
         // for the chain of tiles that are about to be matched, do a small shudder
         // with a light delay down the chain
@@ -85,6 +88,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         public TileMotionConfig[] CascadeMotions => cascadeMotions;
         public TileMotionConfig FinalCascadeMotion => finalCascadeMotion;
+        public float FinalCascadeJumpDistance => finalCascadeJumpDistance;
 
         public float PreEmptDelayPerIndex => preEmptDelayPerIndex;
         public string PreEmptClipName => preEmptClipName;
