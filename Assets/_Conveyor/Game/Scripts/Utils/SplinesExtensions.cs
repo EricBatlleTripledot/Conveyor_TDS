@@ -16,12 +16,12 @@ namespace Game
 
             for (int i = 0; i <= attempts; i++)
             {
-                t = timeSlice * i;
-                var eval = spline.EvaluatePosition(t);
+                var eval = spline.EvaluatePosition(timeSlice * i);
                 var dist2 = math.distance(eval, point);
 
                 if (dist2 < dist)
                 {
+                    t = timeSlice * i;
                     nearest = eval;
                     dist = dist2;
                 }

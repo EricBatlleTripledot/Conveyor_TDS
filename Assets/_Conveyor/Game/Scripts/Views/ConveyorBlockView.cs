@@ -38,9 +38,10 @@ namespace Game
 			await TileMotions.DoMoveOntoBelt(point).AsyncWaitForCompletion();
 			// the animation of the launch lasts longer than the tween
 			await TileMotions.WaitForAnimation();
-			
-			splineAnimate.NormalizedTime = splineTime;
+
+			splineAnimate.StartOffset = splineTime;
 			splineAnimate.Play();
+
 			alignedObjectRaycaster.EnableRaycasting = true;
 		}
 
