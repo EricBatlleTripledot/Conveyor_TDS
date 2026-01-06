@@ -72,6 +72,7 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     direction: 0
+    LastRejectTime: 0
   meshRenderer: {fileID: 7238252238584497798}
   tileMotions: {fileID: 1947578221895688035}
 --- !u!114 &1947578221895688035
@@ -100,6 +101,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tile
       objectReference: {fileID: 0}
+    - target: {fileID: 3484204310395637046, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 0938fe90b9d9044879c503ecb78972c8, type: 2}
     - target: {fileID: 3609601680165265408, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
