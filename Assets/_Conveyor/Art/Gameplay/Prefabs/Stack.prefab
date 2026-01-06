@@ -158,6 +158,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  delayForLaunch: 0.65
   trigger: 0
   tilePrefab: {fileID: 1794890752437536232, guid: cb72f3804904a47d3babf36289b59b30, type: 3}
   tileMaterialToSpawn: {fileID: 2100000, guid: bd0425e8c362d4a4db39a4ee3760679b, type: 2}

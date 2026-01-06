@@ -36,7 +36,12 @@ namespace _2025.ColourBlockArrowProto.Scripts
         [SerializeField]
         private AnimationCurve rotationCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
+        [Header("Delay for Launching Tile")]
+        [SerializeField]
+        private float delayForLaunch = 0.25f;
+        
         private readonly List<Transform> currentStack = new();
+        private readonly List<Sequence> activeSequences = new();
         private int activeTweens;
         
         // todo: cleanup this + Update method
@@ -88,9 +93,27 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         public bool AnyTweensActive() => activeTweens > 0;
 
-        public void DoStackJump()
+        // Adds a delay for the jump to let a Launching ConveyorBlockView animate first,
+        // like a act-response thing
+        public void DoStackJumpWithDelay()
         {
+            DoStackJump(delayForLaunch);
+        }
+        
+        public void DoStackJump(float delay = 0)
+        {
+            if (currentStack.Count == 0)
+            {
+                return;
+            }
+            
             activeTweens = 0;
+
+            foreach (var sequence in activeSequences)
+            {
+                sequence.Kill();
+            }
+            activeSequences.Clear();
             
             var durationsCount = jumpDurationsPerStackedTile.Length;
             var distancesCount = jumpHeightsPerStackedTile.Length;
@@ -108,17 +131,22 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 randomRotation *= Quaternion.AngleAxis(Random.Range(-randomRotationOffset, randomRotationOffset), Vector3.forward);
                 randomRotation *= Quaternion.AngleAxis(Random.Range(-randomRotationOffset, randomRotationOffset), Vector3.right);
                 
-                stackTf.DOKill();
-                
                 stackTf.localPosition = rootLocalPoint;
-                stackTf.localRotation = randomRotation * stackTf.localRotation;
 
-                stackTf.DOLocalMove(jumpToLocalPoint, duration)
-                    .SetEase(jumpCurve)
-                    .OnComplete(() => activeTweens--);
-                stackTf.DORotateQuaternion(endRotation, duration)
-                    .SetEase(rotationCurve);
+                var sequence = DOTween.Sequence();
 
+                sequence.AppendInterval(delay);
+                sequence.AppendCallback(() =>
+                {
+                    stackTf.localRotation = randomRotation * stackTf.localRotation;
+                });
+                sequence.Append(stackTf.DOLocalMove(jumpToLocalPoint, duration)
+                    .SetEase(jumpCurve));
+                sequence.Join(stackTf.DORotateQuaternion(endRotation, duration)
+                    .SetEase(rotationCurve));
+                sequence.OnComplete(() => activeTweens--);
+
+                activeSequences.Add(sequence);
                 activeTweens++;
             }
         }

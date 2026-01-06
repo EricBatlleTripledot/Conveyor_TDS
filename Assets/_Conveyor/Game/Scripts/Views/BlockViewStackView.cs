@@ -64,7 +64,7 @@ namespace Game
                     stack.RemoveAt(0);
 
                     launchingView.Launch(conveyorBeltTargetPoint, conveyorBeltSplineTime);
-                    stackAnimator.DoStackJump();
+                    stackAnimator.DoStackJumpWithDelay();
 
                     ticker = launchInterval;
                 }
