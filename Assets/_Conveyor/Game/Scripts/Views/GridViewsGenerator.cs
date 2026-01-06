@@ -15,6 +15,9 @@ namespace Game
 		[SerializeField]
 		private Vector2 gridSpacing = Vector2.one;
 
+		// todo: temporary variable to help offset a level until a proper implementation is done - Canvas
+		public Vector2 offset;
+		
 		private List<GridBlockView> blockViews;
 
 		[ContextMenu("Generate Grid")]
@@ -54,7 +57,7 @@ namespace Game
 		{
 			var gridBlockView = Instantiate(gridBlockViewPrefab, gridTransform);
 			gridBlockView.gameObject.name = $"Cube_{colorBlock.Position.x}_{colorBlock.Position.y}";
-			gridBlockView.gameObject.transform.position = new Vector3(colorBlock.Position.x * gridSpacing.x, 0, colorBlock.Position.y * gridSpacing.y);
+			gridBlockView.gameObject.transform.position = new Vector3(colorBlock.Position.x * gridSpacing.x + offset.x, 0, colorBlock.Position.y * gridSpacing.y + offset.y);
 			gridBlockView.Initialize(colorBlock);
 			return gridBlockView;
 		}
