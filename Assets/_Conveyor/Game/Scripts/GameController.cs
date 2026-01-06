@@ -129,7 +129,7 @@ namespace Game
             var conveyorBlockView = conveyorBlockViewFactory.Create(new ConveyorBlock(color));
             conveyorBlockView.GridBlockDetected += CheckBlockViewMatch;
 
-            blockViewSpawnerView.SpawnAndLaunch(color, conveyorBlockView);
+            blockViewSpawnerView.AddBlockToSpawnQueue(color, conveyorBlockView);
         }
 
         private void CheckBlockViewMatch(ConveyorBlockView conveyorBlockView, GridBlockView gridBlockView)
