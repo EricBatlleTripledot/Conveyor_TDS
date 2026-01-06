@@ -27,6 +27,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 .SetEase(animationSettings.FromBeltToRejectMoveCurve));
             sequence.Append(transform.DOMove(returnPoint, animationSettings.FromRejectToBeltDuration)
                 .SetEase(animationSettings.FromRejectToBeltMoveCurve));
+            sequence.AppendInterval(animationSettings.PostRejectIdle);
             
             if (!string.IsNullOrEmpty(animationSettings.FromBeltToRejectClipName))
                 animator.Play(animationSettings.FromBeltToRejectClipName);

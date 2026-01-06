@@ -34,6 +34,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
         private float fromBeltToRejectDuration = 1;
         [SerializeField]
         private float fromRejectToBeltDuration = 0.5f;
+        [SerializeField]
+        private float postRejectIdle = 0.1f;
         // note that the total duration of this animation is fromBeltToRejectDuration + fromRejectToBeltDuration
         [SerializeField]
         private AnimationCurve fromBeltToRejectMoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -77,6 +79,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         public float FromBeltToRejectDuration => fromBeltToRejectDuration;
         public float FromRejectToBeltDuration => fromRejectToBeltDuration;
+        public float PostRejectIdle => postRejectIdle;
         public AnimationCurve FromBeltToRejectMoveCurve => fromBeltToRejectMoveCurve;
         public AnimationCurve FromRejectToBeltMoveCurve => fromRejectToBeltMoveCurve;
         public string FromBeltToRejectClipName => fromBeltToRejectClipName;

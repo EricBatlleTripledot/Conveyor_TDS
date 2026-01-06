@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using _2025.ColourBlockArrowProto.Scripts;
 using _Conveyor.Scripts.Gameplay.VFX;
@@ -28,6 +29,10 @@ namespace Game
         private ArrowTileAnimationSettings tileAnimationSettings;
         [SerializeField]
         private GameVFXSpawner vfxSpawner;
+        
+        // temporary variable, here to demo reject animation before a proper solution - Canvas
+        // note that as of typing, the reject animation is 0.68f long
+        public float delayBeforeNewReject = 1f;
         
         [Header("DEBUG")]
         [SerializeField]
@@ -124,24 +129,43 @@ namespace Game
             var canMatch = blockMatchService.CanMatch(conveyorBlockView.ConveyorBlock, gridBlockView.ColorBlock, level.Grid);
             if (!canMatch)
             {
-                // todo: technically works but will repeatedly trigger,
-                // needs a cooldown of some kind
-                /*if (blockMatchService.HasSameColor(conveyorBlockView.ConveyorBlock, gridBlockView.ColorBlock))
-                {
-                    OnConveyorBlockReject(conveyorBlockView, gridBlockView.ColorBlock);
-                }*/
+                CheckAndPerformRejectAnim(conveyorBlockView, gridBlockView);
                 return;
             }
 
             OnConveyorBlockMatch(conveyorBlockView, gridBlockView.ColorBlock);
         }
 
+        private void CheckAndPerformRejectAnim(ConveyorBlockView conveyorBlockView, GridBlockView gridBlockView)
+        {
+            if (!blockMatchService.HasSameColor(conveyorBlockView.ConveyorBlock, gridBlockView.ColorBlock))
+            {
+                return;
+            }
+            
+            var threshold = Time.timeSinceLevelLoad - delayBeforeNewReject;
+            if (gridBlockView.ColorBlock.LastRejectTime >= threshold)
+            {
+                return;
+            }
+            
+            OnConveyorBlockReject(conveyorBlockView, gridBlockView.ColorBlock);
+        }
+
         private async Task OnConveyorBlockReject(ConveyorBlockView conveyorBlockView, ColorBlock colorBlock)
         {
             var chain = level.Grid.GetBlockChain(colorBlock);
+
+            var threshold = Time.timeSinceLevelLoad - delayBeforeNewReject;
+            if (chain.Any(x => x.LastRejectTime >= threshold))
+            {
+                return;
+            }
             
             foreach (var block in chain)
             {
+                block.LastRejectTime = Time.timeSinceLevelLoad;
+                
                 var view = gameGridView.GetViewForBlock(block);
                 view.TileMotions.DoRejectOnBoard();
             }

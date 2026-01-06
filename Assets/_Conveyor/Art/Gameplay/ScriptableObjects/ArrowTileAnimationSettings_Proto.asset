@@ -95,6 +95,7 @@ MonoBehaviour:
     clipName: ArrowTile_Move_OntoBoard
   fromBeltToRejectDuration: 0.28
   fromRejectToBeltDuration: 0.4
+  postRejectIdle: 0.28
   fromBeltToRejectMoveCurve:
     serializedVersion: 2
     m_Curve:
