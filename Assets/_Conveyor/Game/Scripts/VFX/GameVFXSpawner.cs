@@ -11,13 +11,28 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         public void SpawnCascadeLanding(Vector3 point, int cascadeIndex)
         {
             var prefab = prefabsList.GetCascadeLandingVfx(cascadeIndex);
-            Instantiate(prefab, point, Quaternion.identity);
-            // todo: await vfx to finish then cleanup back into a pool
+            AwaitVfxAndReturn(Instantiate(prefab, point, Quaternion.identity));
         }
 
         public void SpawnTileFinish(Vector3 point)
         {
-            Instantiate(prefabsList.TileOnHide, point, Quaternion.identity);
+            AwaitVfxAndReturn(Instantiate(prefabsList.TileOnHide, point, Quaternion.identity));
+        }
+
+        void AwaitVfxAndReturn(GameObject clone)
+        {
+            if (clone.TryGetComponent<WaitForVfxFinish>(out var waitComponent))
+            {
+                waitComponent.ParticleSystemFinished += o =>
+                {
+                    // todo: pooling?
+                    Destroy(o.gameObject);
+                };
+            }
+            else
+            {
+                Debug.LogWarning($"GameVFXSpawner: spawned a VFX prefab without a WaitForVfxFinish component: '{clone.name}'", clone);
+            }
         }
     }
 }
