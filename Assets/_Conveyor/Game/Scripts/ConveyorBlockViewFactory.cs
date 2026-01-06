@@ -18,7 +18,7 @@ namespace Game
 		public ConveyorBlockView Create(ConveyorBlock conveyorBlock)
 		{
 			var conveyorBlockView = Object.Instantiate(conveyorBlockViewPrefab, splineContainer.transform);
-			conveyorBlockView.transform.localPosition = splineContainer.Spline.Knots.First().Position;
+			//conveyorBlockView.transform.localPosition = splineContainer.Spline.Knots.First().Position;
 			conveyorBlockView.Initialize(conveyorBlock, splineContainer);
 			return conveyorBlockView;
 		}

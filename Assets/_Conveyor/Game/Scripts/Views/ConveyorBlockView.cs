@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using _2025.ColourBlockArrowProto.Scripts;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -32,8 +33,11 @@ namespace Game
 			SetColor(conveyorBlock.Color);
 		}
 
-		public void Launch()
+		public async Task Launch(Vector3 point, float splineTime)
 		{
+			await TileMotions.DoMoveOntoBelt(point).AsyncWaitForCompletion();
+
+			splineAnimate.ElapsedTime = splineTime;
 			splineAnimate.Play();
 			alignedObjectRaycaster.EnableRaycasting = true;
 		}

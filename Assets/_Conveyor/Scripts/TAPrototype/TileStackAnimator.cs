@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -8,7 +9,6 @@ namespace _2025.ColourBlockArrowProto.Scripts
 {
     public class TileStackAnimator : MonoBehaviour
     {
-
         [Header("Stacking")]
         [SerializeField]
         private Transform stackContainer;
@@ -19,6 +19,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
         [SerializeField]
         private Vector3 spacingPerTile = new(0, 0.225f, 0);
 
+        public Vector3 StackTopPoint => stackOrigin.position;
+        
         [Header("Add-to-Stack Animation")]
         [SerializeField]
         private Vector3 jumpLocalDirection = Vector3.up;
@@ -41,6 +43,13 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public GameObject tilePrefab;
         public Material tileMaterialToSpawn;
 
+        private MaterialPropertyBlock propertyBlock;
+        
+        private void Awake()
+        {
+            propertyBlock = new MaterialPropertyBlock();
+        }
+        
         private void Update()
         {
             if (trigger)
@@ -54,6 +63,23 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 DoStackJump();
             }
         }
+        
+        /*public Task DoTileAnimation(Color color)
+        {
+            propertyBlock.SetColor("_Color", color);
+            tileClone.SetPropertyBlock(propertyBlock);
+            
+            animator.Play(actClipName);
+            onSpawnParticles.Play();
+                
+            animator.PlayQueued(idleClipName);
+            
+            // todo: replace this with a UniTask.Delay approach
+            var tcs = new TaskCompletionSource<bool>();
+            StartCoroutine(WaitForAnimation(() => tcs.TrySetResult(true)));
+            
+            return tcs.Task;
+        }*/
 
         private void RefreshStackList()
         {

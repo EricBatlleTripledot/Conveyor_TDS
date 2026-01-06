@@ -26,6 +26,8 @@ namespace Game
 
         [Header("Animation/VFX")]
         [SerializeField]
+        private BlockViewSpawnerView blockViewSpawnerView;
+        [SerializeField]
         private ArrowTileAnimationSettings tileAnimationSettings;
         [SerializeField]
         private GameVFXSpawner vfxSpawner;
@@ -57,6 +59,9 @@ namespace Game
             handService = new HandService(randomProvider);
             conveyorBlockViewFactory = new ConveyorBlockViewFactory(conveyorBlockViewPrefab, splineContainer);
 
+            var splineEval = splineContainer.Spline.GetNearestPointTo(blockViewSpawnerView.StackPoint, 20);
+            blockViewSpawnerView.Initialize(splineEval.Item1, splineEval.Item2);
+            
             handView.ColorSelected += OnHandColorSelected;
             
             if (serializedLevel == null)
@@ -123,7 +128,8 @@ namespace Game
         {
             var conveyorBlockView = conveyorBlockViewFactory.Create(new ConveyorBlock(color));
             conveyorBlockView.GridBlockDetected += CheckBlockViewMatch;
-            conveyorBlockView.Launch();
+
+            blockViewSpawnerView.SpawnAndLaunch(color, conveyorBlockView);
         }
 
         private void CheckBlockViewMatch(ConveyorBlockView conveyorBlockView, GridBlockView gridBlockView)
