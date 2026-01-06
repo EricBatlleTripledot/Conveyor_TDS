@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -66,6 +68,24 @@ namespace _2025.ColourBlockArrowProto.Scripts
             }
 
             return tween;
+        }
+
+        public Task WaitForAnimation()
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            StartCoroutine(WaitForAnimator(() => tcs.TrySetResult(true)));
+            
+            return tcs.Task;
+        }
+
+        private IEnumerator WaitForAnimator(Action onFinish)
+        {
+            while (animator.isPlaying)
+            {
+                yield return null;
+            }
+            
+            onFinish.Invoke();
         }
         
         private IEnumerator DelayBeforeAnimation(string clip, float delay)

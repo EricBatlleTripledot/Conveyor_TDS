@@ -36,8 +36,10 @@ namespace Game
 		public async Task Launch(Vector3 point, float splineTime)
 		{
 			await TileMotions.DoMoveOntoBelt(point).AsyncWaitForCompletion();
-
-			splineAnimate.ElapsedTime = splineTime;
+			// the animation of the launch lasts longer than the tween
+			await TileMotions.WaitForAnimation();
+			
+			splineAnimate.NormalizedTime = splineTime;
 			splineAnimate.Play();
 			alignedObjectRaycaster.EnableRaycasting = true;
 		}

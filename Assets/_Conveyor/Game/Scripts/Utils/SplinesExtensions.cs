@@ -7,7 +7,7 @@ namespace Game
     public static class SplinesExtensions
     {
         // Returns the nearest position, and the time eval on the spline
-        public static (Vector3, float) GetNearestPointTo(this Spline spline, float3 point, int attempts)
+        public static (Vector3, float) GetNearestPointTo(this SplineContainer spline, float3 point, int attempts)
         {
             var timeSlice = 1f / attempts;
             var nearest = spline.EvaluatePosition(0);
