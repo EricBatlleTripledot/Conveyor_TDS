@@ -36,21 +36,15 @@ namespace _2025.ColourBlockArrowProto.Scripts
         [SerializeField]
         private AnimationCurve rotationCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-        private List<Transform> currentStack = new();
+        private readonly List<Transform> currentStack = new();
         private int activeTweens;
         
+        // todo: cleanup this + Update method
         [Header("Temp: Spawning")]
         public bool trigger;
         public GameObject tilePrefab;
         public Material tileMaterialToSpawn;
 
-        private MaterialPropertyBlock propertyBlock;
-        
-        private void Awake()
-        {
-            propertyBlock = new MaterialPropertyBlock();
-        }
-        
         private void Update()
         {
             if (trigger)
@@ -66,27 +60,10 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 DoStackJump();
             }
         }
-        
-        /*public Task DoTileAnimation(Color color)
-        {
-            propertyBlock.SetColor("_Color", color);
-            tileClone.SetPropertyBlock(propertyBlock);
-            
-            animator.Play(actClipName);
-            onSpawnParticles.Play();
-                
-            animator.PlayQueued(idleClipName);
-            
-            // todo: replace this with a UniTask.Delay approach
-            var tcs = new TaskCompletionSource<bool>();
-            StartCoroutine(WaitForAnimation(() => tcs.TrySetResult(true)));
-            
-            return tcs.Task;
-        }*/
 
         public void AddToStack(Transform t)
         {
-            currentStack.Add(t);
+            currentStack.Insert(0, t);
             // atm this animator is written around localPositions, so change parent
             t.SetParent(stackContainer);
         }

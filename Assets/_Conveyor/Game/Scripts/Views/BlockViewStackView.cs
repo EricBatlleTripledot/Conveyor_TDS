@@ -58,6 +58,8 @@ namespace Game
                 if (stack.Count > 0 && !stackAnimator.AnyTweensActive())
                 {
                     var launchingView = stack[0];
+                    // todo: when removing this view from the stack, re-parent it to the GameGrid,
+                    // if that's what we want it to do - Canvas
                     stackAnimator.RemoveFromStack(launchingView.transform);
                     stack.RemoveAt(0);
 
