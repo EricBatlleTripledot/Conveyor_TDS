@@ -30,9 +30,11 @@ namespace Game
         [SerializeField]
         private GameVFXSpawner vfxSpawner;
         
-        // temporary variable, here to demo reject animation before a proper solution - Canvas
-        // note that as of typing, the reject animation is 0.68f long
-        public float delayBeforeNewReject = 1f;
+        // temporary implementation, here to demo reject animation before a proper solution - Canvas
+        // technically the desired check is that: reject once per chain, until the ConveyorBlockView changes rotation on the belt
+        public float delayBeforeNewReject = 0.5f;
+        private float RejectDelay => tileAnimationSettings.FullRejectDuration + delayBeforeNewReject;
+        private float RejectThreshold => Time.timeSinceLevelLoad - RejectDelay;
         
         [Header("DEBUG")]
         [SerializeField]
@@ -143,8 +145,7 @@ namespace Game
                 return;
             }
             
-            var threshold = Time.timeSinceLevelLoad - delayBeforeNewReject;
-            if (gridBlockView.ColorBlock.LastRejectTime >= threshold)
+            if (gridBlockView.ColorBlock.LastRejectTime >= RejectThreshold)
             {
                 return;
             }
@@ -156,7 +157,7 @@ namespace Game
         {
             var chain = level.Grid.GetBlockChain(colorBlock);
 
-            var threshold = Time.timeSinceLevelLoad - delayBeforeNewReject;
+            var threshold = RejectThreshold;
             if (chain.Any(x => x.LastRejectTime >= threshold))
             {
                 return;

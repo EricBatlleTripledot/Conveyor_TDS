@@ -84,6 +84,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public AnimationCurve FromRejectToBeltMoveCurve => fromRejectToBeltMoveCurve;
         public string FromBeltToRejectClipName => fromBeltToRejectClipName;
 
+        public float FullRejectDuration => fromBeltToRejectDuration + fromRejectToBeltDuration + postRejectIdle;
+        
         public float RejectOnBoardDelay => rejectOnBoardDelay;
         public float RejectOnBoardDuration => rejectOnBoardDuration;
         public float RejectOnBoardStrength => rejectOnBoardStrength;
