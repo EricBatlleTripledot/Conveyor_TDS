@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game
 {
@@ -12,7 +13,7 @@ namespace Game
 		[SerializeField]
 		private Transform gridTransform;
 		[SerializeField]
-		private int gridSpacing;
+		private Vector2 gridSpacing = Vector2.one;
 
 		private List<GridBlockView> blockViews;
 
@@ -25,7 +26,7 @@ namespace Game
 			foreach (var colorBlock in colorBlocksToCreate)
 			{
 				var gridBlockView = Instantiate(gridBlockViewPrefab, gridTransform);
-				gridBlockView.gameObject.transform.position += new Vector3(i * gridSpacing, 0, 0);
+				gridBlockView.gameObject.transform.position += new Vector3(i * gridSpacing.x, 0, 0);
 				gridBlockView.Initialize(colorBlock);
 				blockViews.Add(gridBlockView);
 				i++;
@@ -53,7 +54,7 @@ namespace Game
 		{
 			var gridBlockView = Instantiate(gridBlockViewPrefab, gridTransform);
 			gridBlockView.gameObject.name = $"Cube_{colorBlock.Position.x}_{colorBlock.Position.y}";
-			gridBlockView.gameObject.transform.position = new Vector3(colorBlock.Position.x * gridSpacing, 0, colorBlock.Position.y * gridSpacing);
+			gridBlockView.gameObject.transform.position = new Vector3(colorBlock.Position.x * gridSpacing.x, 0, colorBlock.Position.y * gridSpacing.y);
 			gridBlockView.Initialize(colorBlock);
 			return gridBlockView;
 		}

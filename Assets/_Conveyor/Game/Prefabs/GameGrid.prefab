@@ -62,4 +62,4 @@ MonoBehaviour:
   colorBlocksToCreate: []
   gridBlockViewPrefab: {fileID: 4715003326245283696, guid: 8e3b1e0aac5c5664c9c4472df1ac5c8b, type: 3}
   gridTransform: {fileID: 3245820446104880812}
-  gridSpacing: 2
+  gridSpacing: {x: 1.1, y: 1.25}
