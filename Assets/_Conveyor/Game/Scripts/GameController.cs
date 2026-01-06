@@ -4,6 +4,7 @@ using _2025.ColourBlockArrowProto.Scripts;
 using _Conveyor.Scripts.Gameplay.VFX;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
 namespace Game
@@ -23,10 +24,12 @@ namespace Game
         private ConveyorBlockView conveyorBlockViewPrefab;
         [SerializeField]
         private SplineContainer splineContainer;
-
+        
         [Header("Animation/VFX")]
         [SerializeField]
-        private BlockViewSpawnerView blockViewSpawnerView;
+        private BlockViewSpawnerView spawnerView;
+        [SerializeField]
+        private BlockViewStackView stackView;
         [SerializeField]
         private ArrowTileAnimationSettings tileAnimationSettings;
         [SerializeField]
@@ -59,8 +62,8 @@ namespace Game
             handService = new HandService(randomProvider);
             conveyorBlockViewFactory = new ConveyorBlockViewFactory(conveyorBlockViewPrefab, splineContainer);
 
-            var splineEval = splineContainer.GetNearestPointTo(blockViewSpawnerView.StackPoint, 30);
-            blockViewSpawnerView.Initialize(splineEval.Item1, splineEval.Item2);
+            var splineEval = splineContainer.GetNearestPointTo(stackView.StackPoint, 30);
+            stackView.Initialize(splineEval.Item1, splineEval.Item2);
             
             handView.ColorSelected += OnHandColorSelected;
             
@@ -129,7 +132,7 @@ namespace Game
             var conveyorBlockView = conveyorBlockViewFactory.Create(new ConveyorBlock(color));
             conveyorBlockView.GridBlockDetected += CheckBlockViewMatch;
 
-            blockViewSpawnerView.AddBlockToSpawnQueue(color, conveyorBlockView);
+            spawnerView.AddBlockToSpawnQueue(color, conveyorBlockView);
         }
 
         private void CheckBlockViewMatch(ConveyorBlockView conveyorBlockView, GridBlockView gridBlockView)

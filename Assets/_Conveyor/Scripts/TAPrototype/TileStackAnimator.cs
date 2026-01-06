@@ -37,6 +37,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
         private AnimationCurve rotationCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
         private List<Transform> currentStack = new();
+        private int activeTweens;
         
         [Header("Temp: Spawning")]
         public bool trigger;
@@ -58,8 +59,10 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
                 var clone = Instantiate(tilePrefab, spawnOrigin.position, spawnOrigin.rotation, stackContainer);
                 clone.GetComponentInChildren<MeshRenderer>().material = new Material(tileMaterialToSpawn);
-
-                RefreshStackList();
+                
+                AddToStack(clone.transform);
+                
+                //RefreshStackList();
                 DoStackJump();
             }
         }
@@ -81,7 +84,20 @@ namespace _2025.ColourBlockArrowProto.Scripts
             return tcs.Task;
         }*/
 
-        private void RefreshStackList()
+        public void AddToStack(Transform t)
+        {
+            currentStack.Add(t);
+            // atm this animator is written around localPositions, so change parent
+            t.SetParent(stackContainer);
+        }
+
+        public void RemoveFromStack(Transform t)
+        {
+            t.SetParent(null);
+            currentStack.Remove(t);
+        }
+
+        /*private void RefreshStackList()
         {
             currentStack.Clear();
             for (int i = 0; i < stackContainer.childCount; i++)
@@ -91,10 +107,14 @@ namespace _2025.ColourBlockArrowProto.Scripts
             // reverse the list so that we have the latest tile added first,
             // as that needs to be at the bottom of the visual stack
             currentStack.Reverse();
-        }
+        }*/
 
-        private void DoStackJump()
+        public bool AnyTweensActive() => activeTweens > 0;
+
+        public void DoStackJump()
         {
+            activeTweens = 0;
+            
             var durationsCount = jumpDurationsPerStackedTile.Length;
             var distancesCount = jumpHeightsPerStackedTile.Length;
             var endRotation = stackOrigin.rotation;
@@ -115,11 +135,14 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 stackTf.localPosition = rootLocalPoint;
                 stackTf.localRotation = randomRotation * stackTf.localRotation;
-                
+
                 stackTf.DOLocalMove(jumpToLocalPoint, duration)
-                    .SetEase(jumpCurve);
+                    .SetEase(jumpCurve)
+                    .OnComplete(() => activeTweens--);
                 stackTf.DORotateQuaternion(endRotation, duration)
                     .SetEase(rotationCurve);
+
+                activeTweens++;
             }
         }
     }
