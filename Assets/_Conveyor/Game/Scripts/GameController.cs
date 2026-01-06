@@ -59,7 +59,7 @@ namespace Game
             handService = new HandService(randomProvider);
             conveyorBlockViewFactory = new ConveyorBlockViewFactory(conveyorBlockViewPrefab, splineContainer);
 
-            var splineEval = splineContainer.GetNearestPointTo(blockViewSpawnerView.StackPoint, 20);
+            var splineEval = splineContainer.GetNearestPointTo(blockViewSpawnerView.StackPoint, 30);
             blockViewSpawnerView.Initialize(splineEval.Item1, splineEval.Item2);
             
             handView.ColorSelected += OnHandColorSelected;

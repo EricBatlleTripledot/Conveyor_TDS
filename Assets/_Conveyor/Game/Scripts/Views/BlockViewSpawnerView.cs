@@ -25,6 +25,7 @@ namespace Game
         {
             if (Application.isPlaying)
             {
+                Gizmos.DrawLine(StackPoint, conveyorBeltTargetPoint);
                 Gizmos.DrawWireCube(conveyorBeltTargetPoint, GizmoCubeSize);
             }
         }
