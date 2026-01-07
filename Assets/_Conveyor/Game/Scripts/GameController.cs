@@ -2,9 +2,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using _2025.ColourBlockArrowProto.Scripts;
 using _Conveyor.Scripts.Gameplay.VFX;
+using Game.MeshGeneration;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using UnityEngine.Splines;
 
 namespace Game
@@ -24,6 +24,10 @@ namespace Game
         private ConveyorBlockView conveyorBlockViewPrefab;
         [SerializeField]
         private SplineContainer splineContainer;
+
+        [Header("ConveyorBelt")]
+        [SerializeField]
+        private ConveyorFromPoints conveyorFromPoints;
         
         [Header("Animation/VFX")]
         [SerializeField]
@@ -81,6 +85,10 @@ namespace Game
             else
             {
                 level = levelImporter.FromJson(serializedLevel.text);
+                
+                // todo: call with level json
+                conveyorFromPoints.ReadConveyorPointsFromJson();
+                conveyorFromPoints.BuildConveyorFromPoints();
             }
         }
 
