@@ -39,8 +39,11 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         public Tween DoRejectOnBoard()
         {
+            var originalPosition = transform.position;
             return transform.DOShakePosition(animationSettings.RejectOnBoardDuration, animationSettings.RejectOnBoardStrength, animationSettings.RejectOnBoardVibrato)
-                .SetDelay(animationSettings.RejectOnBoardDelay);
+                .SetDelay(animationSettings.RejectOnBoardDelay)
+                .OnKill(() => transform.position = originalPosition)
+                .OnComplete(() => transform.position = originalPosition);
         }
         
         public Tween DoCascade(Vector3 point, int cascadeIndex, bool isFinal)
