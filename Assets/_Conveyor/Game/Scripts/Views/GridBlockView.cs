@@ -17,6 +17,8 @@ namespace Game
 		public ColorBlock ColorBlock => colorBlock;
 		public ArrowTileMotions TileMotions => tileMotions;
 
+		private MaterialPropertyBlock propertyBlock;
+		
 		public void Initialize(ColorBlock colorBlock)
 		{
 			this.colorBlock = colorBlock;
@@ -30,36 +32,18 @@ namespace Game
 
 		private void UpdateView(ColorBlock colorBlock)
 		{
-			var propertyBlock = new MaterialPropertyBlock();
+			propertyBlock = new MaterialPropertyBlock();
 			propertyBlock.SetColor("_Color", colorBlock.Color);
+			propertyBlock.SetFloat("_Icon_Rotation", colorBlock.Direction.ToUvRotation());
 			meshRenderer.SetPropertyBlock(propertyBlock);
-			
-			UpdateRotationForDirection(colorBlock.Direction);
 		}
 
-		private void UpdateRotationForDirection(BlockDirection blockDirection)
+		public void UpdateViewForCascade()
 		{
-			switch (blockDirection)
-			{
-				case BlockDirection.None:
-				case BlockDirection.Right:
-					// 0Y
-					break;
-				case BlockDirection.Up:
-					// 270Y
-					transform.localEulerAngles = new Vector3(0, 270f, 0);
-					break;
-				case BlockDirection.Down:
-					// 90Y
-					transform.localEulerAngles = new Vector3(0, 90f, 0);
-					break;
-				case BlockDirection.Left:
-					// 180Y
-					transform.localEulerAngles = new Vector3(0, 180f, 0);
-					break;
-				default:
-					throw new ArgumentOutOfRangeException(nameof(blockDirection), blockDirection, null);
-			}
+			propertyBlock.SetFloat("_Icon_Rotation", 0);
+			meshRenderer.SetPropertyBlock(propertyBlock);
+
+			transform.eulerAngles = colorBlock.Direction.ToEuler();
 		}
 	}
 }

@@ -280,6 +280,7 @@ namespace Game
 
                 var isFinalInCascade = i + 1 == count;
                 var tween = view.TileMotions.DoCascade(nextPos, i, isFinalInCascade);
+                view.UpdateViewForCascade();
 
                 lastViewPosition = view.transform.position;
 

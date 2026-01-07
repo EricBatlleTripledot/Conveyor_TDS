@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BodyTex:
-        m_Texture: {fileID: 2800000, guid: 154018eec1822423185348103c864b80, type: 3}
+        m_Texture: {fileID: 2800000, guid: 842c95278db8a4dc8b38c73a46ef8e6c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -108,6 +108,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _Icon_Rotation: 0
     - _Light_NormalRotate_Degrees: 156.8
     - _Light_Strength_Multiply: 0.7
     - _Metallic: 0
