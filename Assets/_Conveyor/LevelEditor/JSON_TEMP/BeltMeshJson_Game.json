@@ -1,0 +1,156 @@
+{
+    "version": 1,
+    "name": "ExampleJSON",
+    "width": 8,
+    "height": 8,
+    "blocks": [
+        {
+            "x": 0,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 1,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 2,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 3,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 4,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 5,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 6,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 6,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 5,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 4,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 3,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 2,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 1,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        }
+    ],
+    "hand": {
+        "initialCustomHand": [],
+        "colorWeights": []
+    }
+}
