@@ -1,0 +1,396 @@
+{
+    "version": 1,
+    "name": "EXAMPLE2JSON",
+    "width": 8,
+    "height": 8,
+    "blocks": [
+        {
+            "x": 0,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 0,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 0,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 6,
+            "y": 0,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 7,
+            "y": 0,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 1,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 1,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 1,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 1,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 1,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 1,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 6,
+            "y": 1,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 7,
+            "y": 1,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 2,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 6,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 7,
+            "y": 2,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 3,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 6,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 7,
+            "y": 3,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 4,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 4,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 4,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 4,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 4,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 4,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 6,
+            "y": 4,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 7,
+            "y": 4,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 5,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 5,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 5,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 5,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 5,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 5,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 6,
+            "y": 5,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 7,
+            "y": 5,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 6,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 6,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 6,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 6,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 6,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 6,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 6,
+            "y": 6,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 7,
+            "y": 6,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 7,
+            "type": "ConveyorBelt",
+            "payload": ""
+        },
+        {
+            "x": 3,
+            "y": 7,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 4,
+            "y": 7,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 5,
+            "y": 7,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 6,
+            "y": 7,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 7,
+            "y": 7,
+            "type": "Empty",
+            "payload": ""
+        }
+    ],
+    "hand": {
+        "initialCustomHand": [],
+        "colorWeights": []
+    }
+}

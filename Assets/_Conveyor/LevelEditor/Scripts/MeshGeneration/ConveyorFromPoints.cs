@@ -7,6 +7,10 @@ namespace LevelEditor
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class ConveyorFromPoints : MonoBehaviour
     {
+        [Header("JSON Input")]
+        [SerializeField]
+        private LevelPointsFromJson levelPointsFromJson;
+        
         [Header("Shape")]
         [SerializeField]
         private float halfExtentX = 5f;
@@ -23,11 +27,7 @@ namespace LevelEditor
         private Mesh mesh;
         private readonly List<Vector3> verts = new();
         private readonly List<int> tris = new();
-
-        [Header("Conveyor Belt Points")]
-        [SerializeField]
-        private ConveyorBeltPoints conveyorBeltPoints;
-
+        
         [Header("Rounded Corners")]
         [SerializeField]
         private bool roundCorners = true;
@@ -35,7 +35,7 @@ namespace LevelEditor
         private float cornerRadius = 0.5f; 
         [SerializeField] 
         private int cornerSegments = 6;
-
+        
         private void Awake()
         {
             if (!mesh) {
@@ -57,14 +57,19 @@ namespace LevelEditor
             mf.sharedMesh = mesh;
         }
         
+        public void ReadConveyorPointsFromJson()
+        {
+            levelPointsFromJson.LoadLevelPointsFromJson();
+        }
+        
         [ContextMenu("Build Conveyor From Points")]
-        private void BuildConveyorFromPoints()
+        public void BuildConveyorFromPoints()
         {
             if (!mesh) {
                 return;
             }
-
-            var pts = BuildFromNormalizedPoints(conveyorBeltPoints.ConveyorPoints, halfExtentX, halfExtentZ, yOffset);
+            
+            var pts = BuildFromNormalizedPoints(levelPointsFromJson.ConveyorPoints, halfExtentX, halfExtentZ, yOffset);
 
             pts = RoundRightAngleCornersXZ(pts, cornerRadius, cornerSegments, closed: true);
             

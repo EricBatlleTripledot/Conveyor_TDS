@@ -21,23 +21,17 @@ namespace LevelEditor
         public string type;
     }
 
-    public class LevelPointsFromJson : MonoBehaviour
+    [CreateAssetMenu(fileName = "ConveyorBeltPoints", menuName = "LevelEditor/ConveyorPointsFromJSON", order = 1)]
+    public class LevelPointsFromJson : ScriptableObject
     {
+        public List<Vector2> ConveyorPoints;
         [SerializeField]
         private TextAsset jsonFile;
-
-        [SerializeField]
-        private ConveyorBeltPoints conveyorBeltPoints;
-
-        [ContextMenu("Load Level Points From JSON")]
-        private void LoadLevelPointsFromJson()
+        
+        public void LoadLevelPointsFromJson()
         {
             if (!jsonFile) {
                 Debug.LogError("No file assigned! Check the jsonFile field.");
-                return;
-            }
-            if (!conveyorBeltPoints) {
-                Debug.LogError("No conveyorBeltPoints assigned! Check the conveyorBeltPoints field.");
                 return;
             }
 
@@ -50,14 +44,14 @@ namespace LevelEditor
 
             var loop = TraceSingleLoop(isConv, level.width, level.height);
 
-            conveyorBeltPoints.ConveyorPoints.Clear();
+            ConveyorPoints.Clear();
             foreach (var c in loop) {
                 var u = (c.x + 0.5f) / level.width;
                 var v = (c.y + 0.5f) / level.height;
-                conveyorBeltPoints.ConveyorPoints.Add(new Vector2(u, v));
+                ConveyorPoints.Add(new Vector2(u, v));
             }
 
-            Debug.Log($"Loaded {conveyorBeltPoints.ConveyorPoints.Count} ordered conveyor points from JSON.");
+            Debug.Log($"Loaded {ConveyorPoints.Count} ordered conveyor points from JSON.");
         }
 
         private static List<Vector2Int> TraceSingleLoop(bool[,] isConveyor, int width, int height)
