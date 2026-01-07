@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace LevelEditor
+namespace Game.MeshGeneration
 {
     [Serializable]
     public class LevelJson
