@@ -175,26 +175,26 @@
         {
             "x": 4,
             "y": 3,
-            "type": "Empty",
-            "payload": ""
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":1.0,\"b\":0.0,\"a\":1.0},\"direction\":2}"
         },
         {
             "x": 5,
             "y": 3,
             "type": "Color",
-            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":3}"
+            "payload": "{\"color\":{\"r\":0.0,\"g\":1.0,\"b\":0.0,\"a\":1.0},\"direction\":3}"
         },
         {
             "x": 6,
             "y": 3,
             "type": "Color",
-            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":3}"
+            "payload": "{\"color\":{\"r\":0.0,\"g\":1.0,\"b\":0.0,\"a\":1.0},\"direction\":3}"
         },
         {
             "x": 7,
             "y": 3,
             "type": "Color",
-            "payload": "{\"color\":{\"r\":1.0,\"g\":0.0,\"b\":0.0,\"a\":1.0},\"direction\":3}"
+            "payload": "{\"color\":{\"r\":0.0,\"g\":1.0,\"b\":0.0,\"a\":1.0},\"direction\":3}"
         },
         {
             "x": 0,
@@ -217,14 +217,14 @@
         {
             "x": 3,
             "y": 4,
-            "type": "Empty",
-            "payload": ""
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":3}"
         },
         {
             "x": 4,
             "y": 4,
-            "type": "Empty",
-            "payload": ""
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":3}"
         },
         {
             "x": 5,
