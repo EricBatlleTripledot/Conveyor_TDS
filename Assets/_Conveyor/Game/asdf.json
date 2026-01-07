@@ -1,0 +1,108 @@
+{
+    "version": 1,
+    "name": "asdf",
+    "width": 4,
+    "height": 4,
+    "blocks": [
+        {
+            "x": 0,
+            "y": 0,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 0,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 0,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":2}"
+        },
+        {
+            "x": 3,
+            "y": 0,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 1,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 1,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 1,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":2}"
+        },
+        {
+            "x": 3,
+            "y": 1,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 2,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":2}"
+        },
+        {
+            "x": 3,
+            "y": 2,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 0,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 1,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        },
+        {
+            "x": 2,
+            "y": 3,
+            "type": "Color",
+            "payload": "{\"color\":{\"r\":0.0,\"g\":0.0,\"b\":1.0,\"a\":1.0},\"direction\":2}"
+        },
+        {
+            "x": 3,
+            "y": 3,
+            "type": "Empty",
+            "payload": ""
+        }
+    ],
+    "hand": {
+        "initialCustomHand": [],
+        "colorWeights": []
+    }
+}

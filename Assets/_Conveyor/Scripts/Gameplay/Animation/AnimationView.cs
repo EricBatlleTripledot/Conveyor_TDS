@@ -23,7 +23,7 @@ public class AnimationView : ScriptableObject
 
     public void PlayEnterAnimation(GameObject obj)
     {
-        Debug.Log("Clear animation played for " + obj.name);
+        Debug.Log("Enter animation played for " + obj.name);
     }
 
     public void PlayClearAnimation(Transform obj1)

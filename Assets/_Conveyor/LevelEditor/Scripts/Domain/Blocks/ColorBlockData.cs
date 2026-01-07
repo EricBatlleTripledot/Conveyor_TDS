@@ -15,7 +15,7 @@ namespace LevelEditor
 
 		public Color Color => color;
 		public BlockDirection Direction => direction;
-		
+
 		public ColorBlockData(Vector2Int position, Color color, BlockDirection direction) : base(position)
 		{
 			this.color = color;
