@@ -224,10 +224,8 @@ namespace Game
 
             PreEmptCascade(chain);
 
-            var beltPoint = conveyorBlockView.transform.position;
-            
             await RemoveConveyorBlock(conveyorBlockView, chain.Blocks[0]);
-            await RemoveGridBlocksView(beltPoint, chain);
+            await RemoveGridBlocksView(chain);
         }
 
         private async Task RemoveConveyorBlock(ConveyorBlockView conveyorBlockView, ColorBlock firstBlockInChain)
@@ -268,7 +266,7 @@ namespace Game
             }
         }
         
-        private async Task RemoveGridBlocksView(Vector3 beltInitialPoint, ColorBlocksChain chain)
+        private async Task RemoveGridBlocksView(ColorBlocksChain chain)
         {
             // mark all blocks in chain that they will remove themselves
             foreach (ColorBlock block in chain)
@@ -277,41 +275,39 @@ namespace Game
                 view.IsCascading = true;
             }
             
-            Vector3 lastViewPosition = beltInitialPoint;
-            var count = chain.Blocks.Count;
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < chain.Count; i++)
             {
                 var block = chain.Blocks[i];
                 var view = gameGridView.GetViewForBlock(block);
-                
-                // todo: define next position as block pos + the direction of the block
-                // todo: move into utility method on grid view
-                Vector3 nextPos;
-                if (i + 1 < count)
-                {
-                    var nextView = gameGridView.GetViewForBlock(chain.Blocks[i + 1]);
-                    nextPos = nextView.transform.position;
-                }
-                else
-                {
-                    var pos = view.transform.position;
-                    var dir = (pos - lastViewPosition).normalized;
-                    
-                    nextPos = pos + dir * tileAnimationSettings.FinalCascadeJumpDistance;
-                }
 
-                var isFinalInCascade = i + 1 == count;
+                var nextPos = GetCascadePosition(i, chain);
+
+                var isFinalInCascade = i + 1 == chain.Count;
                 var tween = view.TileMotions.DoCascade(nextPos, i, isFinalInCascade);
                 view.UpdateViewForCascade();
 
-                lastViewPosition = view.transform.position;
-
                 await tween.AsyncWaitForCompletion();
 
-                HandleVfxAfterCascade(nextPos, i, count);
+                HandleVfxAfterCascade(nextPos, i, chain.Count);
                 
                 gameGridView.DestroyGridBlockView(block);
             }
+        }
+
+        private Vector3 GetCascadePosition(int i, ColorBlocksChain chain)
+        {
+            var block = chain.Blocks[i];
+            var view = gameGridView.GetViewForBlock(block);
+            
+            if (i + 1 < chain.Count)
+            {
+                var nextView = gameGridView.GetViewForBlock(chain.Blocks[i + 1]);
+             
+                return nextView.transform.position;
+            }
+
+            return view.transform.position 
+                   + block.Direction.ToVector3Direction() * tileAnimationSettings.FinalCascadeJumpDistance;
         }
 
         private void HandleVfxAfterCascade(Vector3 point, int chainIndex, int count)

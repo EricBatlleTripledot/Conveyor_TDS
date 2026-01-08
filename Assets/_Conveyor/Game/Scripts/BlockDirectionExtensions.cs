@@ -45,10 +45,21 @@ namespace Game
 			};
 		}
 		
+		public static Vector3 ToVector3Direction(this BlockDirection blockDirection)
+		{
+			return blockDirection switch
+			{
+				BlockDirection.None => Vector3.zero,
+				BlockDirection.Up => new Vector3(0, 0, 1),
+				BlockDirection.Down => new Vector3(0, 0, -1),
+				BlockDirection.Left => new Vector3(-1, 0, 0),
+				BlockDirection.Right => new Vector3(1, 0, 0),
+				_ => throw new ArgumentOutOfRangeException(nameof(blockDirection), blockDirection, null)
+			};
+		}
 		
 		public static Vector3 ToEuler(this BlockDirection blockDirection)
 		{
-			
 			return blockDirection switch
 			{
 				BlockDirection.None => Vector3.zero,
