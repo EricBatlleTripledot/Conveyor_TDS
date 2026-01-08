@@ -14,10 +14,12 @@ namespace Game
 		[SerializeField]
 		private ArrowTileMotions tileMotions;
 
+		private MaterialPropertyBlock propertyBlock;
+
 		public ColorBlock ColorBlock => colorBlock;
 		public ArrowTileMotions TileMotions => tileMotions;
 
-		private MaterialPropertyBlock propertyBlock;
+		public bool IsCascading { get; set; }
 		
 		public void Initialize(ColorBlock colorBlock)
 		{

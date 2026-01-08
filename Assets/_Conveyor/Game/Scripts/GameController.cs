@@ -145,6 +145,12 @@ namespace Game
 
         private void CheckBlockViewMatch(ConveyorBlockView conveyorBlockView, GridBlockView gridBlockView)
         {
+            // Prevent triggering a new animation when the block is already being removed
+            if (gridBlockView.IsCascading)
+            {
+                return;
+            }
+            
             var canMatch = blockMatchService.CanMatch(conveyorBlockView.ConveyorBlock, gridBlockView.ColorBlock, level.Grid);
             if (!canMatch)
             {
@@ -264,6 +270,13 @@ namespace Game
         
         private async Task RemoveGridBlocksView(Vector3 beltInitialPoint, ColorBlocksChain chain)
         {
+            // mark all blocks in chain that they will remove themselves
+            foreach (ColorBlock block in chain)
+            {
+                var view = gameGridView.GetViewForBlock(block);
+                view.IsCascading = true;
+            }
+            
             Vector3 lastViewPosition = beltInitialPoint;
             var count = chain.Blocks.Count;
             for (int i = 0; i < count; i++)
