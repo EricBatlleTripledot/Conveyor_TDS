@@ -39,10 +39,6 @@ namespace Game
         [SerializeField]
         private GameVFXSpawner vfxSpawner;
         
-        // temporary implementation, here to demo reject animation before a proper solution - Canvas
-        // technically the desired check is that: reject once per chain, until the ConveyorBlockView changes rotation on the belt
-        private float RejectThreshold => Time.timeSinceLevelLoad - tileAnimationSettings.RejectOnBoardDuration;
-        
         [Header("DEBUG")]
         [SerializeField]
         private TextAsset serializedLevel;
@@ -166,30 +162,11 @@ namespace Game
                 return;
             }
             
-            if (gridBlockView.ColorBlock.LastRejectTime >= RejectThreshold)
-            {
-                return;
-            }
-            
-            OnConveyorBlockReject(gridBlockView.ColorBlock);
-        }
-
-        private void OnConveyorBlockReject(ColorBlock colorBlock)
-        {
-            var chain = level.Grid.GetBlockChain(colorBlock);
-
-            var threshold = RejectThreshold;
-            if (chain.Any(x => x.LastRejectTime >= threshold))
-            {
-                return;
-            }
-            
+            var chain = level.Grid.GetBlockChain(gridBlockView.ColorBlock);
             foreach (var block in chain)
             {
-                block.LastRejectTime = Time.timeSinceLevelLoad;
-                
                 var view = gameGridView.GetViewForBlock(block);
-                view.TileMotions.DoRejectOnBoard();
+                view.DoRejectShake();
             }
         }
 

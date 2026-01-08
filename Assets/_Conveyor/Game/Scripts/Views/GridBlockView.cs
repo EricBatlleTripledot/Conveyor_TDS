@@ -13,6 +13,8 @@ namespace Game
 		private MeshRenderer meshRenderer;
 		[SerializeField]
 		private ArrowTileMotions tileMotions;
+		[SerializeField]
+		private ArrowTileAnimationSettings tileAnimationSettings;
 
 		private MaterialPropertyBlock propertyBlock;
 
@@ -20,7 +22,10 @@ namespace Game
 		public ArrowTileMotions TileMotions => tileMotions;
 
 		public bool IsCascading { get; set; }
-		
+		public float LastRejectTime { get; private set; }
+
+		private float RejectThreshold => Time.timeSinceLevelLoad - tileAnimationSettings.RejectOnBoardDuration;
+
 		public void Initialize(ColorBlock colorBlock)
 		{
 			this.colorBlock = colorBlock;
@@ -46,6 +51,18 @@ namespace Game
 			meshRenderer.SetPropertyBlock(propertyBlock);
 
 			transform.eulerAngles = colorBlock.Direction.ToEuler();
+		}
+
+		public void DoRejectShake()
+		{
+			if (LastRejectTime >= RejectThreshold)
+			{
+				return;
+			}
+			
+			LastRejectTime = Time.timeSinceLevelLoad;
+			
+			tileMotions.DoRejectOnBoard();
 		}
 	}
 }
