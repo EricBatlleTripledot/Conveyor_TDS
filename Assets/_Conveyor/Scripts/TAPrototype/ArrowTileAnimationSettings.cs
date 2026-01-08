@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _2025.ColourBlockArrowProto.Scripts
 {
@@ -59,8 +60,14 @@ namespace _2025.ColourBlockArrowProto.Scripts
         // if the cascade ends before this array is done, we always play the finish motion instead
         [SerializeField]
         private TileMotionConfig[] cascadeMotions;
+        [Space(10)]
         [SerializeField]
         private TileMotionConfig finalCascadeMotion;
+        // a different motion for when a chain is a low amount of tiles
+        [SerializeField]
+        private int thresholdForShorterCascadeFinishMotion = 1;
+        [SerializeField]
+        private TileMotionConfig finalCascadeLowThresholdMotion;
         [Space(10)]
         [SerializeField]
         private float finalCascadeJumpDistance = 0.5f;
@@ -93,7 +100,11 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         public TileMotionConfig[] CascadeMotions => cascadeMotions;
         public TileMotionConfig FinalCascadeMotion => finalCascadeMotion;
+        public int ThresholdForShorterCascadeFinishMotion => thresholdForShorterCascadeFinishMotion;
+        public TileMotionConfig FinalCascadeLowThresholdMotion => finalCascadeLowThresholdMotion;
         public float FinalCascadeJumpDistance => finalCascadeJumpDistance;
+
+        public bool ShouldDoShorterCascade(int cascadeIndex) => cascadeIndex <= ThresholdForShorterCascadeFinishMotion; 
 
         public float PreEmptDelayPerIndex => preEmptDelayPerIndex;
         public string PreEmptClipName => preEmptClipName;

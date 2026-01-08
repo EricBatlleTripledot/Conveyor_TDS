@@ -285,6 +285,7 @@ namespace Game
                 var view = gameGridView.GetViewForBlock(block);
                 
                 // todo: define next position as block pos + the direction of the block
+                // todo: move into utility method on grid view
                 Vector3 nextPos;
                 if (i + 1 < count)
                 {
@@ -306,13 +307,29 @@ namespace Game
                 lastViewPosition = view.transform.position;
 
                 await tween.AsyncWaitForCompletion();
-                
-                if(i < count - 1)
-                    vfxSpawner.SpawnCascadeLanding(nextPos, i);
-                else
-                    vfxSpawner.SpawnTileFinish(nextPos);
+
+                HandleVfxAfterCascade(nextPos, i, count);
                 
                 gameGridView.DestroyGridBlockView(block);
+            }
+        }
+
+        private void HandleVfxAfterCascade(Vector3 point, int chainIndex, int count)
+        {
+            if (chainIndex < count - 1)
+            {
+                vfxSpawner.SpawnCascadeLanding(point, chainIndex);
+            }
+            else
+            {
+                if (tileAnimationSettings.ShouldDoShorterCascade(chainIndex))
+                {
+                    vfxSpawner.SpawnTileFinishShort(point);
+                }
+                else
+                {
+                    vfxSpawner.SpawnTileFinish(point);
+                }
             }
         }
     }

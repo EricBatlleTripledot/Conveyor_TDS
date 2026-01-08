@@ -20,10 +20,13 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [Header("Tile Finish VFX")]
         [SerializeField]
         private GameObject tileOnHide;
+        [SerializeField]
+        private GameObject tileOnHideShortCascade;
 
         public GameObject GetCascadeLandingVfx(int index) =>
             index >= thresholdForFasterVFX ? tileOnCascadeFastLanding : tileOnCascadeLanding;
 
         public GameObject TileOnHide => tileOnHide;
+        public GameObject TileOnHideShortCascade => tileOnHideShortCascade;
     }
 }

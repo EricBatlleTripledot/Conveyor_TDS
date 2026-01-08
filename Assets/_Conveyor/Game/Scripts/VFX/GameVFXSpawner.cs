@@ -18,6 +18,11 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         {
             AwaitVfxAndReturn(Instantiate(prefabsList.TileOnHide, point, Quaternion.identity));
         }
+        
+        public void SpawnTileFinishShort(Vector3 point)
+        {
+            AwaitVfxAndReturn(Instantiate(prefabsList.TileOnHideShortCascade, point, Quaternion.identity));
+        }
 
         void AwaitVfxAndReturn(GameObject clone)
         {

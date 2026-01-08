@@ -49,9 +49,17 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public Tween DoCascade(Vector3 point, int cascadeIndex, bool isFinal)
         {
             var i = Mathf.Clamp(cascadeIndex, 0, animationSettings.CascadeMotions.Length - 1);
-            var motion = isFinal ? animationSettings.FinalCascadeMotion : animationSettings.CascadeMotions[i];
+            if (isFinal)
+            {
+                if (animationSettings.ShouldDoShorterCascade(cascadeIndex))
+                {
+                    return DoMotion(animationSettings.FinalCascadeLowThresholdMotion, point);
+                }
 
-            return DoMotion(motion, point);
+                return DoMotion(animationSettings.FinalCascadeMotion, point);
+            }
+
+            return DoMotion(animationSettings.CascadeMotions[i], point);
         }
 
         public void DoPreEmptCascade(int cascadeIndex)

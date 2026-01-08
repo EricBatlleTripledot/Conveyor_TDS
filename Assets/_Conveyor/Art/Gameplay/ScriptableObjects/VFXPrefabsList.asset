@@ -16,3 +16,4 @@ MonoBehaviour:
   tileOnCascadeFastLanding: {fileID: 891140212264022168, guid: ff1f675cc39e1468287f1b3753efb999, type: 3}
   thresholdForFasterVFX: 2
   tileOnHide: {fileID: 891140212264022168, guid: 9a2ee1e0d6b924b2a9696b1e668618d0, type: 3}
+  tileOnHideShortCascade: {fileID: 891140212264022168, guid: 71b15ca85b6744a4b94d55b7d4175533, type: 3}
