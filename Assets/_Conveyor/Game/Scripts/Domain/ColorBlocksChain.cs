@@ -12,12 +12,10 @@ namespace Game
 		private List<ColorBlock> blocks;
 
 		public List<ColorBlock> Blocks => blocks;
-		public int Count { get; private set; }
 
 		public ColorBlocksChain(List<ColorBlock> blocks)
 		{
 			this.blocks = blocks;
-			Count = this.blocks.Count;
 		}
 
 		public void AddBlock(ColorBlock colorBlock)

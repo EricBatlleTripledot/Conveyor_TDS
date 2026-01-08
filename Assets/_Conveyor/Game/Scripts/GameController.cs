@@ -274,40 +274,39 @@ namespace Game
                 var view = gameGridView.GetViewForBlock(block);
                 view.IsCascading = true;
             }
-            
-            for (int i = 0; i < chain.Count; i++)
+
+            var count = chain.Blocks.Count;
+            for (int i = 0; i < count; i++)
             {
                 var block = chain.Blocks[i];
                 var view = gameGridView.GetViewForBlock(block);
+                var nextView = i + 1 < count
+                    ? gameGridView.GetViewForBlock(chain.Blocks[i + 1])
+                    : null;
 
-                var nextPos = GetCascadePosition(i, chain);
+                var nextPos = GetCascadePosition(i, count, view, nextView);
 
-                var isFinalInCascade = i + 1 == chain.Count;
+                var isFinalInCascade = i + 1 == count;
                 var tween = view.TileMotions.DoCascade(nextPos, i, isFinalInCascade);
                 view.UpdateViewForCascade();
 
                 await tween.AsyncWaitForCompletion();
 
-                HandleVfxAfterCascade(nextPos, i, chain.Count);
+                HandleVfxAfterCascade(nextPos, i, count);
                 
                 gameGridView.DestroyGridBlockView(block);
             }
         }
 
-        private Vector3 GetCascadePosition(int i, ColorBlocksChain chain)
+        private Vector3 GetCascadePosition(int i, int count, GridBlockView view, GridBlockView nextView)
         {
-            var block = chain.Blocks[i];
-            var view = gameGridView.GetViewForBlock(block);
-            
-            if (i + 1 < chain.Count)
+            if (i + 1 < count)
             {
-                var nextView = gameGridView.GetViewForBlock(chain.Blocks[i + 1]);
-             
                 return nextView.transform.position;
             }
 
             return view.transform.position 
-                   + block.Direction.ToVector3Direction() * tileAnimationSettings.FinalCascadeJumpDistance;
+                   + view.ColorBlock.Direction.ToVector3Direction() * tileAnimationSettings.FinalCascadeJumpDistance;
         }
 
         private void HandleVfxAfterCascade(Vector3 point, int chainIndex, int count)
