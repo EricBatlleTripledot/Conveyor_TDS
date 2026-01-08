@@ -47,8 +47,6 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         [Header("Reject on Board")]
         [SerializeField]
-        private float rejectOnBoardDelay = 0.28f;
-        [SerializeField]
         private float rejectOnBoardDuration = 0.5f;
         [SerializeField]
         private float rejectOnBoardStrength = 1f;
@@ -91,9 +89,6 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public AnimationCurve FromRejectToBeltMoveCurve => fromRejectToBeltMoveCurve;
         public string FromBeltToRejectClipName => fromBeltToRejectClipName;
 
-        public float FullRejectDuration => fromBeltToRejectDuration + fromRejectToBeltDuration + postRejectIdle;
-        
-        public float RejectOnBoardDelay => rejectOnBoardDelay;
         public float RejectOnBoardDuration => rejectOnBoardDuration;
         public float RejectOnBoardStrength => rejectOnBoardStrength;
         public int RejectOnBoardVibrato => rejectOnBoardVibrato;

@@ -181,9 +181,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   fromBeltToRejectClipName: ArrowTile_Move_OntoBoard_Rejection
-  rejectOnBoardDelay: 0.28
+  rejectOnBoardDelay: 0
   rejectOnBoardDuration: 0.25
-  rejectOnBoardStrength: 0.25
+  rejectOnBoardStrength: 0.15
   rejectOnBoardVibrato: 40
   cascadeMotions:
   - duration: 0.5

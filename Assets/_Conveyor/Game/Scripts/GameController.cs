@@ -41,9 +41,7 @@ namespace Game
         
         // temporary implementation, here to demo reject animation before a proper solution - Canvas
         // technically the desired check is that: reject once per chain, until the ConveyorBlockView changes rotation on the belt
-        public float delayBeforeNewReject = 0.5f;
-        private float RejectDelay => tileAnimationSettings.FullRejectDuration + delayBeforeNewReject;
-        private float RejectThreshold => Time.timeSinceLevelLoad - RejectDelay;
+        private float RejectThreshold => Time.timeSinceLevelLoad - tileAnimationSettings.RejectOnBoardDuration;
         
         [Header("DEBUG")]
         [SerializeField]
@@ -173,10 +171,10 @@ namespace Game
                 return;
             }
             
-            OnConveyorBlockReject(conveyorBlockView, gridBlockView.ColorBlock);
+            OnConveyorBlockReject(gridBlockView.ColorBlock);
         }
 
-        private async Task OnConveyorBlockReject(ConveyorBlockView conveyorBlockView, ColorBlock colorBlock)
+        private void OnConveyorBlockReject(ColorBlock colorBlock)
         {
             var chain = level.Grid.GetBlockChain(colorBlock);
 
@@ -193,28 +191,6 @@ namespace Game
                 var view = gameGridView.GetViewForBlock(block);
                 view.TileMotions.DoRejectOnBoard();
             }
-
-            await RejectConveyorBlock(conveyorBlockView, chain.Blocks[0]);
-        }
-
-        private async Task RejectConveyorBlock(ConveyorBlockView conveyorBlockView, ColorBlock firstBlockInChain)
-        {
-            conveyorBlockView.ToggleSplineMovement(false);
-            conveyorBlockView.ToggleDetection(false);
-
-            var firstChainView = gameGridView.GetViewForBlock(firstBlockInChain);
-            var firstChainPos = firstChainView.transform.position;
-
-            var initPos = conveyorBlockView.transform.position;
-            
-            var sequence = conveyorBlockView.TileMotions.DoRejectFromBoard(
-                firstChainPos,
-                initPos);
-
-            await sequence.AsyncWaitForCompletion();
-            
-            conveyorBlockView.ToggleSplineMovement(true);
-            conveyorBlockView.ToggleDetection(true);
         }
 
         private async Task OnConveyorBlockMatch(ConveyorBlockView conveyorBlockView, ColorBlock colorBlock)
