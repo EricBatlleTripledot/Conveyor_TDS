@@ -78,7 +78,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
         [SerializeField]
         private float preEmptDelayPerIndex = 0.05f;
         [SerializeField]
-        private string preEmptClipName;
+        private string[] preEmptClipDirectionNames;
 
         public TileMotionConfig FromStackToBeltMotion => fromStackToBeltMotion;
 
@@ -107,6 +107,6 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public bool ShouldDoShorterCascade(int cascadeIndex) => cascadeIndex <= ThresholdForShorterCascadeFinishMotion; 
 
         public float PreEmptDelayPerIndex => preEmptDelayPerIndex;
-        public string PreEmptClipName => preEmptClipName;
+        public string PreEmptClipName(int directionIndex) => preEmptClipDirectionNames[directionIndex];
     }
 }

@@ -347,4 +347,8 @@ MonoBehaviour:
     clipName: ArrowTile_Move_CascadeFinish_1Tile
   finalCascadeJumpDistance: 0.75
   preEmptDelayPerIndex: 0.05
-  preEmptClipName: ArrowTile_PreEmpt_Cascade
+  preEmptClipDirectionNames:
+  - ArrowTile_PreEmpt_Up_Cascade
+  - ArrowTile_PreEmpt_Down_Cascade
+  - ArrowTile_PreEmpt_Left_Cascade
+  - ArrowTile_PreEmpt_Right_Cascade

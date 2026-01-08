@@ -261,7 +261,7 @@ namespace Game
             foreach (var colorBlock in chain)
             {
                 var view = gameGridView.GetViewForBlock(colorBlock);
-                view.TileMotions.DoPreEmptCascade(i);
+                view.TileMotions.DoPreEmptCascade(i, view.ColorBlock.Direction.ToPreEmptIndex());
                 i++;
             }
         }

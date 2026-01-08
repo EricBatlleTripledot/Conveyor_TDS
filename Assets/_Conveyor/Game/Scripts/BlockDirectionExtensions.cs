@@ -70,5 +70,18 @@ namespace Game
 				_ => throw new ArgumentOutOfRangeException(nameof(blockDirection), blockDirection, null)
 			};
 		}
+		
+		public static int ToPreEmptIndex(this BlockDirection blockDirection)
+		{
+			return blockDirection switch
+			{
+				BlockDirection.None => 3,
+				BlockDirection.Up => 0,
+				BlockDirection.Down => 1,
+				BlockDirection.Left => 2,
+				BlockDirection.Right => 3,
+				_ => throw new ArgumentOutOfRangeException(nameof(blockDirection), blockDirection, null)
+			};
+		}
 	}
 }

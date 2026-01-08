@@ -62,9 +62,9 @@ namespace _2025.ColourBlockArrowProto.Scripts
             return DoMotion(animationSettings.CascadeMotions[i], point);
         }
 
-        public void DoPreEmptCascade(int cascadeIndex)
+        public void DoPreEmptCascade(int cascadeIndex, int direction)
         {
-            StartCoroutine(DelayBeforeAnimation( animationSettings.PreEmptClipName, animationSettings.PreEmptDelayPerIndex * cascadeIndex));
+            StartCoroutine(DelayBeforeAnimation( animationSettings.PreEmptClipName(direction), animationSettings.PreEmptDelayPerIndex * cascadeIndex));
         }
 
         // Utilities

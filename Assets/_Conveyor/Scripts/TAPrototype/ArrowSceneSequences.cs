@@ -89,7 +89,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 for (int i = 0; i < cascadingRightTiles.Length; i++)
                 {
-                    cascadingRightTiles[i].DoPreEmptCascade(i);
+                    cascadingRightTiles[i].DoPreEmptCascade(i, 3);
                 }
             }
             if (triggerCascade2)
@@ -101,7 +101,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 for (int i = 0; i < cascadingRightTiles2.Length; i++)
                 {
-                    cascadingRightTiles2[i].DoPreEmptCascade(i);
+                    cascadingRightTiles2[i].DoPreEmptCascade(i, 3);
                 }
             }
             if (triggerCascade3)
@@ -113,7 +113,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
                 for (int i = 0; i < cascadingRightTiles3.Length; i++)
                 {
-                    cascadingRightTiles3[i].DoPreEmptCascade(i);
+                    cascadingRightTiles3[i].DoPreEmptCascade(i, 3);
                 }
             }
 
@@ -139,7 +139,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 for (int i = 0; i < cascadingRightTiles4.Length; i++)
                 {
-                    cascadingRightTiles4[i].DoPreEmptCascade(i);
+                    cascadingRightTiles4[i].DoPreEmptCascade(i, 3);
                 }
             }
         }
