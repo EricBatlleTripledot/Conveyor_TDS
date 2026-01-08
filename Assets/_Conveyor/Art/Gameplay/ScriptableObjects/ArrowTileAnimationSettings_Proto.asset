@@ -319,7 +319,7 @@ MonoBehaviour:
     clipName: ArrowTile_Move_CascadeFinish
   thresholdForShorterCascadeFinishMotion: 1
   finalCascadeLowThresholdMotion:
-    duration: 0.516
+    duration: 0.5
     curve:
       serializedVersion: 2
       m_Curve:
