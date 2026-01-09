@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ArrowMaterial_blank_G
+  m_Name: ArrowMaterial_Right_P
   m_Shader: {fileID: -6465566751694194690, guid: bc25e972d9fc84cd5bed9b5be778f004, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _IconTex:
-        m_Texture: {fileID: 2800000, guid: d3c37e46fd15447d29906210dca15401, type: 3}
+        m_Texture: {fileID: 2800000, guid: d6e66ee9bd16346b9a81617146f686bb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -129,11 +129,11 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
-    - _Color: {r: 0.07492691, g: 0.764151, b: 0, a: 1}
+    - _Color: {r: 0.75800604, g: 0.16055535, b: 0.8301887, a: 1}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Icon_Offset: {r: -1.1, g: -0.9, b: 0, a: 0}
-    - _Icon_Tiling: {r: 3.2, g: 2.8, b: 0, a: 0}
+    - _Icon_Offset: {r: -1.05, g: -0.43, b: 0, a: 0}
+    - _Icon_Tiling: {r: 3, g: 1.87, b: 0, a: 0}
     - _LightColor: {r: 1, g: 0.98302037, b: 0.6367924, a: 0}
     - _Light_DotProduct_StepEdges: {r: 0.5, g: 1, b: 0, a: 0}
     - _Light_NormalRotate_Axis: {r: 0.8, g: 0.3, b: 0, a: 0}
