@@ -11,6 +11,8 @@ namespace Game
 		[SerializeField]
 		private List<ColorBlock> blocks;
 
+		public List<ColorBlock> Blocks => blocks;
+
 		public ColorBlocksChain(List<ColorBlock> blocks)
 		{
 			this.blocks = blocks;

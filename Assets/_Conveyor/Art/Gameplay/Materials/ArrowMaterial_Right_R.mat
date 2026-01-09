@@ -53,7 +53,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _IconTex:
-        m_Texture: {fileID: 2800000, guid: 0eeac4d23d9c344ddbf57f7f75f8ac90, type: 3}
+        m_Texture: {fileID: 2800000, guid: d6e66ee9bd16346b9a81617146f686bb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -131,8 +131,8 @@ Material:
     - _Color: {r: 1, g: 0, b: 0, a: 1}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Icon_Offset: {r: -0.25, g: -0.25, b: 0, a: 0}
-    - _Icon_Tiling: {r: 1.5, g: 1.5, b: 0, a: 0}
+    - _Icon_Offset: {r: -1.05, g: -0.43, b: 0, a: 0}
+    - _Icon_Tiling: {r: 3, g: 1.87, b: 0, a: 0}
     - _LightColor: {r: 1, g: 0.98302037, b: 0.6367924, a: 0}
     - _Light_DotProduct_StepEdges: {r: 0.5, g: 1, b: 0, a: 0}
     - _Light_NormalRotate_Axis: {r: 0.8, g: 0.3, b: 0, a: 0}

@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 
@@ -27,6 +29,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 .SetEase(animationSettings.FromBeltToRejectMoveCurve));
             sequence.Append(transform.DOMove(returnPoint, animationSettings.FromRejectToBeltDuration)
                 .SetEase(animationSettings.FromRejectToBeltMoveCurve));
+            sequence.AppendInterval(animationSettings.PostRejectIdle);
             
             if (!string.IsNullOrEmpty(animationSettings.FromBeltToRejectClipName))
                 animator.Play(animationSettings.FromBeltToRejectClipName);
@@ -36,21 +39,31 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         public Tween DoRejectOnBoard()
         {
+            var originalPosition = transform.position;
             return transform.DOShakePosition(animationSettings.RejectOnBoardDuration, animationSettings.RejectOnBoardStrength, animationSettings.RejectOnBoardVibrato)
-                .SetDelay(animationSettings.RejectOnBoardDelay);
+                .OnKill(() => transform.position = originalPosition)
+                .OnComplete(() => transform.position = originalPosition);
         }
         
         public Tween DoCascade(Vector3 point, int cascadeIndex, bool isFinal)
         {
             var i = Mathf.Clamp(cascadeIndex, 0, animationSettings.CascadeMotions.Length - 1);
-            var motion = isFinal ? animationSettings.FinalCascadeMotion : animationSettings.CascadeMotions[i];
+            if (isFinal)
+            {
+                if (animationSettings.ShouldDoShorterCascade(cascadeIndex))
+                {
+                    return DoMotion(animationSettings.FinalCascadeLowThresholdMotion, point);
+                }
 
-            return DoMotion(motion, point);
+                return DoMotion(animationSettings.FinalCascadeMotion, point);
+            }
+
+            return DoMotion(animationSettings.CascadeMotions[i], point);
         }
 
-        public void DoPreEmptCascade(int cascadeIndex)
+        public void DoPreEmptCascade(int cascadeIndex, int direction)
         {
-            StartCoroutine(DelayBeforeAnimation( animationSettings.PreEmptClipName, animationSettings.PreEmptDelayPerIndex * cascadeIndex));
+            StartCoroutine(DelayBeforeAnimation( animationSettings.PreEmptClipName(direction), animationSettings.PreEmptDelayPerIndex * cascadeIndex));
         }
 
         // Utilities
@@ -65,6 +78,24 @@ namespace _2025.ColourBlockArrowProto.Scripts
             }
 
             return tween;
+        }
+
+        public Task WaitForAnimation()
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            StartCoroutine(WaitForAnimator(() => tcs.TrySetResult(true)));
+            
+            return tcs.Task;
+        }
+
+        private IEnumerator WaitForAnimator(Action onFinish)
+        {
+            while (animator.isPlaying)
+            {
+                yield return null;
+            }
+            
+            onFinish.Invoke();
         }
         
         private IEnumerator DelayBeforeAnimation(string clip, float delay)

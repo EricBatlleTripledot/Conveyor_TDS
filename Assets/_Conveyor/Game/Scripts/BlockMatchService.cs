@@ -7,7 +7,7 @@
 			return HasSameColor(conveyorBeltBlock, gridBlock) && BlockChainHasValidExitPath(gameGrid, gridBlock);
 		}
 
-		private bool HasSameColor(ConveyorBlock conveyorBeltBlock, ColorBlock otherBlock)
+		public bool HasSameColor(ConveyorBlock conveyorBeltBlock, ColorBlock otherBlock)
 		{
 			return conveyorBeltBlock.Color == otherBlock.Color;
 		}

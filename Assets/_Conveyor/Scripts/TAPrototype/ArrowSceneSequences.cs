@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using DG.Tweening;
-using Unity.Mathematics;
 using UnityEngine;
 
 namespace _2025.ColourBlockArrowProto.Scripts
@@ -90,7 +89,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 for (int i = 0; i < cascadingRightTiles.Length; i++)
                 {
-                    cascadingRightTiles[i].DoPreEmptCascade(i);
+                    cascadingRightTiles[i].DoPreEmptCascade(i, 3);
                 }
             }
             if (triggerCascade2)
@@ -102,7 +101,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 for (int i = 0; i < cascadingRightTiles2.Length; i++)
                 {
-                    cascadingRightTiles2[i].DoPreEmptCascade(i);
+                    cascadingRightTiles2[i].DoPreEmptCascade(i, 3);
                 }
             }
             if (triggerCascade3)
@@ -114,7 +113,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
                 for (int i = 0; i < cascadingRightTiles3.Length; i++)
                 {
-                    cascadingRightTiles3[i].DoPreEmptCascade(i);
+                    cascadingRightTiles3[i].DoPreEmptCascade(i, 3);
                 }
             }
 
@@ -140,7 +139,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 for (int i = 0; i < cascadingRightTiles4.Length; i++)
                 {
-                    cascadingRightTiles4[i].DoPreEmptCascade(i);
+                    cascadingRightTiles4[i].DoPreEmptCascade(i, 3);
                 }
             }
         }
@@ -160,7 +159,7 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
             if (cascade >= tiles.Length)
             {
-                Instantiate(vfxOnTileFinish, initiator.transform.position, quaternion.identity);
+                Instantiate(vfxOnTileFinish, initiator.transform.position, Quaternion.identity);
                 return;
             }
 
@@ -178,7 +177,6 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 var pos = initiator.transform.position;
                 var dir = (pos - tiles[cascade - 2].transform.position).normalized;
                 nextPos = pos + dir * 0.5f;
-
             }
 
             var tween = tiles[cascade].DoCascade(nextPos, cascade, cascade + 1 == tiles.Length);

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _2025.ColourBlockArrowProto.Scripts
 {
@@ -34,6 +35,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
         private float fromBeltToRejectDuration = 1;
         [SerializeField]
         private float fromRejectToBeltDuration = 0.5f;
+        [SerializeField]
+        private float postRejectIdle = 0.1f;
         // note that the total duration of this animation is fromBeltToRejectDuration + fromRejectToBeltDuration
         [SerializeField]
         private AnimationCurve fromBeltToRejectMoveCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -43,8 +46,6 @@ namespace _2025.ColourBlockArrowProto.Scripts
         private string fromBeltToRejectClipName;
 
         [Header("Reject on Board")]
-        [SerializeField]
-        private float rejectOnBoardDelay = 0.28f;
         [SerializeField]
         private float rejectOnBoardDuration = 0.5f;
         [SerializeField]
@@ -57,16 +58,25 @@ namespace _2025.ColourBlockArrowProto.Scripts
         // if the cascade ends before this array is done, we always play the finish motion instead
         [SerializeField]
         private TileMotionConfig[] cascadeMotions;
+        [Space(10)]
         [SerializeField]
         private TileMotionConfig finalCascadeMotion;
-
+        // a different motion for when a chain is a low amount of tiles
+        [SerializeField]
+        private int thresholdForShorterCascadeFinishMotion = 1;
+        [SerializeField]
+        private TileMotionConfig finalCascadeLowThresholdMotion;
+        [Space(10)]
+        [SerializeField]
+        private float finalCascadeJumpDistance = 0.5f;
+        
         [Header("Cascade Pre-empt Animation")]
         // for the chain of tiles that are about to be matched, do a small shudder
         // with a light delay down the chain
         [SerializeField]
         private float preEmptDelayPerIndex = 0.05f;
         [SerializeField]
-        private string preEmptClipName;
+        private string[] preEmptClipDirectionNames;
 
         public TileMotionConfig FromStackToBeltMotion => fromStackToBeltMotion;
 
@@ -74,19 +84,24 @@ namespace _2025.ColourBlockArrowProto.Scripts
 
         public float FromBeltToRejectDuration => fromBeltToRejectDuration;
         public float FromRejectToBeltDuration => fromRejectToBeltDuration;
+        public float PostRejectIdle => postRejectIdle;
         public AnimationCurve FromBeltToRejectMoveCurve => fromBeltToRejectMoveCurve;
         public AnimationCurve FromRejectToBeltMoveCurve => fromRejectToBeltMoveCurve;
         public string FromBeltToRejectClipName => fromBeltToRejectClipName;
 
-        public float RejectOnBoardDelay => rejectOnBoardDelay;
         public float RejectOnBoardDuration => rejectOnBoardDuration;
         public float RejectOnBoardStrength => rejectOnBoardStrength;
         public int RejectOnBoardVibrato => rejectOnBoardVibrato;
 
         public TileMotionConfig[] CascadeMotions => cascadeMotions;
         public TileMotionConfig FinalCascadeMotion => finalCascadeMotion;
+        public int ThresholdForShorterCascadeFinishMotion => thresholdForShorterCascadeFinishMotion;
+        public TileMotionConfig FinalCascadeLowThresholdMotion => finalCascadeLowThresholdMotion;
+        public float FinalCascadeJumpDistance => finalCascadeJumpDistance;
+
+        public bool ShouldDoShorterCascade(int cascadeIndex) => cascadeIndex <= ThresholdForShorterCascadeFinishMotion; 
 
         public float PreEmptDelayPerIndex => preEmptDelayPerIndex;
-        public string PreEmptClipName => preEmptClipName;
+        public string PreEmptClipName(int directionIndex) => preEmptClipDirectionNames[directionIndex];
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace _2025.ColourBlockArrowProto.Scripts
@@ -18,11 +19,19 @@ namespace _2025.ColourBlockArrowProto.Scripts
         [SerializeField]
         private ParticleSystem onSpawnParticles;
 
+        // todo: remove this + Update
         [Header("Testing")]
         public bool trigger;
 
         public MeshRenderer tileClone;
         public Material tileMaterialToSpawn;
+
+        private MaterialPropertyBlock propertyBlock;
+        
+        private void Awake()
+        {
+            propertyBlock = new MaterialPropertyBlock();
+        }
 
         private void Update()
         {
@@ -36,6 +45,23 @@ namespace _2025.ColourBlockArrowProto.Scripts
                 
                 animator.PlayQueued(idleClipName);
             }
+        }
+
+        public Task DoTileAnimation(Color color)
+        {
+            propertyBlock.SetColor("_Color", color);
+            tileClone.SetPropertyBlock(propertyBlock);
+            
+            animator.Play(actClipName);
+            onSpawnParticles.Play();
+                
+            animator.PlayQueued(idleClipName);
+            
+            // todo: replace this with a UniTask.Delay approach
+            var tcs = new TaskCompletionSource<bool>();
+            StartCoroutine(WaitForAnimation(() => tcs.TrySetResult(true)));
+            
+            return tcs.Task;
         }
         
         public IEnumerator WaitForAnimation(Action onFinish)
