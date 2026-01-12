@@ -58,7 +58,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.23113206, g: 0.7780256, b: 1, a: 0}
+    - _Color: {r: 0.3443396, g: 0.80932325, b: 1, a: 0}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 0}
     - _Icon_Offset: {r: -1.05, g: -0.25, b: 0, a: 0}
     - _Icon_Tiling: {r: 3, g: 1.63, b: 0, a: 0}
