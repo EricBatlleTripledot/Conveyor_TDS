@@ -21,14 +21,14 @@ MonoBehaviour:
     tiling: {x: 2.39, y: 1.93}
     offset: {x: -0.78, y: -0.46}
     rotation: 270
-  rightArrowConfig:
-    tiling: {x: 3, y: 1.72}
-    offset: {x: -1.05, y: -0.25}
-    rotation: 0
   leftArrowConfig:
     tiling: {x: 3, y: 1.72}
     offset: {x: -1.08, y: -0.36}
     rotation: 180
+  rightArrowConfig:
+    tiling: {x: 3, y: 1.87}
+    offset: {x: -1.05, y: -0.4}
+    rotation: 0
   dotTexture: {fileID: 2800000, guid: d3c37e46fd15447d29906210dca15401, type: 3}
   dotConfig:
     tiling: {x: 3.2, y: 2.8}

@@ -6,7 +6,8 @@
         "Unity.Splines",
         "Unity.InputSystem",
         "Unity.Mathematics",
-        "Game.TileAnimation"
+        "Game.TileAnimation",
+        "Game.TileRendering"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

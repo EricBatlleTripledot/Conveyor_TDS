@@ -12,7 +12,7 @@ namespace _Conveyor.Game.Scripts.TileRendering
         order = 0)]
     public class BlockViewIconConfig : ScriptableObject
     {
-        private static readonly int TextureID = Shader.PropertyToID("_BodyTex");
+        private static readonly int TextureID = Shader.PropertyToID("_IconTex");
         private static readonly int TilingID = Shader.PropertyToID("_Icon_Tiling");
         private static readonly int OffsetID = Shader.PropertyToID("_Icon_Offset");
         private static readonly int RotationID = Shader.PropertyToID("_Icon_Rotation");
@@ -27,9 +27,9 @@ namespace _Conveyor.Game.Scripts.TileRendering
         [SerializeField]
         private IconConfig downArrowConfig;
         [SerializeField]
-        private IconConfig rightArrowConfig;
-        [SerializeField]
         private IconConfig leftArrowConfig;
+        [SerializeField]
+        private IconConfig rightArrowConfig;
         
         [Header("Dot")]
         [SerializeField]
@@ -52,6 +52,7 @@ namespace _Conveyor.Game.Scripts.TileRendering
         {
             var config = dir switch
             {
+                // 0 == none
                 1 => upArrowConfig,
                 2 => downArrowConfig,
                 3 => leftArrowConfig,
