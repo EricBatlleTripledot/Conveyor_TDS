@@ -1,7 +1,9 @@
 {
-    "name": "Game.BlockRendering",
+    "name": "Game.TileAnimation",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:5acb9f6f7b6814e29b489cf8b472396a"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
