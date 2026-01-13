@@ -1490,8 +1490,8 @@
     "m_ObjectId": "2eaa63c04bad497ba21ac3a6ef0e2209",
     "m_Title": "Apply Icon onto Body",
     "m_Position": {
-        "x": -2418.7998046875,
-        "y": -85.57037353515625
+        "x": -2419.0,
+        "y": -85.5
     }
 }
 
@@ -3306,8 +3306,8 @@
     "m_ObjectId": "b4cf129eaa26405b82a14fa90f4d3313",
     "m_Title": "After making our shading, Saturate the Color",
     "m_Position": {
-        "x": -3028.000244140625,
-        "y": -90.99995422363281
+        "x": -3028.0,
+        "y": -91.0
     }
 }
 
@@ -4733,8 +4733,8 @@
     "m_ObjectId": "ec00094252a24260af449e62c25966a6",
     "m_Title": "Apply Emissive for full-bright Furnace Effect",
     "m_Position": {
-        "x": -1102.0001220703125,
-        "y": -85.49993896484375
+        "x": -1102.0,
+        "y": -85.5
     }
 }
 
