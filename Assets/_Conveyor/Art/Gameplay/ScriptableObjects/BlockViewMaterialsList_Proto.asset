@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7d642a41124a6bb24b189ed9ec540d, type: 3}
+  m_Name: BlockViewMaterialsList_Proto
+  m_EditorClassIdentifier: 
+  materials:
+  - {fileID: 2100000, guid: a6103b942e6a0433ab859c60f92e0fe1, type: 2}
+  - {fileID: 2100000, guid: 71793d23ed57644e3a858c66c34d4f90, type: 2}
+  - {fileID: 2100000, guid: 278f4d9a9a1954246acb757172f1a2bd, type: 2}
+  - {fileID: 2100000, guid: 678cfe73827fe4eef8bf8966c3af744d, type: 2}
+  - {fileID: 2100000, guid: 0db6d227516604348ad08c9c871c8910, type: 2}
+  - {fileID: 2100000, guid: eb84814ecbff44304b3629a56c630939, type: 2}
+  - {fileID: 2100000, guid: 5a42699f49bd944cfacf88d698faf753, type: 2}
+  - {fileID: 2100000, guid: 6ca7651ac3e454f4492534ceabe5b470, type: 2}
+  - {fileID: 2100000, guid: 662d6f28c35e248588746a8dd5bbc4b5, type: 2}
+  - {fileID: 2100000, guid: f44007f14754e4b6d8ee16390e66232c, type: 2}
