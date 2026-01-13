@@ -16,7 +16,7 @@ namespace _Conveyor.Game.Scripts.TileRendering
         private Material[] materials;
 
         // placeholder for Color Enum
-        public Material GetMaterialForColor(int colorId)
+        public Material GetMaterialForId(int colorId)
         {
             return materials[colorId];
         }
