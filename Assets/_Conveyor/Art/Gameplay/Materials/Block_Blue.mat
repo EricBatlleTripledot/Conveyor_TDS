@@ -60,8 +60,8 @@ Material:
     m_Colors:
     - _Color: {r: 0.3443396, g: 0.80932325, b: 1, a: 0}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 0}
-    - _Icon_Offset: {r: -1.05, g: -0.25, b: 0, a: 0}
-    - _Icon_Tiling: {r: 3, g: 1.63, b: 0, a: 0}
+    - _Icon_Offset: {r: -1.08, g: -0.36, b: 0, a: 0}
+    - _Icon_Tiling: {r: 3, g: 1.72, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &7933171110893063680
