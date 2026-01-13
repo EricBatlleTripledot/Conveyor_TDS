@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MatcapPractice_Blue
+  m_Name: Block_Green
   m_Shader: {fileID: -6465566751694194690, guid: 1a3596aa3610240d2bf8091d1fe26b33, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -58,7 +58,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.3443396, g: 0.80932325, b: 1, a: 0}
+    - _Color: {r: 0.28315237, g: 0.9528302, b: 0.43943194, a: 0}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 0}
     - _Icon_Offset: {r: -1.05, g: -0.25, b: 0, a: 0}
     - _Icon_Tiling: {r: 3, g: 1.63, b: 0, a: 0}

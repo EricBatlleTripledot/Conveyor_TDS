@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MatcapPractice_Red
+  m_Name: Block_Purple
   m_Shader: {fileID: -6465566751694194690, guid: 1a3596aa3610240d2bf8091d1fe26b33, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -52,13 +52,13 @@ Material:
     m_Floats:
     - _Body_Add: 0
     - _Icon_Rotation: 0
-    - _Matcap_Add: 0.25
+    - _Matcap_Add: 0.1
     - _Matcap_Pow: 0.9
     - _PostCombine_Saturation: 1.2
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 1, g: 0.5056539, b: 0.495283, a: 0}
+    - _Color: {r: 0.70754004, g: 0.512994, b: 0.8301887, a: 0}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 0}
     - _Icon_Offset: {r: -1.05, g: -0.25, b: 0, a: 0}
     - _Icon_Tiling: {r: 3, g: 1.63, b: 0, a: 0}
