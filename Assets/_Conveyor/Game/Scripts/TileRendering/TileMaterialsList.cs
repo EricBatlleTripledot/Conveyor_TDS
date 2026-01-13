@@ -7,10 +7,10 @@ namespace _Conveyor.Game.Scripts.TileRendering
     /// SO responsible for storing the list of materials per color style
     /// </summary>
     [CreateAssetMenu(
-        fileName = "BlockViewMaterialsList",
-        menuName = "Color Block Arrow/BlockView Materials List",
+        fileName = "TileMaterialsList",
+        menuName = "Color Block Arrow/Tile Materials List",
         order = 0)]
-    public class BlockViewMaterialsList : ScriptableObject
+    public class TileMaterialsList : ScriptableObject
     {
         [SerializeField]
         private Material[] materials;

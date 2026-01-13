@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b629e8bd874947a9a931431eec1d011d, type: 3}
-  m_Name: ArrowTileAnimationSettings_Proto
+  m_Name: TileAnimationSettings_Proto
   m_EditorClassIdentifier: 
   fromStackToBeltMotion:
     duration: 0.25

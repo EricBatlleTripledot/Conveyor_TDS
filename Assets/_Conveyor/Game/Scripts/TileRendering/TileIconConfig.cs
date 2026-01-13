@@ -4,13 +4,13 @@ using UnityEngine;
 namespace _Conveyor.Game.Scripts.TileRendering
 {
     /// <summary>
-    /// SO in charge of holding the UVs needed for our different icons on a BlockView
+    /// SO in charge of holding the UVs needed for our different icons on a BlockView's Tile
     /// </summary>
     [CreateAssetMenu(
-        fileName = "BlockViewIconConfig", 
-        menuName = "Color Block Arrow/BlockView Icon Config",
+        fileName = "TileIconConfig", 
+        menuName = "Color Block Arrow/Tile Icon Config",
         order = 0)]
-    public class BlockViewIconConfig : ScriptableObject
+    public class TileIconConfig : ScriptableObject
     {
         private static readonly int TextureID = Shader.PropertyToID("_IconTex");
         private static readonly int TilingID = Shader.PropertyToID("_Icon_Tiling");

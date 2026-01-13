@@ -22,7 +22,7 @@ namespace Game
 		[SerializeField]
 		private ArrowTileAnimationSettings tileAnimationSettings;
 		[SerializeField]
-		private BlockViewIconConfig viewIconConfig;
+		private TileIconConfig viewIconConfig;
 
 		private MaterialPropertyBlock propertyBlock;
 
@@ -44,17 +44,6 @@ namespace Game
 		{
 			Destroy(gameObject);
 		}
-
-		[ContextMenu("Clear")]
-		public void DebugClear() => meshRenderer.SetPropertyBlock(null);
-		[ContextMenu("Test Left")]
-		public void DebugLeft() => UpdateView(new ColorBlock(Vector2Int.zero, Color.blue, BlockDirection.Left));
-		[ContextMenu("Test Right")]
-		public void DebugRight() => UpdateView(new ColorBlock(Vector2Int.zero, Color.blue, BlockDirection.Right));
-		[ContextMenu("Test Up")]
-		public void DebugUp() => UpdateView(new ColorBlock(Vector2Int.zero, Color.blue, BlockDirection.Up));
-		[ContextMenu("Test Down")]
-		public void DebugDown() => UpdateView(new ColorBlock(Vector2Int.zero, Color.blue, BlockDirection.Down));
 		
 		private void UpdateView(ColorBlock colorBlock)
 		{

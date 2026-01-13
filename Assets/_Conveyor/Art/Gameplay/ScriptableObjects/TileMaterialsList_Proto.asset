@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5b7d642a41124a6bb24b189ed9ec540d, type: 3}
-  m_Name: BlockViewMaterialsList_Proto
+  m_Name: TileMaterialsList_Proto
   m_EditorClassIdentifier: 
   materials:
   - {fileID: 2100000, guid: a6103b942e6a0433ab859c60f92e0fe1, type: 2}
