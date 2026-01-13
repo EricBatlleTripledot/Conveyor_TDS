@@ -11,6 +11,11 @@ namespace _2025.ColourBlockArrowProto.Scripts
         public Animation animator;
         public ArrowTileAnimationSettings animationSettings;
 
+
+        public void Initialise()
+        {
+            animator.Play(animationSettings.InitClipName);
+        }
         
         public Tween DoMoveOntoBelt(Vector3 point)
         {

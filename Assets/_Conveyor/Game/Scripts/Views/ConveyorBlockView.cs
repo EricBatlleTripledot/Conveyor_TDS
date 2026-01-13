@@ -30,6 +30,7 @@ namespace Game
 		{
 			this.conveyorBlock = conveyorBlock;
 			splineAnimate.Container = splineContainer;
+			tileMotions.Initialise();
 			SetColor(conveyorBlock.Color);
 		}
 

@@ -18,6 +18,10 @@ namespace _2025.ColourBlockArrowProto.Scripts
          * Rejected = when a conveyor belt tile tries to match but can't, and returns back onto the conveyor belt
          * Cascade = a chain of matches, where we start slow and build-up in speed per match
          */
+
+        [Header("Init")]
+        [SerializeField]
+        private string initClipName = "ArrowTile_Init";
         
         [Header("From Stack onto Belt Animation")]
         [SerializeField]
@@ -77,6 +81,8 @@ namespace _2025.ColourBlockArrowProto.Scripts
         private float preEmptDelayPerIndex = 0.05f;
         [SerializeField]
         private string[] preEmptClipDirectionNames;
+
+        public string InitClipName => initClipName;
 
         public TileMotionConfig FromStackToBeltMotion => fromStackToBeltMotion;
 

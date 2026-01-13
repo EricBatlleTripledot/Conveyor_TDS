@@ -5019,6 +5019,7 @@ Animation:
   serializedVersion: 4
   m_Animation: {fileID: 0}
   m_Animations:
+  - {fileID: 7400000, guid: 939a34152af064937ab302a5aac2afc3, type: 2}
   - {fileID: 7400000, guid: 622c08619e16740e39f73dd47aec76cb, type: 2}
   - {fileID: 7400000, guid: 3af7219d9d1f64edab63cf1ac8dc6443, type: 2}
   - {fileID: 7400000, guid: 9bba08cf367ad46f6a0822d1c895e28f, type: 2}

@@ -9,7 +9,6 @@ namespace Game
 	public class GridBlockView : MonoBehaviour
 	{
 		private static readonly int ColorID = Shader.PropertyToID("_Color");
-		private static readonly int IconRotationID = Shader.PropertyToID("_Icon_Rotation");
 		
 		[SerializeField]
 		private ColorBlock colorBlock;
@@ -37,6 +36,8 @@ namespace Game
 		public void Initialize(ColorBlock colorBlock)
 		{
 			this.colorBlock = colorBlock;
+			tileMotions.Initialise();
+			
 			UpdateView(colorBlock);
 		}
 
@@ -50,6 +51,7 @@ namespace Game
 			propertyBlock = new MaterialPropertyBlock();
 			propertyBlock.SetColor(ColorID, colorBlock.Color);
 			viewIconConfig.SetupPropertyBlockForArrow(propertyBlock, (int)colorBlock.Direction);
+			
 			meshRenderer.SetPropertyBlock(propertyBlock);
 		}
 
