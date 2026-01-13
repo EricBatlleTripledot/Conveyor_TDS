@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ArrowTile_GridView
-  m_Shader: {fileID: -6465566751694194690, guid: bc25e972d9fc84cd5bed9b5be778f004, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 1a3596aa3610240d2bf8091d1fe26b33, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -29,7 +29,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BodyTex:
-        m_Texture: {fileID: 2800000, guid: 842c95278db8a4dc8b38c73a46ef8e6c, type: 3}
+        m_Texture: {fileID: 2800000, guid: fcb939b92b44044eca2e95d7168bbc16, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -58,6 +58,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 154018eec1822423185348103c864b80, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MatcapTex:
+        m_Texture: {fileID: 2800000, guid: 6d4284ec195c8403a973a1e5cff09c32, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -95,6 +99,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _Body_Add: 0
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -111,10 +116,13 @@ Material:
     - _Icon_Rotation: 0
     - _Light_NormalRotate_Degrees: 156.8
     - _Light_Strength_Multiply: 0.7
+    - _Matcap_Add: 0
+    - _Matcap_Pow: 0.9
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _PostCombine_Saturation: 1.5
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
@@ -132,7 +140,7 @@ Material:
     - _Color: {r: 0, g: 0.37633944, b: 1, a: 1}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Icon_Offset: {r: -1.05, g: -0.43, b: 0, a: 0}
+    - _Icon_Offset: {r: -1.05, g: -0.4, b: 0, a: 0}
     - _Icon_Tiling: {r: 3, g: 1.87, b: 0, a: 0}
     - _LightColor: {r: 1, g: 0.98302037, b: 0.6367924, a: 0}
     - _Light_DotProduct_StepEdges: {r: 0.5, g: 1, b: 0, a: 0}

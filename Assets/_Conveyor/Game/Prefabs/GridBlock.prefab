@@ -72,10 +72,10 @@ MonoBehaviour:
     position: {x: 0, y: 0}
     color: {r: 0, g: 0, b: 0, a: 0}
     direction: 0
-    LastRejectTime: 0
   meshRenderer: {fileID: 7238252238584497798}
   tileMotions: {fileID: 1947578221895688035}
   tileAnimationSettings: {fileID: 11400000, guid: c9686e11ef86843d5a88d73f48f5ea94, type: 2}
+  viewIconConfig: {fileID: 11400000, guid: 59f32a027727a4cc7b4222f29ebc115b, type: 2}
 --- !u!114 &1947578221895688035
 MonoBehaviour:
   m_ObjectHideFlags: 0

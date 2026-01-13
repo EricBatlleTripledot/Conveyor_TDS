@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e06a32c0fb648159325fc316de95657, type: 3}
+  m_Name: TileIconConfig_Proto
+  m_EditorClassIdentifier: 
+  arrowTexture: {fileID: 2800000, guid: d6e66ee9bd16346b9a81617146f686bb, type: 3}
+  upArrowConfig:
+    tiling: {x: 2.39, y: 1.93}
+    offset: {x: -0.72, y: -0.43}
+    rotation: 90
+  downArrowConfig:
+    tiling: {x: 2.39, y: 1.93}
+    offset: {x: -0.78, y: -0.46}
+    rotation: 270
+  leftArrowConfig:
+    tiling: {x: 3, y: 1.72}
+    offset: {x: -1.08, y: -0.36}
+    rotation: 180
+  rightArrowConfig:
+    tiling: {x: 3, y: 1.87}
+    offset: {x: -1.05, y: -0.4}
+    rotation: 0
+  dotTexture: {fileID: 2800000, guid: d3c37e46fd15447d29906210dca15401, type: 3}
+  dotConfig:
+    tiling: {x: 3.2, y: 2.8}
+    offset: {x: -1.1, y: -0.9}
+    rotation: 0

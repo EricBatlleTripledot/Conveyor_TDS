@@ -1,5 +1,6 @@
 ﻿using System;
 using _2025.ColourBlockArrowProto.Scripts;
+using _Conveyor.Game.Scripts.TileRendering;
 using TMPro;
 using UnityEngine;
 
@@ -7,14 +8,21 @@ namespace Game
 {
 	public class GridBlockView : MonoBehaviour
 	{
+		private static readonly int ColorID = Shader.PropertyToID("_Color");
+		private static readonly int IconRotationID = Shader.PropertyToID("_Icon_Rotation");
+		
 		[SerializeField]
 		private ColorBlock colorBlock;
 		[SerializeField]
 		private MeshRenderer meshRenderer;
 		[SerializeField]
 		private ArrowTileMotions tileMotions;
+		
+		[Header("ScriptableObjects")]
 		[SerializeField]
 		private ArrowTileAnimationSettings tileAnimationSettings;
+		[SerializeField]
+		private TileIconConfig viewIconConfig;
 
 		private MaterialPropertyBlock propertyBlock;
 
@@ -36,18 +44,18 @@ namespace Game
 		{
 			Destroy(gameObject);
 		}
-
+		
 		private void UpdateView(ColorBlock colorBlock)
 		{
 			propertyBlock = new MaterialPropertyBlock();
-			propertyBlock.SetColor("_Color", colorBlock.Color);
-			propertyBlock.SetFloat("_Icon_Rotation", colorBlock.Direction.ToUvRotation());
+			propertyBlock.SetColor(ColorID, colorBlock.Color);
+			viewIconConfig.SetupPropertyBlockForArrow(propertyBlock, (int)colorBlock.Direction);
 			meshRenderer.SetPropertyBlock(propertyBlock);
 		}
 
 		public void UpdateViewForCascade()
 		{
-			propertyBlock.SetFloat("_Icon_Rotation", 0);
+			viewIconConfig.SetupPropertyBlockForArrow(propertyBlock, (int)BlockDirection.Right);
 			meshRenderer.SetPropertyBlock(propertyBlock);
 
 			transform.eulerAngles = colorBlock.Direction.ToEuler();
