@@ -30,8 +30,6 @@ namespace Game
         
         [Header("Animation/VFX")]
         [SerializeField]
-        private BlockViewSpawnerView spawnerView;
-        [SerializeField]
         private BlockViewStackView stackView;
         [SerializeField]
         private BlockAnimationSettings tileAnimationSettings;
@@ -132,8 +130,8 @@ namespace Game
         {
             var conveyorBlockView = conveyorBlockViewFactory.Create(new ConveyorBlock(color));
             conveyorBlockView.GridBlockDetected += CheckBlockViewMatch;
-
-            spawnerView.AddBlockToSpawnQueue(color, conveyorBlockView);
+            
+            stackView.AddBlockToStack(conveyorBlockView);
         }
 
         private void CheckBlockViewMatch(ConveyorBlockView conveyorBlockView, GridBlockView gridBlockView)
