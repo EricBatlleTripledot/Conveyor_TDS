@@ -48,7 +48,7 @@ namespace _Conveyor.Scripts.Gameplay.VFX
             var simulationSpeed = cascadeIndexOverSpeed.Evaluate(index);
             mainModule.simulationSpeed = simulationSpeed;
 
-            var cycle = Mathf.Clamp(index, 1, maxCycleCount);
+            var cycle = Mathf.Clamp(index + 1, 1, maxCycleCount);
             var burst = new ParticleSystem.Burst(0, 1, 1, cycle, 0.1f);
             system.emission.SetBurst(0, burst);
         }
