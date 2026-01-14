@@ -11,6 +11,9 @@ namespace _Conveyor.Scripts.Gameplay.VFX
     {
         [Header("Cascade VFX")]
         [SerializeField]
+        private GameObject slinky;
+        [Space(10)]
+        [SerializeField]
         private GameObject tileOnCascadeLanding;
         [SerializeField]
         private GameObject tileOnCascadeFastLanding;
@@ -22,6 +25,8 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         private GameObject tileOnHide;
         [SerializeField]
         private GameObject tileOnHideShortCascade;
+
+        public GameObject Slinky => slinky;
 
         public GameObject GetCascadeLandingVfx(int index) =>
             index >= thresholdForFasterVFX ? tileOnCascadeFastLanding : tileOnCascadeLanding;

@@ -261,6 +261,11 @@ namespace Game
                 await tween.AsyncWaitForCompletion();
 
                 HandleVfxAfterCascade(nextPos, i, count);
+
+                if (i < count - 2 && nextView)
+                {
+                    vfxSpawner.SpawnSlinky(nextPos, nextView.ColorBlock.Direction.ToVector3Direction());
+                }
                 
                 gameGridView.DestroyGridBlockView(block);
             }
