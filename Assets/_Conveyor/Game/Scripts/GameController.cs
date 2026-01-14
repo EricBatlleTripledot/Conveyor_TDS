@@ -264,7 +264,10 @@ namespace Game
 
                 if (i < count - 2 && nextView)
                 {
-                    vfxSpawner.SpawnSlinky(nextPos, nextView.ColorBlock.Direction.ToVector3Direction());
+                    vfxSpawner.SpawnSlinky(
+                        nextPos,
+                        nextView.ColorBlock.Direction.ToVector3Direction(),
+                        i);
                 }
                 
                 gameGridView.DestroyGridBlockView(block);

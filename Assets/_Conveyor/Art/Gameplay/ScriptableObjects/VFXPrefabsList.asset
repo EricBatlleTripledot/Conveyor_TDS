@@ -13,6 +13,54 @@ MonoBehaviour:
   m_Name: VFXPrefabsList
   m_EditorClassIdentifier: 
   slinky: {fileID: 4431101046231782974, guid: d650cea5f23e84104a22334fe94a1b66, type: 3}
+  cascadeIndexOverSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.2
+      outSlope: 0.2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 3
+      inSlope: 0.2
+      outSlope: 0.2
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  cascadeZSizeOverSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.95
+      inSlope: -0.065
+      outSlope: -0.065
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 0.3
+      inSlope: -0.065
+      outSlope: -0.065
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   tileOnCascadeLanding: {fileID: 891140212264022168, guid: 35c82b04e71c247bb95b514ceb1f8af8, type: 3}
   tileOnCascadeFastLanding: {fileID: 891140212264022168, guid: ff1f675cc39e1468287f1b3753efb999, type: 3}
   thresholdForFasterVFX: 2
