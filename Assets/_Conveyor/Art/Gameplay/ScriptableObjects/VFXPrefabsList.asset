@@ -13,31 +13,32 @@ MonoBehaviour:
   m_Name: VFXPrefabsList
   m_EditorClassIdentifier: 
   slinky: {fileID: 4431101046231782974, guid: d650cea5f23e84104a22334fe94a1b66, type: 3}
+  maxCycleCount: 10
   cascadeIndexOverSpeed:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
-      inSlope: 0.2
-      outSlope: 0.2
-      tangentMode: 34
+      value: 1.25
+      inSlope: 0.07989489
+      outSlope: 0.07989489
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.33333334
+      outWeight: 0.08265582
     - serializedVersion: 3
       time: 10
       value: 3
-      inSlope: 0.2
-      outSlope: 0.2
-      tangentMode: 34
+      inSlope: 0.29564
+      outSlope: 0.29564
+      tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.046070576
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  cascadeZSizeOverSpeed:
+  cascadeIndexOverZSize:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3

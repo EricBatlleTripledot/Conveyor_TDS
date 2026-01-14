@@ -116,13 +116,13 @@ Material:
     - _Icon_Rotation: 0
     - _Light_NormalRotate_Degrees: 156.8
     - _Light_Strength_Multiply: 0.7
-    - _Matcap_Add: 0
+    - _Matcap_Add: 0.1
     - _Matcap_Pow: 0.9
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PostCombine_Saturation: 1.5
+    - _PostCombine_Saturation: 1.2
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1

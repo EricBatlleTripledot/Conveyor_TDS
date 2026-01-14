@@ -18,8 +18,9 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [SerializeField]
         private AnimationCurve cascadeIndexOverSpeed;
         // where X == loop index, Y == Z Size (to thin the block mesh)
+        [FormerlySerializedAs("cascadeZSizeOverSpeed")]
         [SerializeField]
-        private AnimationCurve cascadeZSizeOverSpeed;
+        private AnimationCurve cascadeIndexOverZSize;
         [Space(10)]
         [SerializeField]
         private GameObject tileOnCascadeLanding;
@@ -41,7 +42,7 @@ namespace _Conveyor.Scripts.Gameplay.VFX
             var mainModule = system.main;
 
             var sizeZMinMax = mainModule.startSizeZ;
-            sizeZMinMax.constant = cascadeZSizeOverSpeed.Evaluate(index);
+            sizeZMinMax.constant = cascadeIndexOverZSize.Evaluate(index);
             mainModule.startSizeZ = sizeZMinMax;
             
             var simulationSpeed = cascadeIndexOverSpeed.Evaluate(index);
