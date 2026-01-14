@@ -272,7 +272,7 @@ namespace Game
                     
                     vfxSpawner.SpawnSlinky(
                         nextPos,
-                        nextView.ColorBlock.Direction.ToVector3Direction(),
+                        nextView.ColorBlock.Direction,
                         i,
                         material);
                 }

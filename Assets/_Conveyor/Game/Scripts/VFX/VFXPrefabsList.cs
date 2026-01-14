@@ -37,7 +37,7 @@ namespace _Conveyor.Scripts.Gameplay.VFX
 
         public GameObject Slinky => slinky;
 
-        public void ConfigureSlinkyForIndex(ParticleSystem system, int index)
+        public void ConfigureSlinkyForIndex(ParticleSystem system, int index, bool isGoingUp)
         {
             var mainModule = system.main;
 
@@ -51,6 +51,12 @@ namespace _Conveyor.Scripts.Gameplay.VFX
             var cycle = Mathf.Clamp(index + 1, 1, maxCycleCount);
             var burst = new ParticleSystem.Burst(0, 1, 1, cycle, 0.1f);
             system.emission.SetBurst(0, burst);
+
+            if (isGoingUp)
+            {
+                var systemRenderer = system.GetComponent<ParticleSystemRenderer>();
+                systemRenderer.sortMode = ParticleSystemSortMode.YoungestInFront;
+            }
         }
 
         public GameObject GetCascadeLandingVfx(int index) =>

@@ -1,3 +1,4 @@
+using Game;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,13 +9,13 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [SerializeField]
         private VFXPrefabsList prefabsList;
 
-        public void SpawnSlinky(Vector3 point, Vector3 direction, int cascadeIndex, Material colorParticleMaterial)
+        public void SpawnSlinky(Vector3 point, BlockDirection direction, int cascadeIndex, Material colorParticleMaterial)
         {
             var clone = Instantiate(prefabsList.Slinky, point, Quaternion.identity);
 
             clone.GetComponent<Renderer>().sharedMaterial = colorParticleMaterial;
-            prefabsList.ConfigureSlinkyForIndex(clone.GetComponent<ParticleSystem>(), cascadeIndex);
-            clone.transform.rotation = Quaternion.LookRotation(Vector3.down, direction);
+            prefabsList.ConfigureSlinkyForIndex(clone.GetComponent<ParticleSystem>(), cascadeIndex, direction == BlockDirection.Up);
+            clone.transform.rotation = Quaternion.LookRotation(Vector3.down, direction.ToVector3Direction());
 
             AwaitVfxAndReturn(clone);
         }
