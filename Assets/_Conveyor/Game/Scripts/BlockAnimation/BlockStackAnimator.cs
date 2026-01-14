@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
@@ -10,9 +11,13 @@ namespace Game.BlockAnimation
     /// </summary>
     public class BlockStackAnimator : MonoBehaviour
     {
+        private static readonly Vector3 GizmosBlockCubeSize = new (1, 0.3f, 1.06f);
+
         [Header("Stacking")]
         [SerializeField]
         private Transform stackContainer;
+        [SerializeField]
+        private Transform addedBlockOrigin;
         [SerializeField]
         private Transform stackOrigin;
         [SerializeField]
@@ -42,9 +47,33 @@ namespace Game.BlockAnimation
         private readonly List<Transform> currentStack = new();
         private readonly List<Sequence> activeSequences = new();
         private int activeTweens;
+        
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.white * 0.5f;
+            DrawSpacingGizmos();
+        }
+        
+        private void OnDrawGizmosSelected()
+        {
+            Gizmos.color = Color.white;
+            DrawSpacingGizmos();
+        }
+
+        void DrawSpacingGizmos()
+        {
+            var origin = transform.position;
+            for (int i = 0; i < 10; i++)
+            {
+                var point = stackOrigin.localPosition + (spacingPerTile * i);
+                Gizmos.DrawWireCube( origin + point, GizmosBlockCubeSize);
+            }
+        }
 
         public void AddToStack(Transform t)
         {
+            t.position = addedBlockOrigin.position;
+            
             currentStack.Insert(0, t);
             // atm this animator is written around localPositions, so change parent
             t.SetParent(stackContainer);

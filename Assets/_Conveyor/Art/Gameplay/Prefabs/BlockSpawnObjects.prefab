@@ -46,7 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stackAnimator: {fileID: 9173839470985816680}
-  launchInterval: 3
+  stackLabel: {fileID: 8474469207562452987}
+  launchInterval: 1
 --- !u!1001 &6497025264492326847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -65,7 +66,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2232665199512744385, guid: 6368375ee067b49eb881cd68eceac671, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: -0.09
       objectReference: {fileID: 0}
     - target: {fileID: 2232665199512744385, guid: 6368375ee067b49eb881cd68eceac671, type: 3}
       propertyPath: m_LocalPosition.z
@@ -109,6 +110,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2232665199512744385, guid: 6368375ee067b49eb881cd68eceac671, type: 3}
   m_PrefabInstance: {fileID: 6497025264492326847}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8474469207562452987 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3436614671999914052, guid: 6368375ee067b49eb881cd68eceac671, type: 3}
+  m_PrefabInstance: {fileID: 6497025264492326847}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9173839470985816680 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2700493375892391383, guid: 6368375ee067b49eb881cd68eceac671, type: 3}
