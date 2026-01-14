@@ -23,3 +23,14 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6ca7651ac3e454f4492534ceabe5b470, type: 2}
   - {fileID: 2100000, guid: 662d6f28c35e248588746a8dd5bbc4b5, type: 2}
   - {fileID: 2100000, guid: f44007f14754e4b6d8ee16390e66232c, type: 2}
+  particleMaterials:
+  - {fileID: 2100000, guid: 2e6306acfdb8e4737a3e9f6dd0b78eaa, type: 2}
+  - {fileID: 2100000, guid: 87ce88b01eaa04ec78f696b7ccc4e598, type: 2}
+  - {fileID: 2100000, guid: 23582bad13a754a25bc81df04ffedd86, type: 2}
+  - {fileID: 2100000, guid: ec5c071f7db54494cb440be51f3983be, type: 2}
+  - {fileID: 2100000, guid: cd28ff86184a945489a919eb658edf02, type: 2}
+  - {fileID: 2100000, guid: 9e5eb9cf4b1034be3b8d44d15fdfda8b, type: 2}
+  - {fileID: 2100000, guid: 0f8c88f5bccba4f2ebc9a4720912d368, type: 2}
+  - {fileID: 2100000, guid: f096ef646c9d74cb9a42f172deaf01aa, type: 2}
+  - {fileID: 2100000, guid: babb3273a585e4c30a5838820805dc93, type: 2}
+  - {fileID: 2100000, guid: 8b4c955075d1e47398a078ce67390ae9, type: 2}
