@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Game.BlockAnimation;
 using _Conveyor.Scripts.Gameplay.VFX;
+using Game.BlockRendering;
 using Game.MeshGeneration;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -37,6 +38,8 @@ namespace Game
         private BlockAnimationSettings tileAnimationSettings;
         [SerializeField]
         private GameVFXSpawner vfxSpawner;
+        [SerializeField]
+        private BlockMaterialsList materialsList;
         
         [Header("DEBUG")]
         [SerializeField]
@@ -262,12 +265,16 @@ namespace Game
 
                 HandleVfxAfterCascade(nextPos, i, count);
 
-                if (i < count - 2 && nextView)
+                // don't spawn into the finish animation
+                if (i < count - 2)
                 {
+                    var material = materialsList.GetMaterialForId(block.GetColorID(), true);
+                    
                     vfxSpawner.SpawnSlinky(
                         nextPos,
                         nextView.ColorBlock.Direction.ToVector3Direction(),
-                        i);
+                        i,
+                        material);
                 }
                 
                 gameGridView.DestroyGridBlockView(block);

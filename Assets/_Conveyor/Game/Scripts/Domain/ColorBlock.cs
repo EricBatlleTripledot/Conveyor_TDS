@@ -28,5 +28,17 @@ namespace Game
         {
             return $"ColorBlock_{color}_{position}_{direction}";
         }
+
+        public int GetColorID()
+        {
+            if (color == Color.red)
+                return 0;
+            if (color == Color.blue)
+                return 1;
+            if (color == Color.green)
+                return 2;
+
+            return 0;
+        }
     }
 }
