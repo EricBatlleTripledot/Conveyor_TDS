@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using _2025.ColourBlockArrowProto.Scripts;
+using Game.BlockAnimation;
 using UnityEngine;
 
 namespace Game
@@ -11,7 +11,7 @@ namespace Game
     public class BlockViewSpawnerView : MonoBehaviour
     {
         [SerializeField]
-        private TileSpawnerAnimator spawnerAnimator;
+        private BlockSpawnerAnimator spawnerAnimator;
         [SerializeField]
         private BlockViewStackView stackView;
 

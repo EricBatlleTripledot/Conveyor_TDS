@@ -1,6 +1,5 @@
-using System.Linq;
 using System.Threading.Tasks;
-using _2025.ColourBlockArrowProto.Scripts;
+using Game.BlockAnimation;
 using _Conveyor.Scripts.Gameplay.VFX;
 using Game.MeshGeneration;
 using UnityEngine;
@@ -35,7 +34,7 @@ namespace Game
         [SerializeField]
         private BlockViewStackView stackView;
         [SerializeField]
-        private ArrowTileAnimationSettings tileAnimationSettings;
+        private BlockAnimationSettings tileAnimationSettings;
         [SerializeField]
         private GameVFXSpawner vfxSpawner;
         

@@ -1,7 +1,5 @@
-﻿using System;
-using _2025.ColourBlockArrowProto.Scripts;
-using _Conveyor.Game.Scripts.TileRendering;
-using TMPro;
+﻿using Game.BlockAnimation;
+using Game.BlockRendering;
 using UnityEngine;
 
 namespace Game
@@ -15,18 +13,18 @@ namespace Game
 		[SerializeField]
 		private MeshRenderer meshRenderer;
 		[SerializeField]
-		private ArrowTileMotions tileMotions;
+		private BlockMotions tileMotions;
 		
 		[Header("ScriptableObjects")]
 		[SerializeField]
-		private ArrowTileAnimationSettings tileAnimationSettings;
+		private BlockAnimationSettings tileAnimationSettings;
 		[SerializeField]
-		private TileIconConfig viewIconConfig;
+		private BlockIconConfig viewIconConfig;
 
 		private MaterialPropertyBlock propertyBlock;
 
 		public ColorBlock ColorBlock => colorBlock;
-		public ArrowTileMotions TileMotions => tileMotions;
+		public BlockMotions TileMotions => tileMotions;
 
 		public bool IsCascading { get; set; }
 		public float LastRejectTime { get; private set; }
