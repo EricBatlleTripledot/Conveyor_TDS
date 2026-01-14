@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Block_Blue_AnimTest
-  m_Shader: {fileID: -6465566751694194690, guid: 1a3596aa3610240d2bf8091d1fe26b33, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: ea8c5059d641f4961b88a0fe65177e93, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
