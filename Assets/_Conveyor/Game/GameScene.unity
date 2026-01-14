@@ -4817,6 +4817,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 118057249}
     - target: {fileID: 7757832517730806372, guid: 3e29c3168669a814fbf946534f0b7119, type: 3}
+      propertyPath: materialsList
+      value: 
+      objectReference: {fileID: 11400000, guid: 41a85cafb41dc4a80a6d03ae0b87f89a, type: 2}
+    - target: {fileID: 7757832517730806372, guid: 3e29c3168669a814fbf946534f0b7119, type: 3}
       propertyPath: serializedLevel
       value: 
       objectReference: {fileID: 4900000, guid: a6e156d39531143688f706db214345cf, type: 3}
