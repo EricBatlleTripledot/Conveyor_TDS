@@ -1,11 +1,12 @@
-using System.Collections;
 using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace Game.Tests
 {
-    public class TestBlockMatchService
+    /// <summary>
+    /// Testing edge cases from: https://docs.google.com/spreadsheets/d/1yQJKqZnIYmdGgyvKn8rSLGFXwPmHYNEBoKNsugnpK30/edit?gid=0#gid=0
+    /// </summary>
+    public class TestBlockMatchEdgeCases
     {
         private BlockMatchService blockMatchService;
         private ResolveMatchUseCase resolveMatchUseCase;
@@ -181,7 +182,6 @@ namespace Game.Tests
             gameGrid.Set(new ColorBlock(new Vector2Int(2, 0), Color.green, BlockDirection.Right));
             var conveyorBlock = new ConveyorBlock(Color.green);
             var matchingBlock = gameGrid.Get(0, 0);
-            // ToDo: This is not working since it calculates the exit with previous blocks, not removing them while calculating
             var canMatch = blockMatchService.CanMatch(conveyorBlock, matchingBlock, gameGrid);
             Assert.IsTrue(canMatch);
             resolveMatchUseCase.Execute(gameGrid, matchingBlock);
