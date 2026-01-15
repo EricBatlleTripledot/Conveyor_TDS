@@ -1,6 +1,5 @@
-using System.Linq;
 using System.Threading.Tasks;
-using _2025.ColourBlockArrowProto.Scripts;
+using Game.BlockAnimation;
 using _Conveyor.Scripts.Gameplay.VFX;
 using Game.MeshGeneration;
 using UnityEngine;
@@ -18,6 +17,8 @@ namespace Game
         [Header("Hand")]
         [SerializeField]
         private HandView handView;
+        [SerializeField]
+        private int stackCapacity = 12;
 
         [Header("ConveyorBlockView")]
         [SerializeField]
@@ -31,11 +32,9 @@ namespace Game
         
         [Header("Animation/VFX")]
         [SerializeField]
-        private BlockViewSpawnerView spawnerView;
-        [SerializeField]
         private BlockViewStackView stackView;
         [SerializeField]
-        private ArrowTileAnimationSettings tileAnimationSettings;
+        private BlockAnimationSettings tileAnimationSettings;
         [SerializeField]
         private GameVFXSpawner vfxSpawner;
         
@@ -61,7 +60,7 @@ namespace Game
             conveyorBlockViewFactory = new ConveyorBlockViewFactory(conveyorBlockViewPrefab, splineContainer);
 
             var splineEval = splineContainer.GetNearestPointTo(stackView.StackPoint, 30);
-            stackView.Initialize(splineEval.Item1, splineEval.Item2);
+            stackView.Initialize(splineEval.Item1, splineEval.Item2, stackCapacity);
             
             handView.ColorSelected += OnHandColorSelected;
             
@@ -97,6 +96,11 @@ namespace Game
 
         private void OnHandColorSelected(HandButtonView handButtonView, Color color)
         {
+            if (!HasCapacityInStack())
+            {
+                return;
+            }
+            
             handButtonView.Clear();
             CreateConveyorBlockView(color);
             AddNextConveyorBlockButton();
@@ -112,29 +116,40 @@ namespace Game
         {
             if (Keyboard.current[Key.R].wasPressedThisFrame)
             {
-                CreateConveyorBlockView(Color.red);
+                if (HasCapacityInStack())
+                {
+                    CreateConveyorBlockView(Color.red);
+                }
                 return;
             }
             
             if (Keyboard.current[Key.B].wasPressedThisFrame)
             {
-                CreateConveyorBlockView(Color.blue);
+                if (HasCapacityInStack())
+                {
+                    CreateConveyorBlockView(Color.blue);
+                }
                 return;
             }
             
             if (Keyboard.current[Key.G].wasPressedThisFrame)
             {
-                CreateConveyorBlockView(Color.green);
+                if (HasCapacityInStack())
+                {
+                    CreateConveyorBlockView(Color.green);
+                }
                 return;
             }
         }
+
+        private bool HasCapacityInStack() => stackView.CapacityLeft > 0;
         
         private void CreateConveyorBlockView(Color color)
         {
             var conveyorBlockView = conveyorBlockViewFactory.Create(new ConveyorBlock(color));
             conveyorBlockView.GridBlockDetected += CheckBlockViewMatch;
-
-            spawnerView.AddBlockToSpawnQueue(color, conveyorBlockView);
+            
+            stackView.AddBlockToStack(conveyorBlockView);
         }
 
         private void CheckBlockViewMatch(ConveyorBlockView conveyorBlockView, GridBlockView gridBlockView)

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using _2025.ColourBlockArrowProto.Scripts;
+using Game.BlockAnimation;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -21,10 +21,10 @@ namespace Game
 		[SerializeField]
 		private MeshRenderer meshRenderer;
 		[SerializeField]
-		private ArrowTileMotions tileMotions;
+		private BlockMotions tileMotions;
 
 		public ConveyorBlock ConveyorBlock => conveyorBlock;
-		public ArrowTileMotions TileMotions => tileMotions;
+		public BlockMotions TileMotions => tileMotions;
 
 		public void Initialize(ConveyorBlock conveyorBlock, SplineContainer splineContainer)
 		{

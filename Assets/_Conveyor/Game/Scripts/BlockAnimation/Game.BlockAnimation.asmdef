@@ -1,13 +1,8 @@
 {
-    "name": "Game",
-    "rootNamespace": "Game",
+    "name": "Game.BlockAnimation",
+    "rootNamespace": "",
     "references": [
-        "Unity.TextMeshPro",
-        "Unity.Splines",
-        "Unity.InputSystem",
-        "Unity.Mathematics",
-        "Game.BlockAnimation",
-        "Game.BlockRendering"
+        "GUID:5acb9f6f7b6814e29b489cf8b472396a"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

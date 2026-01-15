@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
-using _2025.ColourBlockArrowProto.Scripts;
+using Game.BlockAnimation;
+using TMPro;
 using UnityEngine;
 
 namespace Game
@@ -10,13 +10,17 @@ namespace Game
     /// </summary>
     public class BlockViewStackView : MonoBehaviour
     {
+        private static readonly Vector3 GizmoCubeSize = new (1, 0.3f, 1.06f);
+
         private readonly List<ConveyorBlockView> stack = new();
 
         private Vector3 conveyorBeltTargetPoint;
         private float conveyorBeltSplineTime;
         
         [SerializeField]
-        private TileStackAnimator stackAnimator;
+        private BlockStackAnimator stackAnimator;
+        [SerializeField]
+        private TMP_Text stackLabel;
 
         public Vector3 StackPoint => stackAnimator.StackTopPoint;
         
@@ -25,13 +29,18 @@ namespace Game
         private float launchInterval = 1;
 
         private float ticker;
+        private int capacity;
 
-        private static readonly Vector3 GizmoCubeSize = new (1, 0.25f, 1);
+        public int CurrentStackCount => stack.Count;
+        public int CapacityLeft => capacity - CurrentStackCount;
 
-        public void Initialize(Vector3 beltPoint, float beltTime)
+        public void Initialize(Vector3 beltPoint, float beltTime, int capacity)
         {
             conveyorBeltTargetPoint = beltPoint;
             conveyorBeltSplineTime = beltTime;
+            this.capacity = capacity;
+            
+            UpdateLabel();
         }
         
         private void OnDrawGizmosSelected()
@@ -49,6 +58,12 @@ namespace Game
             stackAnimator.AddToStack(conveyorBlockView.transform);
             
             stackAnimator.DoStackJump();
+            UpdateLabel();
+        }
+
+        private void UpdateLabel()
+        {
+            stackLabel.text = $"{CurrentStackCount}/{capacity}";
         }
         
         private void Update()
@@ -66,6 +81,8 @@ namespace Game
                     launchingView.Launch(conveyorBeltTargetPoint, conveyorBeltSplineTime);
                     stackAnimator.DoStackJumpWithDelay();
 
+                    UpdateLabel();
+                    
                     ticker = launchInterval;
                 }
             }
