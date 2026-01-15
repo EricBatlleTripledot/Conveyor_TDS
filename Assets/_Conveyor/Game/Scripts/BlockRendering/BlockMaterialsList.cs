@@ -13,12 +13,10 @@ namespace Game.BlockRendering
     {
         [SerializeField]
         private Material[] materials;
-        [SerializeField]
-        private Material[] particleMaterials;
 
-        public Material GetMaterialForId(int colorId, bool particleShader)
+        public Material GetMaterialForId(int colorId)
         {
-            return particleShader ? particleMaterials[colorId] : materials[colorId];
+            return materials[colorId];
         }
     }
 }

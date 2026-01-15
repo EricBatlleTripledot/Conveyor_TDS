@@ -268,13 +268,11 @@ namespace Game
                 // don't spawn into the finish animation
                 if (i < count - 2)
                 {
-                    var material = materialsList.GetMaterialForId(block.GetColorID(), true);
-                    
                     vfxSpawner.SpawnSlinky(
                         nextPos,
                         nextView.ColorBlock.Direction,
                         i,
-                        material);
+                        block.Color);
                 }
                 
                 gameGridView.DestroyGridBlockView(block);

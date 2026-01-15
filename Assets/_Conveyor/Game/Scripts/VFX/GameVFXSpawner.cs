@@ -9,11 +9,14 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [SerializeField]
         private VFXPrefabsList prefabsList;
 
-        public void SpawnSlinky(Vector3 point, BlockDirection direction, int cascadeIndex, Material colorParticleMaterial)
+        public void SpawnSlinky(Vector3 point, BlockDirection direction, int cascadeIndex, Color blockColor)
         {
             var clone = Instantiate(prefabsList.Slinky, point, Quaternion.identity);
 
-            clone.GetComponent<Renderer>().sharedMaterial = colorParticleMaterial;
+            var propertyBlock = new MaterialPropertyBlock();
+            propertyBlock.SetColor("_Color", blockColor);
+            clone.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(propertyBlock);
+            
             prefabsList.ConfigureSlinkyForIndex(clone.GetComponent<ParticleSystem>(), cascadeIndex, direction == BlockDirection.Up);
             clone.transform.rotation = Quaternion.LookRotation(Vector3.down, direction.ToVector3Direction());
 

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Block_Yellow_Particle
+  m_Name: Block_Particle
   m_Shader: {fileID: -6465566751694194690, guid: ea8c5059d641f4961b88a0fe65177e93, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -20,7 +20,7 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _IconTex
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -52,13 +52,13 @@ Material:
     m_Floats:
     - _Body_Add: 0
     - _Icon_Rotation: 0
-    - _Matcap_Add: 0.3
+    - _Matcap_Add: 0.1
     - _Matcap_Pow: 0.9
     - _PostCombine_Saturation: 1.2
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 1, g: 0.80576324, b: 0, a: 0}
+    - _Color: {r: 0.745283, g: 0.745283, b: 0.745283, a: 0}
     - _Color_Emissive: {r: 0, g: 0, b: 0, a: 0}
     - _Icon_Offset: {r: -1.05, g: -0.25, b: 0, a: 0}
     - _Icon_Tiling: {r: 3, g: 1.63, b: 0, a: 0}
