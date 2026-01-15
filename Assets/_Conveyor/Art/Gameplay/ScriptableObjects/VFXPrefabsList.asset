@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25f66bf281c416c9f28216ca98583e0, type: 3}
   m_Name: VFXPrefabsList
   m_EditorClassIdentifier: 
-  slinky: {fileID: 4431101046231782974, guid: d650cea5f23e84104a22334fe94a1b66, type: 3}
+  slinky: {fileID: 1843596971942815691, guid: d650cea5f23e84104a22334fe94a1b66, type: 3}
   maxCycleCount: 10
   cascadeIndexOverSpeed:
     serializedVersion: 2
@@ -37,7 +37,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 2
-      value: 1.501337
+      value: 1.6076603
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -46,7 +46,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 3
-      value: 1.8641026
+      value: 1.8330662
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 3.9864502
-      value: 2.0891025
+      value: 2.035941
       inSlope: 0
       outSlope: 0
       tangentMode: 0

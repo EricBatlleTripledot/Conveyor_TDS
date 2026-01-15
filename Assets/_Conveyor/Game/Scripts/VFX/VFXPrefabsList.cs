@@ -11,7 +11,7 @@ namespace _Conveyor.Scripts.Gameplay.VFX
     {
         [Header("Cascade VFX")]
         [SerializeField]
-        private GameObject slinky;
+        private VfxReferences slinky;
         [SerializeField]
         private int maxCycleCount = 10;
         // where X == loop index, Y == Simulation Speed
@@ -35,9 +35,9 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [SerializeField]
         private GameObject tileOnHideShortCascade;
 
-        public GameObject Slinky => slinky;
+        public VfxReferences Slinky => slinky;
 
-        public void ConfigureSlinkyForIndex(ParticleSystem system, int index, bool isGoingUp)
+        public void ConfigureSlinkyForIndex(ParticleSystem system, ParticleSystemRenderer systemRenderer, int index, bool isGoingUp)
         {
             var mainModule = system.main;
 
@@ -54,7 +54,6 @@ namespace _Conveyor.Scripts.Gameplay.VFX
 
             if (isGoingUp)
             {
-                var systemRenderer = system.GetComponent<ParticleSystemRenderer>();
                 systemRenderer.sortMode = ParticleSystemSortMode.YoungestInFront;
             }
         }

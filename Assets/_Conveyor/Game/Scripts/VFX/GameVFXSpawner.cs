@@ -15,12 +15,12 @@ namespace _Conveyor.Scripts.Gameplay.VFX
 
             var propertyBlock = new MaterialPropertyBlock();
             propertyBlock.SetColor("_Color", blockColor);
-            clone.GetComponent<ParticleSystemRenderer>().SetPropertyBlock(propertyBlock);
+            clone.Renderer.SetPropertyBlock(propertyBlock);
             
-            prefabsList.ConfigureSlinkyForIndex(clone.GetComponent<ParticleSystem>(), cascadeIndex, direction == BlockDirection.Up);
+            prefabsList.ConfigureSlinkyForIndex(clone.System, clone.Renderer, cascadeIndex, direction == BlockDirection.Up);
             clone.transform.rotation = Quaternion.LookRotation(Vector3.down, direction.ToVector3Direction());
 
-            AwaitVfxAndReturn(clone);
+            AwaitVfxAndReturn(clone.gameObject);
         }
         
         public void SpawnCascadeLanding(Vector3 point, int cascadeIndex)

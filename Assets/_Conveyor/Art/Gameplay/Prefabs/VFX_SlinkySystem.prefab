@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8886062842950691425}
   - component: {fileID: 885527428067142001}
   - component: {fileID: 740560742197690972}
+  - component: {fileID: 1843596971942815691}
   m_Layer: 0
   m_Name: VFX_SlinkySystem
   m_TagString: Untagged
@@ -1371,7 +1372,7 @@ ParticleSystem:
         key1: {r: 1, g: 1, b: 1, a: 0.50980395}
         key2: {r: 0, g: 0, b: 0, a: 0.078431375}
         key3: {r: 0, g: 0, b: 0, a: 0}
-        key4: {r: 0, g: 0, b: 0, a: 0.039215684}
+        key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
@@ -1386,8 +1387,8 @@ ParticleSystem:
         atime0: 0
         atime1: 13107
         atime2: 45875
-        atime3: 57825
-        atime4: 59367
+        atime3: 58982
+        atime4: 58982
         atime5: 0
         atime6: 0
         atime7: 0
@@ -4933,3 +4934,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainParticleSystem: {fileID: 8886062842950691425}
   checkChildrenAreAlive: 1
+--- !u!114 &1843596971942815691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4431101046231782974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e029982ee0b43a69e5615ddd21125b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  system: {fileID: 8886062842950691425}
+  systemRenderer: {fileID: 885527428067142001}
