@@ -16,7 +16,7 @@ namespace Game
         public Vector2Int Position => position;
         public Color Color => color;
         public BlockDirection Direction => direction;
-
+        
         public ColorBlock(Vector2Int position, Color color, BlockDirection direction)
         {
             this.position = position;

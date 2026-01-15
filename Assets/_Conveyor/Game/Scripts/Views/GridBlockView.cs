@@ -1,23 +1,41 @@
-﻿using TMPro;
+﻿using Game.BlockAnimation;
+using Game.BlockRendering;
 using UnityEngine;
 
 namespace Game
 {
-	[RequireComponent(typeof(MeshRenderer))]
 	public class GridBlockView : MonoBehaviour
 	{
+		private static readonly int ColorID = Shader.PropertyToID("_Color");
+		
 		[SerializeField]
 		private ColorBlock colorBlock;
 		[SerializeField]
-		private TextMeshPro text;
-		[SerializeField]
 		private MeshRenderer meshRenderer;
+		[SerializeField]
+		private BlockMotions tileMotions;
+		
+		[Header("ScriptableObjects")]
+		[SerializeField]
+		private BlockAnimationSettings tileAnimationSettings;
+		[SerializeField]
+		private BlockIconConfig viewIconConfig;
+
+		private MaterialPropertyBlock propertyBlock;
 
 		public ColorBlock ColorBlock => colorBlock;
+		public BlockMotions TileMotions => tileMotions;
+
+		public bool IsCascading { get; set; }
+		public float LastRejectTime { get; private set; }
+
+		private float RejectThreshold => Time.timeSinceLevelLoad - tileAnimationSettings.RejectOnBoardDuration;
 
 		public void Initialize(ColorBlock colorBlock)
 		{
 			this.colorBlock = colorBlock;
+			tileMotions.Initialise();
+			
 			UpdateView(colorBlock);
 		}
 
@@ -25,13 +43,34 @@ namespace Game
 		{
 			Destroy(gameObject);
 		}
-
+		
 		private void UpdateView(ColorBlock colorBlock)
 		{
-			var propertyBlock = new MaterialPropertyBlock();
-			propertyBlock.SetColor("_BaseColor", colorBlock.Color);
+			propertyBlock = new MaterialPropertyBlock();
+			propertyBlock.SetColor(ColorID, colorBlock.Color);
+			viewIconConfig.SetupPropertyBlockForArrow(propertyBlock, (int)colorBlock.Direction);
+			
 			meshRenderer.SetPropertyBlock(propertyBlock);
-			text.text = this.colorBlock.Direction.ToSymbolString();
+		}
+
+		public void UpdateViewForCascade()
+		{
+			viewIconConfig.SetupPropertyBlockForArrow(propertyBlock, (int)BlockDirection.Right);
+			meshRenderer.SetPropertyBlock(propertyBlock);
+
+			transform.eulerAngles = colorBlock.Direction.ToEuler();
+		}
+
+		public void DoRejectShake()
+		{
+			if (LastRejectTime >= RejectThreshold)
+			{
+				return;
+			}
+			
+			LastRejectTime = Time.timeSinceLevelLoad;
+			
+			tileMotions.DoRejectOnBoard();
 		}
 	}
 }

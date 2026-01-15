@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Game.BlockAnimation;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -6,7 +8,6 @@ namespace Game
 {
 	[RequireComponent(typeof(AlignedObjectRaycaster))]
 	[RequireComponent(typeof(SplineAnimate))]
-	[RequireComponent(typeof(MeshRenderer))]
 	public class ConveyorBlockView : MonoBehaviour
 	{
 		public event Action<ConveyorBlockView, GridBlockView> GridBlockDetected;
@@ -19,19 +20,29 @@ namespace Game
 		private SplineAnimate splineAnimate;
 		[SerializeField]
 		private MeshRenderer meshRenderer;
+		[SerializeField]
+		private BlockMotions tileMotions;
 
 		public ConveyorBlock ConveyorBlock => conveyorBlock;
+		public BlockMotions TileMotions => tileMotions;
 
 		public void Initialize(ConveyorBlock conveyorBlock, SplineContainer splineContainer)
 		{
 			this.conveyorBlock = conveyorBlock;
 			splineAnimate.Container = splineContainer;
+			tileMotions.Initialise();
 			SetColor(conveyorBlock.Color);
 		}
 
-		public void Launch()
+		public async Task Launch(Vector3 point, float splineTime)
 		{
+			await TileMotions.DoMoveOntoBelt(point).AsyncWaitForCompletion();
+			// the animation of the launch lasts longer than the tween
+			await TileMotions.WaitForAnimation();
+
+			splineAnimate.StartOffset = splineTime;
 			splineAnimate.Play();
+
 			alignedObjectRaycaster.EnableRaycasting = true;
 		}
 
@@ -61,8 +72,25 @@ namespace Game
 		private void SetColor(Color color)
 		{
 			var propertyBlock = new MaterialPropertyBlock();
-			propertyBlock.SetColor("_BaseColor", color);
+			propertyBlock.SetColor("_Color", color);
 			meshRenderer.SetPropertyBlock(propertyBlock);
+		}
+
+		public void ToggleSplineMovement(bool value)
+		{
+			if (value)
+			{
+				splineAnimate.Play();
+			}
+			else
+			{
+				splineAnimate.Pause();
+			}
+		}
+
+		public void ToggleDetection(bool value)
+		{
+			alignedObjectRaycaster.EnableRaycasting = value;
 		}
 	}
 }

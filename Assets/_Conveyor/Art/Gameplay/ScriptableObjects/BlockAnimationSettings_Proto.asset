@@ -1,0 +1,354 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b629e8bd874947a9a931431eec1d011d, type: 3}
+  m_Name: BlockAnimationSettings_Proto
+  m_EditorClassIdentifier: 
+  initClipName: Block_Init
+  fromStackToBeltMotion:
+    duration: 0.25
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.42597258
+        value: 0.50856185
+        inSlope: 2.6763144
+        outSlope: 2.6763144
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.11509842
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    clipName: Block_Move_OntoBelt
+  fromBeltToBoardMotion:
+    duration: 0.5
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 2.880937
+        outSlope: 2.880937
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.06579498
+      - serializedVersion: 3
+        time: 0.36
+        value: 0.60919493
+        inSlope: 0.51597834
+        outSlope: 0.51597834
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.3102526
+      - serializedVersion: 3
+        time: 0.6013428
+        value: 0.9573113
+        inSlope: 0.26680467
+        outSlope: 0.26680467
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.2594115
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    clipName: Block_Move_OntoBoard
+  fromBeltToRejectDuration: 0.28
+  fromRejectToBeltDuration: 0.4
+  postRejectIdle: 0.28
+  fromBeltToRejectMoveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fromRejectToBeltMoveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.07318095
+      value: 0.16436315
+      inSlope: 0.004941055
+      outSlope: 0.004941055
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.20053911
+      value: 0.05933053
+      inSlope: 0.024092766
+      outSlope: 0.024092766
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.28973302
+      value: 0.18368512
+      inSlope: 0.62107974
+      outSlope: 0.62107974
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.4563405
+      value: 0.121810794
+      inSlope: 0.13337283
+      outSlope: 0.13337283
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.15399614
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  fromBeltToRejectClipName: Block_Move_OntoBoard_Rejection
+  rejectOnBoardDuration: 0.25
+  rejectOnBoardStrength: 0.15
+  rejectOnBoardVibrato: 40
+  cascadeMotions:
+  - duration: 0.5
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    clipName: Block_Move_Cascade1
+  - duration: 0.4
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    clipName: Block_Move_Cascade2
+  - duration: 0.25
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    clipName: Block_Move_Cascade3
+  - duration: 0.2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 1.7949587
+        outSlope: 1.7949587
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.043360434
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0.5801885
+        outSlope: 0.5801885
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.07317072
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    clipName: Block_Move_Cascade4
+  finalCascadeMotion:
+    duration: 0.66
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 3.1027482
+        outSlope: 3.1027482
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.031165311
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    clipName: Block_Move_CascadeFinish
+  thresholdForShorterCascadeFinishMotion: 1
+  finalCascadeLowThresholdMotion:
+    duration: 0.53
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 3.4811318
+        outSlope: 3.4811318
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.028455285
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    clipName: Block_Move_CascadeFinish_1Tile
+  finalCascadeJumpDistance: 0.75
+  preEmptDelayPerIndex: 0.05
+  preEmptClipDirectionNames:
+  - Block_PreEmpt_Up_Cascade
+  - Block_PreEmpt_Down_Cascade
+  - Block_PreEmpt_Left_Cascade
+  - Block_PreEmpt_Right_Cascade

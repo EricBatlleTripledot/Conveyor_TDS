@@ -5,7 +5,9 @@
         "Unity.TextMeshPro",
         "Unity.Splines",
         "Unity.InputSystem",
-        "Unity.Mathematics"
+        "Unity.Mathematics",
+        "Game.BlockAnimation",
+        "Game.BlockRendering"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

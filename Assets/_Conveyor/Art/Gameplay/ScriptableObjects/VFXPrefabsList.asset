@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25f66bf281c416c9f28216ca98583e0, type: 3}
+  m_Name: VFXPrefabsList
+  m_EditorClassIdentifier: 
+  tileOnCascadeLanding: {fileID: 891140212264022168, guid: 35c82b04e71c247bb95b514ceb1f8af8, type: 3}
+  tileOnCascadeFastLanding: {fileID: 891140212264022168, guid: ff1f675cc39e1468287f1b3753efb999, type: 3}
+  thresholdForFasterVFX: 2
+  tileOnHide: {fileID: 891140212264022168, guid: 9a2ee1e0d6b924b2a9696b1e668618d0, type: 3}
+  tileOnHideShortCascade: {fileID: 891140212264022168, guid: 71b15ca85b6744a4b94d55b7d4175533, type: 3}
