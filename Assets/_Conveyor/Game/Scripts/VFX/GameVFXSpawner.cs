@@ -12,13 +12,23 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         public void SpawnStackedBlock(Transform blockView, int cascadeIndex, Color blockColor)
         {
             var clone = Instantiate(prefabsList.StackingBlock, blockView);
-
-            var pos = prefabsList.HeightPerStackedBlock * cascadeIndex * Vector3.up;
-            clone.transform.localPosition = pos;
             
             var propertyBlock = new MaterialPropertyBlock();
             propertyBlock.SetColor("_Color", blockColor);
             clone.Renderer.SetPropertyBlock(propertyBlock);
+            
+            //var pos = prefabsList.HeightPerStackedBlock * cascadeIndex * Vector3.up;
+            //clone.transform.localPosition = pos;
+
+            for (int i = 0; i <= cascadeIndex; i++)
+            {
+                var blockEmit = new ParticleSystem.EmitParams
+                {
+                    position = prefabsList.HeightPerStackedBlock * i * Vector3.up,
+                };
+
+                clone.System.Emit(blockEmit, 1);
+            }
             
             AwaitVfxAndReturn(clone.gameObject);
         }
