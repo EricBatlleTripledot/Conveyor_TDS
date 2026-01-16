@@ -11,6 +11,8 @@ namespace Game
 		[SerializeField]
 		private GridBlockView gridBlockViewPrefab;
 		[SerializeField]
+		private GameObject gridSpacePrefab;
+		[SerializeField]
 		private Transform gridTransform;
 		[SerializeField]
 		private Vector2 gridSpacing = Vector2.one;
@@ -48,7 +50,11 @@ namespace Game
 				}
 				var gridBlockView = InstantiateBlock(colorBlock);
 				blockViews.Add(gridBlockView);
+
+
 			}
+
+			InstantiateSpaces(gameGrid);
 
 			return blockViews;
 		}
@@ -60,6 +66,22 @@ namespace Game
 			gridBlockView.gameObject.transform.position = new Vector3(colorBlock.Position.x * gridSpacing.x + offset.x, 0, colorBlock.Position.y * gridSpacing.y + offset.y);
 			gridBlockView.Initialize(colorBlock);
 			return gridBlockView;
+		}
+		
+		private void InstantiateSpaces(GameGrid gameGrid)
+		{
+			var w = gameGrid.Width;
+			var h = gameGrid.Height;
+
+			for (int x = 0; x < w; x++)
+			{
+				for (int y = 0; y < h; y++)
+				{
+					var space = Instantiate(gridSpacePrefab, gridTransform);
+					space.gameObject.name = $"Space_{x}_{y}";
+					space.gameObject.transform.position = new Vector3(x * gridSpacing.x + offset.x, 0, y * gridSpacing.y + offset.y);
+				}
+			}
 		}
 	}
 }
