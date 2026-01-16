@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: VFXPrefabsList
   m_EditorClassIdentifier: 
   stackingFakeBlock: {fileID: 1843596971942815691, guid: d650cea5f23e84104a22334fe94a1b66, type: 3}
+  vanishingStackingFakeBlock: {fileID: 1843596971942815691, guid: 5762d7a7aeeaa49b8b75f1181fd668c9, type: 3}
   heightPerStackedBlock: -0.22
   firstCascadeIndexOffset: 1
   indexOffset: 1.5

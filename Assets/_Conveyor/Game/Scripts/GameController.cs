@@ -273,6 +273,13 @@ namespace Game
                         i,
                         block.Color);
                 }
+                else
+                {
+                    vfxSpawner.SpawnVanishingStackedBlock(
+                        view.transform.position,
+                        i,
+                        block.Color);
+                }
                 // call the next view to move upwards to meet this moving view
                 if (nextView)
                 {

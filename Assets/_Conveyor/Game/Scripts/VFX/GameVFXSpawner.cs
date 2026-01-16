@@ -31,6 +31,28 @@ namespace _Conveyor.Scripts.Gameplay.VFX
             AwaitVfxAndReturn(clone.gameObject);
         }
         
+        public void SpawnVanishingStackedBlock(Vector3 point, int cascadeIndex, Color blockColor)
+        {
+            var clone = Instantiate(prefabsList.VanishingStackingFakeBlock, point, Quaternion.identity);
+            
+            var propertyBlock = new MaterialPropertyBlock();
+            propertyBlock.SetColor("_Color", blockColor);
+            clone.Renderer.SetPropertyBlock(propertyBlock);
+
+            for (int i = 0; i <= cascadeIndex; i++)
+            {
+                var blockEmit = new ParticleSystem.EmitParams
+                {
+                    position = prefabsList.HeightPerStackedBlock * (i + prefabsList.IndexOffset) * Vector3.up,
+                    startLifetime = 0.6f + (i * 0.1f)
+                };
+
+                clone.System.Emit(blockEmit, 1);
+            }
+            
+            AwaitVfxAndReturn(clone.gameObject);
+        }
+        
         public void SpawnCascadeLanding(Vector3 point, int cascadeIndex)
         {
             var prefab = prefabsList.GetCascadeLandingVfx(cascadeIndex);

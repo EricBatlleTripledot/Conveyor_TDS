@@ -13,6 +13,8 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [SerializeField]
         private VfxReferences stackingFakeBlock;
         [SerializeField]
+        private VfxReferences vanishingStackingFakeBlock;
+        [SerializeField]
         private float heightPerStackedBlock = -0.212f;
         // in order to not clip the particle with the incoming Block,
         // I offset the index to get heightPerStackedBlock * (index + offset),
@@ -37,6 +39,7 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         private GameObject tileOnHideShortCascade;
 
         public VfxReferences StackingBlock => stackingFakeBlock;
+        public VfxReferences VanishingStackingFakeBlock => vanishingStackingFakeBlock;
         public float HeightPerStackedBlock => heightPerStackedBlock;
         public float FirstCascadeIndexOffset => firstCascadeIndexOffset;
         public float IndexOffset => indexOffset;
