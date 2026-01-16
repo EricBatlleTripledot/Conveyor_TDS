@@ -264,22 +264,24 @@ namespace Game
                 var tween = view.TileMotions.DoCascade(nextPos, i, isFinalInCascade);
                 view.UpdateViewForCascade();
 
+                // spawn the stack underneath this view
+                // but don't spawn into the finish animation
+                if (i < count - 1)
+                {
+                    vfxSpawner.SpawnStackedBlock(
+                        view.transform,
+                        i,
+                        block.Color);
+                }
+                // call the next view to move upwards to meet this moving view
                 if (nextView)
                 {
                     nextView.TileMotions.DoMoveToPrepareForCascade(i);
                 }
+                
                 await tween.AsyncWaitForCompletion();
 
                 HandleVfxAfterCascade(nextPos, i, count);
-
-                // don't spawn into the finish animation
-                if (i < count - 2)
-                {
-                    vfxSpawner.SpawnStackedBlock(
-                        nextView.transform,
-                        i,
-                        block.Color);
-                }
                 
                 gameGridView.DestroyGridBlockView(block);
             }

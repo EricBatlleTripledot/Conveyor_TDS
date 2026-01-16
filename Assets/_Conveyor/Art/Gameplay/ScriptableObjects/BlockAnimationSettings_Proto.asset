@@ -345,6 +345,7 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     clipName: Block_Move_CascadeFinish_1Tile
+  heightAddPerCascade: 0.22
   finalCascadeJumpDistance: 0.75
   preEmptDelayPerIndex: 0.05
   preEmptClipDirectionNames:

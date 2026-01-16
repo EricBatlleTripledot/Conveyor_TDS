@@ -24,7 +24,7 @@ namespace _Conveyor.Scripts.Gameplay.VFX
             {
                 var blockEmit = new ParticleSystem.EmitParams
                 {
-                    position = prefabsList.HeightPerStackedBlock * i * Vector3.up,
+                    position = prefabsList.HeightPerStackedBlock * (i + 0.5f) * Vector3.up,
                 };
 
                 clone.System.Emit(blockEmit, 1);
