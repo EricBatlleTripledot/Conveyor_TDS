@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stackingFakeBlock: {fileID: 1843596971942815691, guid: d650cea5f23e84104a22334fe94a1b66, type: 3}
   heightPerStackedBlock: -0.22
+  firstCascadeIndexOffset: 1
+  indexOffset: 1.5
   tileOnCascadeLanding: {fileID: 891140212264022168, guid: 35c82b04e71c247bb95b514ceb1f8af8, type: 3}
   tileOnCascadeFastLanding: {fileID: 891140212264022168, guid: ff1f675cc39e1468287f1b3753efb999, type: 3}
   thresholdForFasterVFX: 2

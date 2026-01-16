@@ -14,6 +14,14 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         private VfxReferences stackingFakeBlock;
         [SerializeField]
         private float heightPerStackedBlock = -0.212f;
+        // in order to not clip the particle with the incoming Block,
+        // I offset the index to get heightPerStackedBlock * (index + offset),
+        // this first value is for the first cascade, so that the particle doesn't vanish under the floor
+        [SerializeField]
+        private float firstCascadeIndexOffset = 0.5f;
+        // and this second value if for index 1+ onwards
+        [SerializeField]
+        private float indexOffset = 1.5f;
         [Space(10)]
         [SerializeField]
         private GameObject tileOnCascadeLanding;
@@ -30,6 +38,8 @@ namespace _Conveyor.Scripts.Gameplay.VFX
 
         public VfxReferences StackingBlock => stackingFakeBlock;
         public float HeightPerStackedBlock => heightPerStackedBlock;
+        public float FirstCascadeIndexOffset => firstCascadeIndexOffset;
+        public float IndexOffset => indexOffset;
 
         public GameObject GetCascadeLandingVfx(int index) =>
             index >= thresholdForFasterVFX ? tileOnCascadeFastLanding : tileOnCascadeLanding;

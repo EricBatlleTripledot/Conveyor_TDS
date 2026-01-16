@@ -16,15 +16,13 @@ namespace _Conveyor.Scripts.Gameplay.VFX
             var propertyBlock = new MaterialPropertyBlock();
             propertyBlock.SetColor("_Color", blockColor);
             clone.Renderer.SetPropertyBlock(propertyBlock);
-            
-            //var pos = prefabsList.HeightPerStackedBlock * cascadeIndex * Vector3.up;
-            //clone.transform.localPosition = pos;
 
+            var offset = cascadeIndex == 0 ? prefabsList.FirstCascadeIndexOffset : prefabsList.IndexOffset;
             for (int i = 0; i <= cascadeIndex; i++)
             {
                 var blockEmit = new ParticleSystem.EmitParams
                 {
-                    position = prefabsList.HeightPerStackedBlock * (i + 0.5f) * Vector3.up,
+                    position = prefabsList.HeightPerStackedBlock * (i + offset) * Vector3.up,
                 };
 
                 clone.System.Emit(blockEmit, 1);

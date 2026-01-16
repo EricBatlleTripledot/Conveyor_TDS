@@ -56,8 +56,8 @@ namespace Game.BlockAnimation
 
         public Tween DoMoveToPrepareForCascade(int cascadeIndex)
         {
-            cascadeIndex += 1;
-            var pos = transform.position + animationSettings.GetOffsetPerCascade(cascadeIndex);
+            // get position above the stack, under the incoming block
+            var pos = transform.position + animationSettings.GetOffsetPerCascade(cascadeIndex + 1);
             var i = Mathf.Clamp(cascadeIndex, 0, animationSettings.CascadeMotions.Length - 1);
 
             return transform.DOMove(pos, animationSettings.CascadeMotions[i].duration)
@@ -67,7 +67,7 @@ namespace Game.BlockAnimation
         public Tween DoCascade(Vector3 point, int cascadeIndex, bool isFinal)
         {
             // add one so that this block moves on-top-of the next block
-            point += animationSettings.GetOffsetPerCascade(cascadeIndex + 1);
+            point += animationSettings.GetOffsetPerCascade(cascadeIndex + 2);
             
             var i = Mathf.Clamp(cascadeIndex, 0, animationSettings.CascadeMotions.Length - 1);
             if (isFinal)
