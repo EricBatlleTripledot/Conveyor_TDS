@@ -45,6 +45,7 @@ namespace Game
         private readonly BlockMatchService blockMatchService = new BlockMatchService();
         private readonly HandSaveMapper handSaveMapper = new HandSaveMapper();
         private readonly IRandomProvider randomProvider = new UnityRandomProvider();
+        private readonly FrameRateService frameRateService = new FrameRateService();
 
         private LevelImporter levelImporter;
         private ConveyorBlockViewFactory conveyorBlockViewFactory;
@@ -59,6 +60,8 @@ namespace Game
             handService = new HandService(randomProvider);
             conveyorBlockViewFactory = new ConveyorBlockViewFactory(conveyorBlockViewPrefab, splineContainer);
 
+            frameRateService.SetTargetFrameRate();
+            
             var splineEval = splineContainer.GetNearestPointTo(stackView.StackPoint, 30);
             stackView.Initialize(splineEval.Item1, splineEval.Item2, stackCapacity);
             
