@@ -53,6 +53,14 @@ namespace Game.BlockAnimation
                 .OnKill(() => transform.position = originalPosition)
                 .OnComplete(() => transform.position = originalPosition);
         }
+
+        public void DoChainBlocker()
+        {
+            if (!string.IsNullOrEmpty(animationSettings.ChainBlockerClipName))
+            {
+                animator.Play(animationSettings.ChainBlockerClipName);
+            }
+        }
         
         public Tween DoCascade(Vector3 point, int cascadeIndex, bool isFinal)
         {

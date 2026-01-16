@@ -72,5 +72,10 @@ namespace Game
 			
 			tileMotions.DoRejectOnBoard();
 		}
+
+		public void DoChainBlocker()
+		{
+			tileMotions.DoChainBlocker();
+		}
 	}
 }

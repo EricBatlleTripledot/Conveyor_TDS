@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.BlockAnimation
 {
@@ -56,6 +57,10 @@ namespace Game.BlockAnimation
         [SerializeField]
         private int rejectOnBoardVibrato = 10;
         
+        [Header("Chain-Blocking Animation")]
+        [SerializeField]
+        private string chainBlockerClipName = "Block_Reject";
+        
         [Header("Cascade Animation")]
         // treated as an array of options to play through and repeat the last one until done,
         // if the cascade ends before this array is done, we always play the finish motion instead
@@ -97,6 +102,8 @@ namespace Game.BlockAnimation
         public float RejectOnBoardDuration => rejectOnBoardDuration;
         public float RejectOnBoardStrength => rejectOnBoardStrength;
         public int RejectOnBoardVibrato => rejectOnBoardVibrato;
+
+        public string ChainBlockerClipName => chainBlockerClipName;
 
         public BlockMotionConfig[] CascadeMotions => cascadeMotions;
         public BlockMotionConfig FinalCascadeMotion => finalCascadeMotion;

@@ -166,6 +166,9 @@ namespace Game
             var canMatch = blockMatchService.CanMatch(conveyorBlockView.ConveyorBlock, gridBlockView.ColorBlock, level.Grid);
             if (!canMatch)
             {
+                // todo: find the block that is blocking this chain,
+                // and call that view to DoChainBlocker() animation
+                
                 CheckAndPerformRejectAnim(conveyorBlockView, gridBlockView);
                 return;
             }

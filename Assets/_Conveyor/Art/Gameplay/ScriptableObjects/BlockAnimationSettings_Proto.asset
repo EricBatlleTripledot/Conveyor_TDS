@@ -185,6 +185,7 @@ MonoBehaviour:
   rejectOnBoardDuration: 0.25
   rejectOnBoardStrength: 0.15
   rejectOnBoardVibrato: 40
+  chainBlockerClipName: Block_Reject
   cascadeMotions:
   - duration: 0.5
     curve:
