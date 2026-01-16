@@ -56,6 +56,8 @@ namespace Game.BlockAnimation
         
         public Tween DoCascade(Vector3 point, int cascadeIndex, bool isFinal)
         {
+            point += animationSettings.GetOffsetPerCascade(cascadeIndex);
+            
             var i = Mathf.Clamp(cascadeIndex, 0, animationSettings.CascadeMotions.Length - 1);
             if (isFinal)
             {

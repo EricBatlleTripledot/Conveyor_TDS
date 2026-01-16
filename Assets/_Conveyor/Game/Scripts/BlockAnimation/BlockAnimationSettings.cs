@@ -71,6 +71,8 @@ namespace Game.BlockAnimation
         private BlockMotionConfig finalCascadeLowThresholdMotion;
         [Space(10)]
         [SerializeField]
+        private float heightAddPerCascade = 0.212f;
+        [SerializeField]
         private float finalCascadeJumpDistance = 0.5f;
         
         [Header("Cascade Pre-empt Animation")]
@@ -102,6 +104,7 @@ namespace Game.BlockAnimation
         public BlockMotionConfig FinalCascadeMotion => finalCascadeMotion;
         public int ThresholdForShorterCascadeFinishMotion => thresholdForShorterCascadeFinishMotion;
         public BlockMotionConfig FinalCascadeLowThresholdMotion => finalCascadeLowThresholdMotion;
+        public Vector3 GetOffsetPerCascade(int cascadeIndex) => heightAddPerCascade * cascadeIndex * Vector3.up;
         public float FinalCascadeJumpDistance => finalCascadeJumpDistance;
 
         public bool ShouldDoShorterCascade(int cascadeIndex) => cascadeIndex <= ThresholdForShorterCascadeFinishMotion; 
