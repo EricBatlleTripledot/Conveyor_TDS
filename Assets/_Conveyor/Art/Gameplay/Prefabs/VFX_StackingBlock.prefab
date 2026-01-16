@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 740560742197690972}
   - component: {fileID: 1843596971942815691}
   m_Layer: 0
-  m_Name: VFX_SlinkySystem
+  m_Name: VFX_StackingBlock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -289,7 +289,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.9
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -342,7 +342,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.9
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -1036,7 +1036,7 @@ ParticleSystem:
       repeatInterval: 0.1
       probability: 1
   SizeModule:
-    enabled: 1
+    enabled: 0
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -1198,7 +1198,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 0
   RotationModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 1
@@ -1360,7 +1360,7 @@ ParticleSystem:
         m_RotationOrder: 4
     separateAxes: 1
   ColorModule:
-    enabled: 1
+    enabled: 0
     gradient:
       serializedVersion: 2
       minMaxState: 1
@@ -1551,7 +1551,7 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 1
+    enabled: 0
     x:
       serializedVersion: 2
       minMaxState: 1

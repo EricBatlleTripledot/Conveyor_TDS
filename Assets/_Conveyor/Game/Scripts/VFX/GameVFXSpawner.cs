@@ -9,17 +9,17 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [SerializeField]
         private VFXPrefabsList prefabsList;
 
-        public void SpawnSlinky(Vector3 point, BlockDirection direction, int cascadeIndex, Color blockColor)
+        public void SpawnStackedBlock(Transform blockView, int cascadeIndex, Color blockColor)
         {
-            var clone = Instantiate(prefabsList.Slinky, point, Quaternion.identity);
+            var clone = Instantiate(prefabsList.StackingBlock, blockView);
 
+            var pos = prefabsList.HeightPerStackedBlock * cascadeIndex * Vector3.up;
+            clone.transform.localPosition = pos;
+            
             var propertyBlock = new MaterialPropertyBlock();
             propertyBlock.SetColor("_Color", blockColor);
             clone.Renderer.SetPropertyBlock(propertyBlock);
             
-            prefabsList.ConfigureSlinkyForIndex(clone.System, clone.Renderer, cascadeIndex, direction == BlockDirection.Up);
-            clone.transform.rotation = Quaternion.LookRotation(Vector3.down, direction.ToVector3Direction());
-
             AwaitVfxAndReturn(clone.gameObject);
         }
         

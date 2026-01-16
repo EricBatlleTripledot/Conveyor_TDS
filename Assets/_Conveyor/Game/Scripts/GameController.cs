@@ -271,9 +271,8 @@ namespace Game
                 // don't spawn into the finish animation
                 if (i < count - 2)
                 {
-                    vfxSpawner.SpawnSlinky(
-                        nextPos,
-                        nextView.ColorBlock.Direction,
+                    vfxSpawner.SpawnStackedBlock(
+                        nextView.transform,
                         i,
                         block.Color);
                 }

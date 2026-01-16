@@ -11,16 +11,9 @@ namespace _Conveyor.Scripts.Gameplay.VFX
     {
         [Header("Cascade VFX")]
         [SerializeField]
-        private VfxReferences slinky;
+        private VfxReferences stackingFakeBlock;
         [SerializeField]
-        private int maxCycleCount = 10;
-        // where X == loop index, Y == Simulation Speed
-        [SerializeField]
-        private AnimationCurve cascadeIndexOverSpeed;
-        // where X == loop index, Y == Z Size (to thin the block mesh)
-        [FormerlySerializedAs("cascadeZSizeOverSpeed")]
-        [SerializeField]
-        private AnimationCurve cascadeIndexOverZSize;
+        private float heightPerStackedBlock = -0.212f;
         [Space(10)]
         [SerializeField]
         private GameObject tileOnCascadeLanding;
@@ -35,28 +28,8 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [SerializeField]
         private GameObject tileOnHideShortCascade;
 
-        public VfxReferences Slinky => slinky;
-
-        public void ConfigureSlinkyForIndex(ParticleSystem system, ParticleSystemRenderer systemRenderer, int index, bool isGoingUp)
-        {
-            var mainModule = system.main;
-
-            var sizeZMinMax = mainModule.startSizeZ;
-            sizeZMinMax.constant = cascadeIndexOverZSize.Evaluate(index);
-            mainModule.startSizeZ = sizeZMinMax;
-            
-            var simulationSpeed = cascadeIndexOverSpeed.Evaluate(index);
-            mainModule.simulationSpeed = simulationSpeed;
-
-            var cycle = Mathf.Clamp(index + 1, 1, maxCycleCount);
-            var burst = new ParticleSystem.Burst(0, 1, 1, cycle, 0.1f);
-            system.emission.SetBurst(0, burst);
-
-            if (isGoingUp)
-            {
-                systemRenderer.sortMode = ParticleSystemSortMode.YoungestInFront;
-            }
-        }
+        public VfxReferences StackingBlock => stackingFakeBlock;
+        public float HeightPerStackedBlock => heightPerStackedBlock;
 
         public GameObject GetCascadeLandingVfx(int index) =>
             index >= thresholdForFasterVFX ? tileOnCascadeFastLanding : tileOnCascadeLanding;
