@@ -264,6 +264,10 @@ namespace Game
                 var tween = view.TileMotions.DoCascade(nextPos, i, isFinalInCascade);
                 view.UpdateViewForCascade();
 
+                if (nextView)
+                {
+                    nextView.TileMotions.DoMoveToPrepareForCascade(i);
+                }
                 await tween.AsyncWaitForCompletion();
 
                 HandleVfxAfterCascade(nextPos, i, count);

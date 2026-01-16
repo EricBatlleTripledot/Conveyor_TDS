@@ -53,10 +53,21 @@ namespace Game.BlockAnimation
                 .OnKill(() => transform.position = originalPosition)
                 .OnComplete(() => transform.position = originalPosition);
         }
+
+        public Tween DoMoveToPrepareForCascade(int cascadeIndex)
+        {
+            cascadeIndex += 1;
+            var pos = transform.position + animationSettings.GetOffsetPerCascade(cascadeIndex);
+            var i = Mathf.Clamp(cascadeIndex, 0, animationSettings.CascadeMotions.Length - 1);
+
+            return transform.DOMove(pos, animationSettings.CascadeMotions[i].duration)
+                .SetEase(Ease.OutExpo);
+        }
         
         public Tween DoCascade(Vector3 point, int cascadeIndex, bool isFinal)
         {
-            point += animationSettings.GetOffsetPerCascade(cascadeIndex);
+            // add one so that this block moves on-top-of the next block
+            point += animationSettings.GetOffsetPerCascade(cascadeIndex + 1);
             
             var i = Mathf.Clamp(cascadeIndex, 0, animationSettings.CascadeMotions.Length - 1);
             if (isFinal)
