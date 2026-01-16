@@ -24,7 +24,10 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         // and this second value if for index 1+ onwards
         [SerializeField]
         private float indexOffset = 1.5f;
-        [Space(10)]
+        [SerializeField]
+        private AnimationCurve cascadeIndexOverSimSpeed;
+        
+        [Space(15)]
         [SerializeField]
         private GameObject tileOnCascadeLanding;
         [SerializeField]
@@ -43,6 +46,7 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         public float HeightPerStackedBlock => heightPerStackedBlock;
         public float FirstCascadeIndexOffset => firstCascadeIndexOffset;
         public float IndexOffset => indexOffset;
+        public AnimationCurve CascadeIndexOverSimSpeed => cascadeIndexOverSimSpeed;
 
         public GameObject GetCascadeLandingVfx(int index) =>
             index >= thresholdForFasterVFX ? tileOnCascadeFastLanding : tileOnCascadeLanding;

@@ -9,9 +9,17 @@ namespace _Conveyor.Scripts.Gameplay.VFX
         [SerializeField]
         private VFXPrefabsList prefabsList;
 
+        private Quaternion rotation = Quaternion.Euler(90, 0, 0);
+        
         public void SpawnStackedBlock(Transform blockView, int cascadeIndex, Color blockColor)
         {
             var clone = Instantiate(prefabsList.StackingBlock, blockView);
+            clone.transform.localRotation = rotation;
+
+            var system = clone.GetComponent<ParticleSystem>();
+            var systemMainModule = system.main;
+            
+            systemMainModule.simulationSpeed = prefabsList.CascadeIndexOverSimSpeed.Evaluate(cascadeIndex);
             
             var propertyBlock = new MaterialPropertyBlock();
             propertyBlock.SetColor("_Color", blockColor);
@@ -22,7 +30,7 @@ namespace _Conveyor.Scripts.Gameplay.VFX
             {
                 var blockEmit = new ParticleSystem.EmitParams
                 {
-                    position = prefabsList.HeightPerStackedBlock * (i + offset) * Vector3.up,
+                    position = prefabsList.HeightPerStackedBlock * (i + offset) * Vector3.back,
                 };
 
                 clone.System.Emit(blockEmit, 1);
