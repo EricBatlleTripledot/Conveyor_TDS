@@ -8,442 +8,402 @@ namespace Game
     [ExecuteInEditMode]
     public class ConveyorManager : MonoBehaviour
     {
+        public event Action<SplineAnimate> SocketEnteredLaunchWindow;
+
         [Header("Spline Container")]
-        [SerializeField]
-        private SplineContainer splineContainer;
+        [SerializeField] private SplineContainer splineContainer;
 
         [Header("Belt Prefabs")]
-        [SerializeField]
-        private GameObject beltSocketPrefab;
-        [SerializeField]
-        private GameObject beltArrowPrefab;
+        [SerializeField] private GameObject beltSocketPrefab;
+        [SerializeField] private GameObject beltArrowPrefab;
 
-        [Header("Animation Settings")]
-        [SerializeField]
-        private float speed = 1;
-        
-        [SerializeField]
-        private bool alignRotationToSpline = true;
-        [SerializeField]
-        private Transform visualsParentTransform;
-        [SerializeField]
-        private Vector3 arrowForwardLocal = Vector3.forward;
+        [Header("Runtime Animation Settings")]
+        [SerializeField] private float speed = 1f;
+        [SerializeField] private bool alignRotationToSpline = true;
+        [SerializeField] private Transform visualsParentTransform;
+        [SerializeField] private Vector3 arrowForwardLocal = Vector3.forward;
 
-        [SerializeField]
-        private List<SplineAnimate> spawnedSplineAnimatedObjects = new();
-        [SerializeField]
-        private BlockViewStackView stackView;
+        [Header("Sockets")]
+        [SerializeField] private int socketsCount = 6;
+        [SerializeField] private List<SplineAnimate> spawnedSplineAnimatedObjects = new();
 
-        public int socketsCount = 6;
+        [Header("Landing")]
+        [SerializeField] private BlockViewStackView stackView;
 
-        public event Action<SplineAnimate> SocketInsideLaunchWindow;
-        
-        [Space]
-        public float jumpDurationInSeconds = 2;
-        public float triggerMarginMeters = 0.15f;
-        public float steps = 64;
-        public int attempts = 30;
-        // private void Update()
-        // {
-        //     foreach (var splineAnimate in spawnedSplineAnimatedObjects) {
-        //         var (_, tLanding) = splineContainer.GetNearestPointTo(stackView.StackPoint, attempts);
-        //         bool shouldTriggerSocket = ShouldTriggerSocket(splineContainer, splineAnimate.NormalizedTime, tLanding, ,jumpDurationInSeconds, triggerMarginMeters, steps);
-        //         if (shouldTriggerSocket) {
-        //             SocketInsideLaunchWindow?.Invoke(splineAnimate);
-        //         }
-        //     }
-        // }
-        
-        [SerializeField] private Transform stackLandingWorldPoint; // o el punto del stack
-        [SerializeField] private float jumpDurationSec = 3f;        // ideal: asignar desde tween/clip, no hardcode
-        // [SerializeField] private float triggerMarginMeters = 0.1f;
-        [SerializeField] private int nearestAttempts = 64;
+        [Header("Launch Window")]
+        [SerializeField] private float jumpDurationSeconds = 2f;
+        [SerializeField] private float launchWindowToleranceMeters = 0.15f;
+
+        [Header("Sampling Quality")]
+        [SerializeField] private int nearestPointAttempts = 64;
         [SerializeField] private int lengthSteps = 64;
 
-        private float _tLanding;
-        private bool _landingCached;
-        private readonly Dictionary<SplineAnimate, float> _prevTBySocket = new();
-        private readonly Dictionary<SplineAnimate, float> _measuredSpeedBySocket = new();
+        [Header("Event Behaviour")]
+        [SerializeField] private bool triggerOnlyOncePerLap = true;
+        [SerializeField] private float eligibilityReentryMarginMeters = 0.30f;
+
+        [Header("Debug Draw")]
+        [SerializeField] private bool drawLaunchGizmos = true;
+        [SerializeField] private float gizmoSize = 0.18f;
+        [SerializeField] private int gizmoWindowPoints = 30;
         
-        private readonly Dictionary<SplineAnimate, float> _lastDToLanding = new();
-        private readonly Dictionary<SplineAnimate, float> _lastWindowMeters = new();
-        private readonly Dictionary<SplineAnimate, bool> _lastInside = new();
+        private float splineLengthMeters;
+        private float landingTimeOnSpline;
+        private bool landingTimeIsValid;
+
+        private readonly Dictionary<SplineAnimate, SocketLaunchState> socketLaunchStates = new();
+        private readonly HashSet<SplineAnimate> socketsElegibleForLaunch = new();
+
+        private void Awake()
+        {
+            RecalculateSplineLength();
+        }
+
+        private void OnValidate()
+        {
+            if (splineContainer != null)
+            {
+                RecalculateSplineLength();
+            }
+        }
 
         private void Update()
         {
-            if (splineContainer == null || spawnedSplineAnimatedObjects.Count == 0) return;
+            if (splineContainer == null) return;
+            if (stackView == null) return;
+            if (spawnedSplineAnimatedObjects == null || spawnedSplineAnimatedObjects.Count == 0) return;
 
-            CacheLandingTIfNeeded();
+            UpdateLandingTimeOnSpline();
+            if (!landingTimeIsValid) return;
 
-            // 1) medir t y velocidad real (m/s)
-            MeasureSocketsSpeed();
+            UpdateSocketStatesAndTriggerEvents();
+        }
 
-            // 2) decidir triggers
+        private void UpdateLandingTimeOnSpline()
+        {
+            var (landingPosition, landingTime) = splineContainer.GetNearestPointTo(stackView.StackPoint, nearestPointAttempts);
+            landingTimeOnSpline = landingTime;
+            landingTimeIsValid = true;
+        }
+
+        private void UpdateSocketStatesAndTriggerEvents()
+        {
             foreach (var socket in spawnedSplineAnimatedObjects)
             {
                 if (socket == null) continue;
 
-                // float tSocketNow = GetSocketTByPosition(socket);
-                float tSocketNow = socket.NormalizedTime;
-                float speedMps = _measuredSpeedBySocket.TryGetValue(socket, out var v) ? v : 0f;
+                float socketTimeOnSpline = GetSocketTimeOnSpline(socket);
+                SocketLaunchState state = GetOrCreateSocketLaunchState(socket);
 
-                float dToLanding = splineContainer.ApproxLengthForward(tSocketNow, _tLanding, lengthSteps);
-                float dNeeded = speedMps * jumpDurationSec;
-                float window = dNeeded + triggerMarginMeters;
+                state.PreviousTimeOnSpline = state.CurrentTimeOnSpline;
+                state.CurrentTimeOnSpline = socketTimeOnSpline;
 
-                bool inside = dToLanding <= window;
+                float deltaTimeNormalized = GetForwardDeltaNormalized(state.PreviousTimeOnSpline, state.CurrentTimeOnSpline);
+                float socketSpeedMetersPerSecond = EstimateSpeedMetersPerSecond(deltaTimeNormalized);
 
-                _lastDToLanding[socket] = dToLanding;
-                _lastWindowMeters[socket] = window;
-                _lastInside[socket] = inside;
+                float distanceToLandingMeters = splineContainer.ApproxLengthForward(state.CurrentTimeOnSpline, landingTimeOnSpline, lengthSteps);
+                float neededDistanceMeters = socketSpeedMetersPerSecond * jumpDurationSeconds;
+                float windowMeters = neededDistanceMeters + launchWindowToleranceMeters;
 
-                if (inside)
-                {
-                    Debug.LogWarning($"INSIDE? {socket.name} d={dToLanding:F2}m window={window:F2}m speed={speedMps:F2}m/s t={tSocketNow:F3}");
-                    SocketInsideLaunchWindow?.Invoke(socket);
+                state.DistanceFromSocketToLandingMeters = distanceToLandingMeters;
+                state.SpeedMetersPerSecond = socketSpeedMetersPerSecond;
+                state.LaunchWindowSizeMeters = windowMeters;
+                state.IsInsideLaunchWindow = distanceToLandingMeters <= windowMeters;
+
+                bool shouldFire = state.IsInsideLaunchWindow;
+
+                if (triggerOnlyOncePerLap) {
+                    if (socketsElegibleForLaunch.Contains(socket)) {
+                        if (state.IsInsideLaunchWindow) {
+                            socketsElegibleForLaunch.Remove(socket);
+                            shouldFire = true;
+                        }
+                    }
+                    else {
+                        float distanceToBecomeEligibleAgainMeters = windowMeters + eligibilityReentryMarginMeters;
+                        if (distanceToLandingMeters > distanceToBecomeEligibleAgainMeters) {
+                            socketsElegibleForLaunch.Add(socket);
+                        }
+
+                        shouldFire = false;
+                    }
                 }
 
-                if (ShouldTriggerSocket(
-                        splineContainer,
-                        tSocketNow,
-                        _tLanding,
-                        speedMps,
-                        jumpDurationSec,
-                        triggerMarginMeters,
-                        lengthSteps))
+                socketLaunchStates[socket] = state;
+
+                if (shouldFire)
                 {
-                    Debug.LogWarning("EBC SOCKET INSIDE LAUNCH WINDOW");
-                    SocketInsideLaunchWindow?.Invoke(socket);
+                    Debug.LogWarning("SOCKET INSIDE LAUNCH WINDOW");
+                    SocketEnteredLaunchWindow?.Invoke(socket);
                 }
             }
-            CacheBeltSpeedFromFirstSocket();
         }
-        
-        private Vector3 _prevPos;
-        private float _prevTime;
-        private bool _hasPrev;
-        private void CacheBeltSpeedFromFirstSocket()
+
+        private SocketLaunchState GetOrCreateSocketLaunchState(SplineAnimate socket)
         {
-            if (!Application.isPlaying) return;
-            if (spawnedSplineAnimatedObjects == null || spawnedSplineAnimatedObjects.Count == 0) return;
-            var s = spawnedSplineAnimatedObjects[0];
-            if (s == null) return;
-
-            float now = Time.time;
-            Vector3 pos = s.transform.position;
-
-            if (!_hasPrev)
+            if (socketLaunchStates.TryGetValue(socket, out var existing))
             {
-                _hasPrev = true;
-                _prevPos = pos;
-                _prevTime = now;
+                return existing;
+            }
+
+            var created = new SocketLaunchState
+            {
+                PreviousTimeOnSpline = GetSocketTimeOnSpline(socket),
+                CurrentTimeOnSpline = GetSocketTimeOnSpline(socket)
+            };
+
+            socketLaunchStates[socket] = created;
+
+            if (triggerOnlyOncePerLap)
+            {
+                socketsElegibleForLaunch.Add(socket);
+            }
+
+            return created;
+        }
+
+        private float GetSocketTimeOnSpline(SplineAnimate socket)
+        {
+            // avoids noise from nearest-point by position
+            return Mathf.Repeat(socket.NormalizedTime, 1f);
+        }
+
+        private float GetForwardDeltaNormalized(float previousTime, float currentTime)
+        {
+            float delta = currentTime - previousTime;
+            if (delta < 0f) delta += 1f;
+            return delta;
+        }
+
+        private float EstimateSpeedMetersPerSecond(float deltaTimeNormalized)
+        {
+            float deltaMeters = deltaTimeNormalized * splineLengthMeters;
+            float deltaSeconds = Time.deltaTime;
+
+            if (deltaSeconds <= 0f) return 0f;
+            return deltaMeters / deltaSeconds;
+        }
+
+        private void RecalculateSplineLength()
+        {
+            if (splineContainer == null)
+            {
+                splineLengthMeters = 0f;
                 return;
             }
 
-            float dt = now - _prevTime;
-            if (dt <= 0f) return;
-
-            cachedBeltSpeedMps = Vector3.Distance(_prevPos, pos) / dt; // aproximación (euclídea)
-            _prevPos = pos;
-            _prevTime = now;
+            splineLengthMeters = ApproxSplineLength(splineContainer, 512);
         }
 
-        private void CacheLandingTIfNeeded()
+        private float ApproxSplineLength(SplineContainer spline, int steps)
         {
-            if (_landingCached) return;
-            // if (stackLandingWorldPoint == null) return;
+            float length = 0f;
 
-            var (_, t) = splineContainer.GetNearestPointTo(stackView.StackPoint, nearestAttempts);
-            // var (_, t) = splineContainer.GetNearestPointTo(stackLandingWorldPoint.position, nearestAttempts);
-            _tLanding = t;
-            _landingCached = true;
-        }
-
-        private float GetSocketTByPosition(SplineAnimate socket)
-        {
-            var (_, t) = splineContainer.GetNearestPointTo(socket.transform.position, nearestAttempts);
-            return t;
-        }
-
-        private void MeasureSocketsSpeed()
-        {
-            float dt = Time.deltaTime;
-            if (dt <= 0f) return;
-
-            foreach (var socket in spawnedSplineAnimatedObjects)
+            Vector3 previousPosition = (Vector3)spline.EvaluatePosition(0, 0f);
+            for (int i = 1; i <= steps; i++)
             {
-                if (socket == null) continue;
-
-                // float tNow = GetSocketTByPosition(socket);
-                float tNow = socket.NormalizedTime;
-
-                if (_prevTBySocket.TryGetValue(socket, out float tPrev))
-                {
-                    // distancia real recorrida sobre spline en este frame:
-                    float d = splineContainer.ApproxLengthForward(tPrev, tNow, lengthSteps);
-                    float v = d / dt;
-                    _measuredSpeedBySocket[socket] = v;
-                }
-
-                _prevTBySocket[socket] = tNow;
+                float time = i / (float)steps;
+                Vector3 position = (Vector3)spline.EvaluatePosition(0, time);
+                length += Vector3.Distance(previousPosition, position);
+                previousPosition = position;
             }
-        }
-        
-        public bool ShouldTriggerSocket(
-            SplineContainer spline,
-            float tSocketNow,
-            float tLanding,
-            float beltSpeedMetersPerSec,
-            float jumpDurationSec,
-            float triggerMarginMeters,
-            int steps)
-        {
-            float dToLanding = spline.ApproxLengthForward(tSocketNow, tLanding, steps);
 
-            float dNeeded = beltSpeedMetersPerSec * jumpDurationSec;
-
-            return dToLanding <= (dNeeded + triggerMarginMeters);
+            return length;
         }
 
-        public void InstantiateBeltPrefabs(int socketsCount)
+        public void InstantiateBeltPrefabs(int socketsCountToSpawn)
         {
-            if (socketsCount <= 0) return;
+            if (socketsCountToSpawn <= 0) return;
             if (splineContainer == null) return;
             if (beltSocketPrefab == null || beltArrowPrefab == null) return;
-            
+
             ClearSpawnedGameObjects();
-            
-            for (var i = 0; i < socketsCount; i++) {
-                var tSocket = i / (float)socketsCount;
-                SpawnAtT(beltSocketPrefab, tSocket, $"Socket_{i}");
 
-                var tArrow = (i + 0.5f) / socketsCount; // between socket i & i+1
-                // safety net
-                if (tArrow >= 1f) {
-                    tArrow -= 1f;
-                }
+            for (int i = 0; i < socketsCountToSpawn; i++)
+            {
+                float socketTime = i / (float)socketsCountToSpawn;
+                SpawnAtTime(beltSocketPrefab, socketTime, $"Socket_{i}");
 
-                SpawnAtT(beltArrowPrefab, tArrow, $"Arrow_{i}");
+                float arrowTime = (i + 0.5f) / socketsCountToSpawn;
+                if (arrowTime >= 1f) arrowTime -= 1f;
+
+                SpawnAtTime(beltArrowPrefab, arrowTime, $"Arrow_{i}");
             }
         }
-        
-        private void SpawnAtT(GameObject prefab, float t, string name)
+
+        private void SpawnAtTime(GameObject prefab, float timeOnSpline, string objectName)
         {
-            // Don't use spline.Evaluate, use splineContainer.Evaluate.
-            // First one operates in local space, second one in world space!
             const int splineIndex = 0;
-            var position = (Vector3)splineContainer.EvaluatePosition(splineIndex, t);
 
-            var quaternion = Quaternion.identity;
-            if (alignRotationToSpline) {
-                var tangent = splineContainer.EvaluateTangent(splineIndex, t);
-                var up = splineContainer.EvaluateUpVector(splineIndex, t);
-                quaternion = Quaternion.LookRotation(tangent, up);
-                quaternion *= Quaternion.FromToRotation(Vector3.forward, arrowForwardLocal);
+            Vector3 position = (Vector3)splineContainer.EvaluatePosition(splineIndex, timeOnSpline);
+
+            Quaternion rotation = Quaternion.identity;
+            if (alignRotationToSpline)
+            {
+                Vector3 tangent = splineContainer.EvaluateTangent(splineIndex, timeOnSpline);
+                Vector3 up = splineContainer.EvaluateUpVector(splineIndex, timeOnSpline);
+                rotation = Quaternion.LookRotation(tangent, up);
+                rotation *= Quaternion.FromToRotation(Vector3.forward, arrowForwardLocal);
             }
 
-            var parent = visualsParentTransform != null ? visualsParentTransform : transform;
-            var go = Instantiate(prefab, position, quaternion, parent);
-            var splineAnimate = go.GetComponent<SplineAnimate>();
-            ConfigureSplineAnimate(splineAnimate, splineContainer, speed, t);
-            go.name = name;
+            Transform parent = visualsParentTransform != null ? visualsParentTransform : transform;
+            GameObject spawned = Instantiate(prefab, position, rotation, parent);
+
+            var splineAnimate = spawned.GetComponent<SplineAnimate>();
+            ConfigureSplineAnimate(splineAnimate, splineContainer, speed, timeOnSpline);
+
+            spawned.name = objectName;
             spawnedSplineAnimatedObjects.Add(splineAnimate);
+
+            if (triggerOnlyOncePerLap)
+            {
+                socketsElegibleForLaunch.Add(splineAnimate);
+            }
         }
 
-        private void ConfigureSplineAnimate(SplineAnimate splineAnimate, SplineContainer splineContainer, float speed, float startOffset)
+        private void ConfigureSplineAnimate(SplineAnimate splineAnimate, SplineContainer container, float maxSpeed, float startOffset)
         {
-            splineAnimate.Container = splineContainer;
+            if (splineAnimate == null) return;
+
+            splineAnimate.Container = container;
             splineAnimate.AnimationMethod = SplineAnimate.Method.Speed;
-            splineAnimate.MaxSpeed = speed;
+            splineAnimate.MaxSpeed = maxSpeed;
             splineAnimate.StartOffset = startOffset;
         }
 
         [ContextMenu("Play")]
         public void Play()
         {
-            foreach (var splineAnimate in spawnedSplineAnimatedObjects) {
-                splineAnimate.Play();
+            foreach (var splineAnimate in spawnedSplineAnimatedObjects)
+            {
+                if (splineAnimate != null) splineAnimate.Play();
             }
         }
-        
+
         [ContextMenu("Pause")]
         public void Pause()
         {
-            foreach (var splineAnimate in spawnedSplineAnimatedObjects) {
-                splineAnimate.Pause();
+            foreach (var splineAnimate in spawnedSplineAnimatedObjects)
+            {
+                if (splineAnimate != null) splineAnimate.Pause();
             }
         }
 
         [ContextMenu("ClearSpawnedGameObjects")]
         private void ClearSpawnedGameObjects()
         {
-            for (var i = spawnedSplineAnimatedObjects.Count - 1; i >= 0; i--) {
-                if (spawnedSplineAnimatedObjects[i] != null) {
-                    DestroyImmediate(spawnedSplineAnimatedObjects[i].gameObject);
+            for (int i = spawnedSplineAnimatedObjects.Count - 1; i >= 0; i--)
+            {
+                var splineAnimate = spawnedSplineAnimatedObjects[i];
+                if (splineAnimate != null)
+                {
+                    DestroyImmediate(splineAnimate.gameObject);
                 }
             }
+
             spawnedSplineAnimatedObjects.Clear();
+            socketLaunchStates.Clear();
+            socketsElegibleForLaunch.Clear();
         }
-        
-        [ContextMenu("InstantiateBeltPrefabs")]
-        private void DEBUG_InstantiateBeltPrefabs()
-        {
-            InstantiateBeltPrefabs(socketsCount);
-        }
-
-#region DEBUG
-        private float cachedBeltSpeedMps;
-
-        [Header("Launch Debug")]
-        [SerializeField] private bool drawLaunchGizmos = true;
-        // [SerializeField] private Transform stackLandingWorldPoint;
-        [SerializeField] private float debugJumpDurationSec = 3f;        // ideal: leer del tween/clip
-        [SerializeField] private float debugTriggerMarginMeters = 0.1f;
-        [SerializeField] private int debugSamples = 128;
-        [SerializeField] private float gizmoCubeSize = 0.18f;
-
-        [SerializeField] private bool debugOverrideSpeed = true;
-        [SerializeField] private float debugSpeedMps = 1.5f; // prueba con 1..3 m/s
 
         private void OnDrawGizmos()
         {
             if (!drawLaunchGizmos) return;
             if (splineContainer == null) return;
-            // if (stackLandingWorldPoint == null) return;
+            if (stackView == null) return;
 
-            // 1) Landing t
-            var (landingPos, tLanding) = splineContainer.GetNearestPointTo(stackView.StackPoint, debugSamples);
+            var (landingPosition, landingTime) = splineContainer.GetNearestPointTo(stackView.StackPoint, nearestPointAttempts);
 
-            // Landing marker
             Gizmos.color = Color.cyan;
-            Gizmos.DrawCube(landingPos, Vector3.one * gizmoCubeSize * 2);
+            Gizmos.DrawCube(landingPosition, Vector3.one * gizmoSize * 2f);
 
-            // Si no hay sockets, al menos dibujamos landing
+            if (!Application.isPlaying) return;
             if (spawnedSplineAnimatedObjects == null || spawnedSplineAnimatedObjects.Count == 0) return;
 
-            // 2) Usamos el primer socket como referencia para estimar velocidad real
-            // (o podrías calcular un promedio).
-            var firstSocket = spawnedSplineAnimatedObjects[0];
-            if (firstSocket == null) return;
-
-            // float beltSpeedMps = EstimateSpeedMpsFromSocket(firstSocket, tLanding);
-            // float dNeeded = beltSpeedMps * debugJumpDurationSec;
-            float beltSpeedMps = debugOverrideSpeed ? debugSpeedMps : cachedBeltSpeedMps;
-            float dNeeded = beltSpeedMps * debugJumpDurationSec;
-
-
-            // 3) Punto trigger (dNeeded metros antes de landing, siguiendo el sentido inverso)
-            float tTrigger = FindTBackwardFrom(splineContainer, tLanding, dNeeded, debugSamples);
-            Vector3 triggerPos = (Vector3)splineContainer.EvaluatePosition(0, tTrigger);
-
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawCube(triggerPos, Vector3.one * gizmoCubeSize);
-
-            // 4) Ventana por margen (opcional)
-            // Ventana completa
-            DrawSplineWindow(
-                splineContainer,
-                tTrigger,
-                tLanding,
-                points: 30,
-                size: gizmoCubeSize * 0.35f
-            );
-            float tTriggerOuter = FindTBackwardFrom(splineContainer, tLanding, dNeeded + debugTriggerMarginMeters, debugSamples);
-            Vector3 triggerOuterPos = (Vector3)splineContainer.EvaluatePosition(0, tTriggerOuter);
-
-            Gizmos.color = new Color(1f, 0.5f, 0f, 1f); // naranja
-            Gizmos.DrawWireCube(triggerOuterPos, Vector3.one * gizmoCubeSize * 1.4f);
-
-            // Etiqueta visual extra: línea entre trigger y landing
-            Gizmos.color = Color.white;
-            Gizmos.DrawLine(triggerPos, landingPos);
-        }
-        
-        private float _prevTForDebug;
-        private float _prevTimeForDebug;
-        private bool _debugHasPrev;
-
-        private float EstimateSpeedMpsFromSocket(SplineAnimate socket, float tFallback)
-        {
-            // Si no estamos en play mode, no podemos medir velocidad real con dt fácilmente.
-            // Devolvemos una aproximación: 0 => te dibuja trigger casi encima del landing.
-            if (!Application.isPlaying)
-                return 0f;
-
-            float tNow = GetSocketTByPosition(socket);
-            float now = Time.time;
-
-            if (!_debugHasPrev)
+            foreach (var socket in spawnedSplineAnimatedObjects)
             {
-                _debugHasPrev = true;
-                _prevTForDebug = tNow;
-                _prevTimeForDebug = now;
-                return 0f;
+                if (socket == null) continue;
+
+                if (!socketLaunchStates.TryGetValue(socket, out var state))
+                {
+                    Gizmos.color = Color.gray;
+                    Gizmos.DrawSphere(socket.transform.position, gizmoSize * 0.35f);
+                    continue;
+                }
+
+                Gizmos.color = state.IsInsideLaunchWindow ? Color.green : Color.red;
+                Gizmos.DrawSphere(socket.transform.position, gizmoSize * 0.35f);
+
+                // Draw start matching window
+                float triggerDistanceMeters = Mathf.Max(state.LaunchWindowSizeMeters - launchWindowToleranceMeters, 0f);
+                float triggerTime = FindTimeBackwardFrom(splineContainer, landingTime, triggerDistanceMeters, 256);
+                Vector3 triggerPosition = splineContainer.EvaluatePosition(0, triggerTime);
+
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawCube(triggerPosition, Vector3.one * gizmoSize);
+
+                // Draw matching window
+                DrawSplineWindow(splineContainer, triggerTime, landingTime, gizmoWindowPoints, gizmoSize * 0.25f);
             }
-
-            float dt = now - _prevTimeForDebug;
-            if (dt <= 0f) return 0f;
-
-            float d = splineContainer.ApproxLengthForward(_prevTForDebug, tNow, debugSamples);
-            float v = d / dt;
-
-            _prevTForDebug = tNow;
-            _prevTimeForDebug = now;
-
-            return v;
         }
 
-        private float FindTBackwardFrom(SplineContainer spline, float tStart, float metersBack, int steps)
+        private float FindTimeBackwardFrom(SplineContainer spline, float startTime, float metersBack, int steps)
         {
-            if (metersBack <= 0f) return tStart;
+            if (metersBack <= 0f) return startTime;
 
-            // Recorremos hacia atrás en t en pequeños pasos, acumulando distancia hasta llegar a metersBack.
-            float t = tStart;
-            Vector3 prev = (Vector3)spline.EvaluatePosition(0, t);
+            float time = startTime;
+            Vector3 previous = spline.EvaluatePosition(0, time);
             float accumulated = 0f;
 
-            for (int i = 0; i < steps * 4; i++) // *4 por seguridad en wraps
+            for (int i = 0; i < steps * 4; i++)
             {
-                float tNext = t - (1f / steps);
-                if (tNext < 0f) tNext += 1f;
+                float nextTime = time - (1f / steps);
+                if (nextTime < 0f) nextTime += 1f;
 
-                Vector3 p = (Vector3)spline.EvaluatePosition(0, tNext);
-                accumulated += Vector3.Distance(prev, p);
+                Vector3 position = spline.EvaluatePosition(0, nextTime);
+                accumulated += Vector3.Distance(previous, position);
 
                 if (accumulated >= metersBack)
-                    return tNext;
+                {
+                    return nextTime;
+                }
 
-                prev = p;
-                t = tNext;
+                previous = position;
+                time = nextTime;
             }
 
-            return t; // fallback
+            return time;
         }
 
-        private void DrawSplineWindow(
-            SplineContainer spline,
-            float tStart,
-            float tEnd,
-            int points,
-            float size)
+        private void DrawSplineWindow(SplineContainer spline, float startTime, float endTime, int points, float size)
         {
-            Gizmos.color = new Color(1f, 0f, 1f, 0.9f); // magenta
+            Gizmos.color = new Color(1f, 0f, 1f, 0.9f);
 
-            float delta = tEnd - tStart;
-            if (delta < 0f)
-                delta += 1f; // wrap forward
+            float delta = endTime - startTime;
+            if (delta < 0f) delta += 1f;
 
             for (int i = 0; i <= points; i++)
             {
-                float a = i / (float)points;
-                float t = (tStart + delta * a) % 1f;
+                float alpha = i / (float)points;
+                float time = (startTime + delta * alpha) % 1f;
 
-                Vector3 p = (Vector3)spline.EvaluatePosition(0, t);
-                Gizmos.DrawSphere(p, size);
+                Vector3 position = spline.EvaluatePosition(0, time);
+                Gizmos.DrawSphere(position, size);
             }
         }
 
+        private struct SocketLaunchState
+        {
+            public float PreviousTimeOnSpline;
+            public float CurrentTimeOnSpline;
 
-#endregion
+            // Cached derived values for debug & visualization purposes.
+            // Not required for core trigger logic.
+            public float SpeedMetersPerSecond;
+            public float DistanceFromSocketToLandingMeters;
+            public float LaunchWindowSizeMeters;
+
+            public bool IsInsideLaunchWindow;
+        }
     }
 }
