@@ -26,12 +26,14 @@ namespace Game
         [Header("Sockets")]
         [SerializeField] private int socketsCount = 6;
         [SerializeField] private List<SplineAnimate> spawnedSplineAnimatedObjects = new();
+        [SerializeField] private List<SplineAnimate> spawnedSplineAnimatedSockets = new();
 
         [Header("Landing")]
         [SerializeField] private BlockViewStackView stackView;
 
         [Header("Launch Window")]
-        [SerializeField] private float jumpDurationSeconds = 2f;
+        [SerializeField]
+        private AnimationClip jumpAnimationClip;
         [SerializeField] private float launchWindowToleranceMeters = 0.15f;
 
         [Header("Sampling Quality")]
@@ -52,8 +54,14 @@ namespace Game
         private bool landingTimeIsValid;
 
         private readonly Dictionary<SplineAnimate, SocketLaunchState> socketLaunchStates = new();
-        private readonly HashSet<SplineAnimate> socketsElegibleForLaunch = new();
+        private readonly HashSet<SplineAnimate> socketsEligibleForLaunch = new();
 
+        [ContextMenu("InstantiateBeltPrefabs")]
+        public void foo()
+        {
+            InstantiateBeltPrefabs(socketsCount);
+        }
+        
         private void Awake()
         {
             RecalculateSplineLength();
@@ -71,7 +79,7 @@ namespace Game
         {
             if (splineContainer == null) return;
             if (stackView == null) return;
-            if (spawnedSplineAnimatedObjects == null || spawnedSplineAnimatedObjects.Count == 0) return;
+            if (spawnedSplineAnimatedSockets == null || spawnedSplineAnimatedSockets.Count == 0) return;
 
             UpdateLandingTimeOnSpline();
             if (!landingTimeIsValid) return;
@@ -88,7 +96,7 @@ namespace Game
 
         private void UpdateSocketStatesAndTriggerEvents()
         {
-            foreach (var socket in spawnedSplineAnimatedObjects)
+            foreach (var socket in spawnedSplineAnimatedSockets)
             {
                 if (socket == null) continue;
 
@@ -102,7 +110,8 @@ namespace Game
                 float socketSpeedMetersPerSecond = EstimateSpeedMetersPerSecond(deltaTimeNormalized);
 
                 float distanceToLandingMeters = splineContainer.ApproxLengthForward(state.CurrentTimeOnSpline, landingTimeOnSpline, lengthSteps);
-                float neededDistanceMeters = socketSpeedMetersPerSecond * jumpDurationSeconds;
+                var jumpDurationInSeconds = jumpAnimationClip.length;
+                float neededDistanceMeters = socketSpeedMetersPerSecond * jumpDurationInSeconds;
                 float windowMeters = neededDistanceMeters + launchWindowToleranceMeters;
 
                 state.DistanceFromSocketToLandingMeters = distanceToLandingMeters;
@@ -113,16 +122,16 @@ namespace Game
                 bool shouldFire = state.IsInsideLaunchWindow;
 
                 if (triggerOnlyOncePerLap) {
-                    if (socketsElegibleForLaunch.Contains(socket)) {
+                    if (socketsEligibleForLaunch.Contains(socket)) {
                         if (state.IsInsideLaunchWindow) {
-                            socketsElegibleForLaunch.Remove(socket);
+                            socketsEligibleForLaunch.Remove(socket);
                             shouldFire = true;
                         }
                     }
                     else {
                         float distanceToBecomeEligibleAgainMeters = windowMeters + eligibilityReentryMarginMeters;
                         if (distanceToLandingMeters > distanceToBecomeEligibleAgainMeters) {
-                            socketsElegibleForLaunch.Add(socket);
+                            socketsEligibleForLaunch.Add(socket);
                         }
 
                         shouldFire = false;
@@ -156,7 +165,7 @@ namespace Game
 
             if (triggerOnlyOncePerLap)
             {
-                socketsElegibleForLaunch.Add(socket);
+                socketsEligibleForLaunch.Add(socket);
             }
 
             return created;
@@ -165,7 +174,8 @@ namespace Game
         private float GetSocketTimeOnSpline(SplineAnimate socket)
         {
             // avoids noise from nearest-point by position
-            return Mathf.Repeat(socket.NormalizedTime, 1f);
+            // + offset is necessary to make the system works for all sockets, not only the first one
+            return Mathf.Repeat(socket.NormalizedTime + socket.StartOffset, 1f);
         }
 
         private float GetForwardDeltaNormalized(float previousTime, float currentTime)
@@ -222,7 +232,7 @@ namespace Game
             for (int i = 0; i < socketsCountToSpawn; i++)
             {
                 float socketTime = i / (float)socketsCountToSpawn;
-                SpawnAtTime(beltSocketPrefab, socketTime, $"Socket_{i}");
+                SpawnSocketAtTime(socketTime, $"Socket_{i}");
 
                 float arrowTime = (i + 0.5f) / socketsCountToSpawn;
                 if (arrowTime >= 1f) arrowTime -= 1f;
@@ -231,7 +241,7 @@ namespace Game
             }
         }
 
-        private void SpawnAtTime(GameObject prefab, float timeOnSpline, string objectName)
+        private SplineAnimate SpawnAtTime(GameObject prefab, float timeOnSpline, string objectName)
         {
             const int splineIndex = 0;
 
@@ -248,16 +258,26 @@ namespace Game
 
             Transform parent = visualsParentTransform != null ? visualsParentTransform : transform;
             GameObject spawned = Instantiate(prefab, position, rotation, parent);
+            spawned.name = objectName;
 
             var splineAnimate = spawned.GetComponent<SplineAnimate>();
-            ConfigureSplineAnimate(splineAnimate, splineContainer, speed, timeOnSpline);
+            if (splineAnimate != null) {
+                ConfigureSplineAnimate(splineAnimate, splineContainer, speed, timeOnSpline);
+                spawnedSplineAnimatedObjects.Add(splineAnimate);
+            }
+            return splineAnimate;
+        }
 
-            spawned.name = objectName;
-            spawnedSplineAnimatedObjects.Add(splineAnimate);
+        private void SpawnSocketAtTime(float timeOnSpline, string objectName)
+        {
+            var splineAnimate = SpawnAtTime(beltSocketPrefab, timeOnSpline, objectName);
+            if (splineAnimate == null) {
+                return;
+            }
 
-            if (triggerOnlyOncePerLap)
-            {
-                socketsElegibleForLaunch.Add(splineAnimate);
+            spawnedSplineAnimatedSockets.Add(splineAnimate);
+            if (triggerOnlyOncePerLap) {
+                socketsEligibleForLaunch.Add(splineAnimate);
             }
         }
 
@@ -292,18 +312,17 @@ namespace Game
         [ContextMenu("ClearSpawnedGameObjects")]
         private void ClearSpawnedGameObjects()
         {
-            for (int i = spawnedSplineAnimatedObjects.Count - 1; i >= 0; i--)
-            {
+            for (var i = spawnedSplineAnimatedObjects.Count - 1; i >= 0; i--) {
                 var splineAnimate = spawnedSplineAnimatedObjects[i];
-                if (splineAnimate != null)
-                {
+                if (splineAnimate != null) {
                     DestroyImmediate(splineAnimate.gameObject);
                 }
             }
 
+            spawnedSplineAnimatedSockets.Clear();
             spawnedSplineAnimatedObjects.Clear();
             socketLaunchStates.Clear();
-            socketsElegibleForLaunch.Clear();
+            socketsEligibleForLaunch.Clear();
         }
 
         private void OnDrawGizmos()
@@ -318,9 +337,9 @@ namespace Game
             Gizmos.DrawCube(landingPosition, Vector3.one * gizmoSize * 2f);
 
             if (!Application.isPlaying) return;
-            if (spawnedSplineAnimatedObjects == null || spawnedSplineAnimatedObjects.Count == 0) return;
+            if (spawnedSplineAnimatedSockets == null || spawnedSplineAnimatedSockets.Count == 0) return;
 
-            foreach (var socket in spawnedSplineAnimatedObjects)
+            foreach (var socket in spawnedSplineAnimatedSockets)
             {
                 if (socket == null) continue;
 
@@ -332,7 +351,7 @@ namespace Game
                 }
 
                 Gizmos.color = state.IsInsideLaunchWindow ? Color.green : Color.red;
-                Gizmos.DrawSphere(socket.transform.position, gizmoSize * 0.35f);
+                Gizmos.DrawSphere(socket.transform.position, gizmoSize * 0.45f);
 
                 // Draw start matching window
                 float triggerDistanceMeters = Mathf.Max(state.LaunchWindowSizeMeters - launchWindowToleranceMeters, 0f);
