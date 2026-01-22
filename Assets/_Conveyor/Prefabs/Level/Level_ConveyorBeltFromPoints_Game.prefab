@@ -47,8 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelPointsFromJson: {fileID: 11400000, guid: 5772cfe1359524de8a48d0132448e466, type: 2}
-  halfExtentX: 8.8
-  halfExtentZ: 8
+  conveyorWorldSpaceWidth: 5
+  conveyorWorldSpaceHeight: 5
+  conveyorOffsetFromGrid: 0
   yOffset: 0.19
   width: 1.1
   roundCorners: 1

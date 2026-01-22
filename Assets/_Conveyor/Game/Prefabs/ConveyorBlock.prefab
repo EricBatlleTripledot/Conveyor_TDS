@@ -90,7 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableRaycasting: 1
   rayCastDirection: {x: 1, y: 0, z: 0}
-  alignMargin: 0.1
+  alignMargin: 0.22
   rotationTolerance: 0.01
   noHitColor: {r: 1, g: 0, b: 0, a: 1}
   fullyAlignedColor: {r: 0, g: 1, b: 0, a: 1}
@@ -111,9 +111,9 @@ MonoBehaviour:
   m_Target: {fileID: 0}
   m_PlayOnAwake: 1
   m_LoopMode: 1
-  m_Method: 0
+  m_Method: 1
   m_Duration: 6
-  m_MaxSpeed: 11.666667
+  m_MaxSpeed: 2
   m_EasingMode: 0
   m_AlignmentMode: 1
   m_ObjectForwardAxis: 2

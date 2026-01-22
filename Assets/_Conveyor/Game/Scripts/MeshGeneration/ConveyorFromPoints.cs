@@ -13,10 +13,12 @@ namespace Game.MeshGeneration
         
         [Header("Shape")]
         [SerializeField]
-        private float halfExtentX = 5f;
+        private float conveyorWorldSpaceWidth = 5f;
         [SerializeField]
-        private float halfExtentZ = 5f;
+        private float conveyorWorldSpaceHeight = 5f;
 
+        [SerializeField]
+        private float conveyorOffsetFromGrid;
         [SerializeField]
         private float yOffset;
 
@@ -68,8 +70,10 @@ namespace Game.MeshGeneration
             if (!mesh) {
                 return;
             }
-            
-            var pts = BuildFromNormalizedPoints(levelPointsFromJson.ConveyorPoints, halfExtentX, halfExtentZ, yOffset);
+
+            conveyorWorldSpaceWidth = (float)levelPointsFromJson.gridWidth / 2 + conveyorOffsetFromGrid;
+            conveyorWorldSpaceHeight = (float)levelPointsFromJson.gridHeight / 2 + conveyorOffsetFromGrid;
+            var pts = BuildFromNormalizedPositions(levelPointsFromJson.conveyorPoints, conveyorWorldSpaceWidth, conveyorWorldSpaceHeight, yOffset);
 
             pts = RoundRightAngleCornersXZ(pts, cornerRadius, cornerSegments, closed: true);
             
@@ -178,11 +182,11 @@ namespace Game.MeshGeneration
             return output;
         }
 
-        private List<Vector3> BuildFromNormalizedPoints(List<Vector2> pts01, float hx, float hz, float y)
+        private List<Vector3> BuildFromNormalizedPositions(List<Vector2> normalizedPositions, float hx, float hz, float y)
         {
-            var outPts = new List<Vector3>(pts01.Count);
+            var outPts = new List<Vector3>(normalizedPositions.Count);
 
-            foreach (var t in pts01) {
+            foreach (var t in normalizedPositions) {
                 var p = t;
 
                 var x = Mathf.Lerp(-hx, hx, p.x);
