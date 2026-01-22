@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Game.BlockAnimation;
 using _Conveyor.Scripts.Gameplay.VFX;
+using Game;
 using Game.MeshGeneration;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -62,14 +63,14 @@ namespace Game
 
             frameRateService.SetTargetFrameRate();
             
-            var splineEval = splineContainer.GetNearestPointTo(stackView.StackPoint, 30);
+            var splineEval = splineContainer.GetNearestPointTo(stackView.StackPoint, 64);
             stackView.Initialize(splineEval.Item1, splineEval.Item2, stackCapacity);
             
             handView.ColorSelected += OnHandColorSelected;
             
             if (serializedLevel == null)
             {
-                var gameGrid = new GameGrid(3,2);
+                var gameGrid = new GameGrid(3, 2);
                 gameGrid.Set(new ColorBlock(new Vector2Int(0, 0), Color.red, BlockDirection.Up));
                 gameGrid.Set(new ColorBlock(new Vector2Int(1, 0), Color.blue, BlockDirection.Right));
                 gameGrid.Set(new ColorBlock(new Vector2Int(2, 0), Color.blue, BlockDirection.Up));

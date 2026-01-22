@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.BlockAnimation;
 using TMPro;
 using UnityEngine;
@@ -21,18 +23,19 @@ namespace Game
         private BlockStackAnimator stackAnimator;
         [SerializeField]
         private TMP_Text stackLabel;
-
-        public Vector3 StackPoint => stackAnimator.StackTopPoint;
         
-        // todo: for now launch with an interval, replace with pod detection on belt later - Canvas
-        [SerializeField]
-        private float launchInterval = 1;
-
-        private float ticker;
         private int capacity;
-
+        
+        public Vector3 StackPoint => stackAnimator.StackTopPoint;
         public int CurrentStackCount => stack.Count;
         public int CapacityLeft => capacity - CurrentStackCount;
+
+        public ConveyorManager ConveyorManager;
+
+        private void Awake()
+        {
+            ConveyorManager.SocketEnteredLaunchWindow += (_) => LaunchBlock();
+        }
 
         public void Initialize(Vector3 beltPoint, float beltTime, int capacity)
         {
@@ -65,31 +68,22 @@ namespace Game
         {
             stackLabel.text = $"{CurrentStackCount}/{capacity}";
         }
-        
-        private void Update()
+
+        private void LaunchBlock()
         {
-            if (ticker <= 0)
-            {
-                if (stack.Count > 0 && !stackAnimator.AnyTweensActive())
-                {
-                    var launchingView = stack[0];
-                    // todo: when removing this view from the stack, re-parent it to the GameGrid,
-                    // if that's what we want it to do - Canvas
-                    stackAnimator.RemoveFromStack(launchingView.transform);
-                    stack.RemoveAt(0);
-
-                    launchingView.Launch(conveyorBeltTargetPoint, conveyorBeltSplineTime);
-                    stackAnimator.DoStackJumpWithDelay();
-
-                    UpdateLabel();
-                    
-                    ticker = launchInterval;
-                }
+            if (!stack.Any()) {
+                return;
             }
-            else
-            {
-                ticker -= Time.deltaTime;
-            }
+            var launchingView = stack[0];
+            // todo: when removing this view from the stack, re-parent it to the GameGrid,
+            // if that's what we want it to do - Canvas
+            stackAnimator.RemoveFromStack(launchingView.transform);
+            stack.RemoveAt(0);
+
+            launchingView.Launch(conveyorBeltTargetPoint, conveyorBeltSplineTime);
+            stackAnimator.DoStackJumpWithDelay();
+
+            UpdateLabel();
         }
     }
 }

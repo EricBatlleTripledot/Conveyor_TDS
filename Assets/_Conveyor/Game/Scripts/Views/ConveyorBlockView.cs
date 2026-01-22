@@ -34,13 +34,13 @@ namespace Game
 			SetColor(conveyorBlock.Color);
 		}
 
-		public async Task Launch(Vector3 point, float splineTime)
+		public async Task Launch(Vector3 point, float splineStartOffset)
 		{
 			await TileMotions.DoMoveOntoBelt(point).AsyncWaitForCompletion();
 			// the animation of the launch lasts longer than the tween
 			await TileMotions.WaitForAnimation();
 
-			splineAnimate.StartOffset = splineTime;
+			splineAnimate.StartOffset = splineStartOffset;
 			splineAnimate.Play();
 
 			alignedObjectRaycaster.EnableRaycasting = true;

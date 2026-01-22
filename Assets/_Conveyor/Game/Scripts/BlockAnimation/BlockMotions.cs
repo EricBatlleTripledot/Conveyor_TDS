@@ -14,7 +14,7 @@ namespace Game.BlockAnimation
         [SerializeField]
         private Animation animator;
         [SerializeField]
-        private  BlockAnimationSettings animationSettings;
+        private BlockAnimationSettings animationSettings;
 
         public void Initialise()
         {
@@ -76,7 +76,7 @@ namespace Game.BlockAnimation
         }
 
         // Utilities
-        private Tween DoMotion( BlockMotionConfig config, Vector3 point )
+        private Tween DoMotion(BlockMotionConfig config, Vector3 point )
         {
             var tween = transform.DOMove(point, config.duration)
                 .SetEase(config.curve);

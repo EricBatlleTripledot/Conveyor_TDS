@@ -57,7 +57,7 @@ namespace Game
         private readonly HashSet<SplineAnimate> socketsEligibleForLaunch = new();
 
         [ContextMenu("InstantiateBeltPrefabs")]
-        public void foo()
+        public void DEBUG_InstantiateBeltPrefabs()
         {
             InstantiateBeltPrefabs(socketsCount);
         }
