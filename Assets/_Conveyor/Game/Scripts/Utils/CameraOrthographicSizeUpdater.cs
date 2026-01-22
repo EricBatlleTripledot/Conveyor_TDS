@@ -18,7 +18,7 @@ namespace Game
 
         private void UpdateCameraOrtographicSize()
         {
-            var h = Screen.height;
+            var h = Screen.currentResolution.height;
             gameCamera.orthographicSize = h / divisor;
         }
     }
