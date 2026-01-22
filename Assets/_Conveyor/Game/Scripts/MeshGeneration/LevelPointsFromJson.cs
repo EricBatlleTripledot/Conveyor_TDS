@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.MeshGeneration
 {
@@ -24,10 +26,23 @@ namespace Game.MeshGeneration
     [CreateAssetMenu(fileName = "ConveyorBeltPoints", menuName = "LevelEditor/ConveyorPointsFromJSON", order = 1)]
     public class LevelPointsFromJson : ScriptableObject
     {
-        public List<Vector2> ConveyorPoints;
+        private static readonly Vector2Int[] CardinalDirections = {
+            new(1, 0),
+            new(0, 1),
+            new(-1, 0),
+            new(0, -1)
+        };
+
+        [SerializeField]
+        public List<Vector2> conveyorPoints = new List<Vector2>();
+        [SerializeField]
+        public int gridWidth;
+        [SerializeField]
+        public int gridHeight;
         [SerializeField]
         private TextAsset jsonFile;
         
+        [ContextMenu("LoadLevelPointsFromJson")]
         public void LoadLevelPointsFromJson()
         {
             if (!jsonFile) {
@@ -36,104 +51,123 @@ namespace Game.MeshGeneration
             }
 
             var level = JsonUtility.FromJson<LevelJson>(jsonFile.text);
+            gridWidth = level.width;
+            gridHeight = level.height;
 
-            var isConv = new bool[level.width, level.height];
+            var conveyorBeltPositions = new HashSet<Vector2Int>();
             foreach (var b in level.blocks.Where(b => b.type == "ConveyorBelt")) {
-                isConv[b.x, b.y] = true;
+                conveyorBeltPositions.Add(new Vector2Int(b.x, b.y));
             }
 
-            var loop = TraceSingleLoop(isConv, level.width, level.height);
-
-            ConveyorPoints.Clear();
-            foreach (var c in loop) {
-                var u = (c.x + 0.5f) / level.width;
-                var v = (c.y + 0.5f) / level.height;
-                ConveyorPoints.Add(new Vector2(u, v));
+            var orderedConveyorBeltPositions = TraceSingleLoop(conveyorBeltPositions, gridWidth, gridHeight);
+            // To have the points of the conveyor "centered" in the "cell"
+            conveyorPoints.Clear();
+            foreach (var conveyorBeltPosition in orderedConveyorBeltPositions) {
+                var u = (conveyorBeltPosition.x + 0.5f) / gridWidth;
+                var v = (conveyorBeltPosition.y + 0.5f) / gridHeight;
+                conveyorPoints.Add(new Vector2(u, v));
             }
 
-            Debug.Log($"Loaded {ConveyorPoints.Count} ordered conveyor points from JSON.");
+            Debug.Log($"Loaded {conveyorPoints.Count} ordered conveyor points from JSON.");
         }
 
-        private static List<Vector2Int> TraceSingleLoop(bool[,] isConveyor, int width, int height)
+        private List<Vector2Int> TraceSingleLoop(HashSet<Vector2Int> conveyorBeltPositions, int gridWidth, int gridHeight)
         {
-            static bool InBounds(Vector2Int p, int w, int h) => (uint)p.x < (uint)w && (uint)p.y < (uint)h;
-
-            // Pick deterministic start: lowest y, then lowest x
-            Vector2Int start = new(-1, -1);
-            for (int y = 0; y < height && start.x < 0; y++) {
-                for (int x = 0; x < width; x++) {
-                    if (!isConveyor[x, y]) {
-                        continue;
-                    }
-                    start = new Vector2Int(x, y);
-                    break;
-                }
+            if (conveyorBeltPositions.Count == 0) {
+                Debug.LogWarning("Error: No positions for conveyor belt");
+                return new List<Vector2Int>();
             }
 
-            var result = new List<Vector2Int>();
-            if (start.x < 0) {
-                return result;
+            var conveyorStartPosition = conveyorBeltPositions
+                .OrderBy(p => p.y)
+                .ThenBy(p => p.x)
+                .First();
+            
+            bool InBounds(Vector2Int p) => (uint)p.x < (uint)gridWidth && (uint)p.y < (uint)gridHeight;
+
+            if (!TryPickInitialNeighbor(conveyorBeltPositions, conveyorStartPosition, InBounds, out var currentNeighbor)) {
+                Debug.LogWarning("Error: ConveyorBelt has some unlinked positions!");
+                return new List<Vector2Int>();
             }
+            
+            var ordered = new List<Vector2Int>(conveyorBeltPositions.Count) { conveyorStartPosition };
 
-            // Prefer a consistent initial direction order
-            Vector2Int[] dirs = {
-                new(1, 0), // right
-                new(0, 1), // up
-                new(-1, 0), // left
-                new(0, -1) // down
-            };
+            var previousNeighbor = conveyorStartPosition;
+            var safety = conveyorBeltPositions.Count + 1; // a simple loop can't exceed its cell count before closing
 
-            Vector2Int curr = start;
-
-            // Find first neighbor
-            Vector2Int next = default;
-            bool found = false;
-            foreach (var d in dirs) {
-                var n = curr + d;
-                if (InBounds(n, width, height) && isConveyor[n.x, n.y]) {
-                    next = n;
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                return result;
-            }
-
-            result.Add(curr);
-
-            int safety = width * height * 4;
             while (safety-- > 0) {
-                var prev = curr;
-                curr = next;
-
-                if (curr == start)
+                if (currentNeighbor == conveyorStartPosition) {
                     break;
-                result.Add(curr);
-
-                // Choose next neighbor that isn't prev (single loop => exactly one)
-                Vector2Int candidate = default;
-                int candidates = 0;
-
-                foreach (var d in dirs) {
-                    var n = curr + d;
-                    if (!InBounds(n, width, height) || !isConveyor[n.x, n.y])
-                        continue;
-                    if (n == prev)
-                        continue;
-
-                    candidate = n;
-                    candidates++;
                 }
 
-                if (candidates == 0)
-                    break;
+                ordered.Add(currentNeighbor);
 
-                // If candidates > 1 (shouldn't happen for a simple loop), we still pick deterministically.
-                next = candidate;
+                if (!TryPickNextNeighborInLoop(conveyorBeltPositions, currentNeighbor, previousNeighbor, InBounds, out var nextNeighbor)) {
+                    Debug.LogWarning($"Conveyor loop invalid around {currentNeighbor}: expected exactly 2 neighbors.");
+                    return new List<Vector2Int>();
+                }
+
+                previousNeighbor = currentNeighbor;
+                currentNeighbor = nextNeighbor;
             }
 
-            return result;
+            // Validate closure + completeness
+            if (currentNeighbor != conveyorStartPosition) {
+                Debug.LogWarning("Conveyor loop invalid: did not close back to start (safety break).");
+                return new List<Vector2Int>();
+            }
+
+            if (ordered.Count != conveyorBeltPositions.Count) {
+                Debug.LogWarning($"Conveyor loop invalid: visited {ordered.Count}/{conveyorBeltPositions.Count} cells. " + "Likely disconnected parts or a branching/crossing.");
+                return new List<Vector2Int>();
+            }
+
+            return ordered;
+        }
+        
+        private static bool TryPickNextNeighborInLoop(
+            HashSet<Vector2Int> conveyorCells,
+            Vector2Int currentConveyorBeltPosition,
+            Vector2Int previousConveyorCell,
+            Func<Vector2Int, bool> inBounds,
+            out Vector2Int nextConveyorCell)
+        {
+            nextConveyorCell = default;
+
+            // In a valid loop, curr must have exactly 2 neighbors.
+            // One is prev; the other is next.
+            var neighborCount = 0;
+            var foundNext = false;
+
+            foreach (var direction in CardinalDirections) {
+                var nextDirection = currentConveyorBeltPosition + direction;
+                if (!inBounds(nextDirection) || !conveyorCells.Contains(nextDirection)) {
+                    continue;
+                }
+
+                neighborCount++;
+
+                if (nextDirection != previousConveyorCell) {
+                    nextConveyorCell = nextDirection;
+                    foundNext = true;
+                }
+            }
+
+            return neighborCount == 2 && foundNext;
+        }
+        
+        private bool TryPickInitialNeighbor(HashSet<Vector2Int> conveyorCells, Vector2Int conveyorBeltPosition, Func<Vector2Int, bool> inBounds, out Vector2Int neighbor)
+        {
+            foreach (var direction in CardinalDirections) {
+                var nextDirection = conveyorBeltPosition + direction;
+                if (inBounds(nextDirection) && conveyorCells.Contains(nextDirection)) {
+                    neighbor = nextDirection;
+                    return true;
+                }
+            }
+
+            neighbor = default;
+            return false;
         }
     }
 }
