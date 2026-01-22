@@ -113,7 +113,7 @@ MonoBehaviour:
   m_LoopMode: 1
   m_Method: 1
   m_Duration: 6
-  m_MaxSpeed: 2
+  m_MaxSpeed: 4
   m_EasingMode: 0
   m_AlignmentMode: 1
   m_ObjectForwardAxis: 2
