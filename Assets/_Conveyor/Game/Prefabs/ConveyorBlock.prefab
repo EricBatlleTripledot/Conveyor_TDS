@@ -90,8 +90,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableRaycasting: 1
   rayCastDirection: {x: 1, y: 0, z: 0}
-  alignMargin: 0.22
-  rotationTolerance: 0.01
+  alignMargin: 0.24
+  rotationTolerance: 0.28
   noHitColor: {r: 1, g: 0, b: 0, a: 1}
   fullyAlignedColor: {r: 0, g: 1, b: 0, a: 1}
   hitNotAlignedColor: {r: 1, g: 0.6470588, b: 0, a: 1}
