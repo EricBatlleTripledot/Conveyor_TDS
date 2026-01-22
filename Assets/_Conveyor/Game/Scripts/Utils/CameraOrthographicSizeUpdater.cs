@@ -9,7 +9,7 @@ namespace Game
         [SerializeField]
         private Camera gameCamera;
         [SerializeField]
-        private float divisor;
+        private float divisor = 160;
 
         private void OnValidate()
         {
@@ -18,6 +18,10 @@ namespace Game
 
         private void UpdateCameraOrtographicSize()
         {
+            if (gameCamera == null) {
+                return;
+            }
+
             var h = Screen.currentResolution.height;
             gameCamera.orthographicSize = h / divisor;
         }
