@@ -106,8 +106,8 @@ namespace Game
                 state.PreviousTimeOnSpline = state.CurrentTimeOnSpline;
                 state.CurrentTimeOnSpline = socketTimeOnSpline;
 
-                float deltaTimeNormalized = GetForwardDeltaNormalized(state.PreviousTimeOnSpline, state.CurrentTimeOnSpline);
-                float socketSpeedMetersPerSecond = EstimateSpeedMetersPerSecond(deltaTimeNormalized);
+                // maxSpeed simplifies calculations, but it won't work if we add easing, ramps etc to the belt movement
+                float socketSpeedMetersPerSecond = socket.MaxSpeed;
 
                 float distanceToLandingMeters = splineContainer.ApproxLengthForward(state.CurrentTimeOnSpline, landingTimeOnSpline, lengthSteps);
                 var jumpDurationInSeconds = jumpAnimationClip.length;
@@ -176,22 +176,6 @@ namespace Game
             // avoids noise from nearest-point by position
             // + offset is necessary to make the system works for all sockets, not only the first one
             return Mathf.Repeat(socket.NormalizedTime + socket.StartOffset, 1f);
-        }
-
-        private float GetForwardDeltaNormalized(float previousTime, float currentTime)
-        {
-            float delta = currentTime - previousTime;
-            if (delta < 0f) delta += 1f;
-            return delta;
-        }
-
-        private float EstimateSpeedMetersPerSecond(float deltaTimeNormalized)
-        {
-            float deltaMeters = deltaTimeNormalized * splineLengthMeters;
-            float deltaSeconds = Time.deltaTime;
-
-            if (deltaSeconds <= 0f) return 0f;
-            return deltaMeters / deltaSeconds;
         }
 
         private void RecalculateSplineLength()
