@@ -32,12 +32,11 @@ namespace Game
         [SerializeField] private BlockViewStackView stackView;
 
         [Header("Launch Window")]
-        [SerializeField]
-        private AnimationClip jumpAnimationClip;
+        [SerializeField] private AnimationClip jumpAnimationClip;
         [SerializeField] private float launchWindowToleranceMeters = 0.15f;
 
         [Header("Sampling Quality")]
-        [SerializeField] private int nearestPointAttempts = 64;
+        [SerializeField] private int nearestPointSteps = 64;
         [SerializeField] private int lengthSteps = 64;
 
         [Header("Event Behaviour")]
@@ -48,8 +47,7 @@ namespace Game
         [SerializeField] private bool drawLaunchGizmos = true;
         [SerializeField] private float gizmoSize = 0.18f;
         [SerializeField] private int gizmoWindowPoints = 30;
-        
-        private float splineLengthMeters;
+
         private float landingTimeOnSpline;
         private bool landingTimeIsValid;
 
@@ -62,17 +60,20 @@ namespace Game
             InstantiateBeltPrefabs(socketsCount);
         }
         
-        private void Awake()
+        [ContextMenu("AccelerateConveyorBelt")]
+        public void DEBUG_AccelerateConveyorBelt()
         {
-            RecalculateSplineLength();
+            // ToDo: this must propagate to the speed for conveyorBlocks!
+            speed += 2;
+            foreach (var splineAnimate in spawnedSplineAnimatedObjects) {
+                splineAnimate.MaxSpeed = speed;
+            }
         }
 
-        private void OnValidate()
+        private void Start()
         {
-            if (splineContainer != null)
-            {
-                RecalculateSplineLength();
-            }
+            InstantiateBeltPrefabs(socketsCount);
+            Play();
         }
 
         private void Update()
@@ -89,7 +90,7 @@ namespace Game
 
         private void UpdateLandingTimeOnSpline()
         {
-            var (landingPosition, landingTime) = splineContainer.GetNearestPointTo(stackView.StackPoint, nearestPointAttempts);
+            var (_, landingTime) = splineContainer.GetNearestPointTo(stackView.StackPoint, nearestPointSteps);
             landingTimeOnSpline = landingTime;
             landingTimeIsValid = true;
         }
@@ -176,33 +177,6 @@ namespace Game
             // avoids noise from nearest-point by position
             // + offset is necessary to make the system works for all sockets, not only the first one
             return Mathf.Repeat(socket.NormalizedTime + socket.StartOffset, 1f);
-        }
-
-        private void RecalculateSplineLength()
-        {
-            if (splineContainer == null)
-            {
-                splineLengthMeters = 0f;
-                return;
-            }
-
-            splineLengthMeters = ApproxSplineLength(splineContainer, 512);
-        }
-
-        private float ApproxSplineLength(SplineContainer spline, int steps)
-        {
-            float length = 0f;
-
-            Vector3 previousPosition = (Vector3)spline.EvaluatePosition(0, 0f);
-            for (int i = 1; i <= steps; i++)
-            {
-                float time = i / (float)steps;
-                Vector3 position = (Vector3)spline.EvaluatePosition(0, time);
-                length += Vector3.Distance(previousPosition, position);
-                previousPosition = position;
-            }
-
-            return length;
         }
 
         public void InstantiateBeltPrefabs(int socketsCountToSpawn)
@@ -315,7 +289,7 @@ namespace Game
             if (splineContainer == null) return;
             if (stackView == null) return;
 
-            var (landingPosition, landingTime) = splineContainer.GetNearestPointTo(stackView.StackPoint, nearestPointAttempts);
+            var (landingPosition, landingTime) = splineContainer.GetNearestPointTo(stackView.StackPoint, nearestPointSteps);
 
             Gizmos.color = Color.cyan;
             Gizmos.DrawCube(landingPosition, Vector3.one * gizmoSize * 2f);
